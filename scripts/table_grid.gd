@@ -17,7 +17,7 @@ func _on_cell_click(row, column):
 		print(get_cell_value(pos1))
 		
 		if(execute_movement()):
-			get_parent().update_score();
+			get_parent().update_score(get_cell_value(pos0)+get_cell_value(pos1))
 			print('CORRECT')
 		else:
 			print('INCORRECT')

@@ -15,9 +15,9 @@ script = ExtResource("1_sm3gm")
 [node name="Table" parent="." instance=ExtResource("1_lgopx")]
 custom_minimum_size = Vector2(100, 100)
 offset_left = 90.0
-offset_top = 152.0
+offset_top = 137.0
 offset_right = 588.0
-offset_bottom = 252.0
+offset_bottom = 237.0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
