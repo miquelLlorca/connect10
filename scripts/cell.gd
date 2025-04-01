@@ -18,6 +18,18 @@ func set_colour():
 func clean_colour():
 	self.modulate = original_colour
 	
+
+func _on_cell_input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		var column = int((position.x-parentPos.x) / cell_width)
+		var row = int((position.y-parentPos.y) / cell_height)
+		print("Cell clicked at: ", self.position, " -> ", row, ",", column) 
+		get_parent()._on_cell_click(row, column)
+		
+##########################################################################################################################
+##########################################################################################################################
+##########################################################################################################################
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	parentPos = get_parent().position
@@ -28,9 +40,3 @@ func _ready():
 func _process(delta: float) -> void:
 	pass
 	
-func _on_cell_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var column = int((position.x-parentPos.x) / cell_width)
-		var row = int((position.y-parentPos.y) / cell_height)
-		print("Cell clicked at: ", self.position, " -> ", row, ",", column) 
-		get_parent()._on_cell_click(row, column)
