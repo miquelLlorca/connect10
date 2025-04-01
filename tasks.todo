@@ -1,7 +1,7 @@
 Table:
     ✔ Implement base game logic @done (4/1/2025, 3:53:58 PM)
     ☐ Implement expand button
-    ☐ Implement cleaning rows
+    ✔ Implement cleaning rows @done (4/1/2025, 7:39:13 PM)
 
 Missions:
     ☐ Implement mission system

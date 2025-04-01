@@ -6,6 +6,25 @@ var pos1
 var initColumns = 10
 var initRows = 3
 
+
+func get_cell(pos):
+	var i = pos[0]*10 + pos[1]
+	return get_child(i)
+	
+func get_cell_value(pos):
+	var i = pos[0]*10 + pos[1]
+	var value = get_child(i).cell_value
+	if(typeof(value)==TYPE_STRING and value==""):
+			return 0
+	return int(value)
+
+
+
+##########################################################################################################################
+##########################################################################################################################
+##########################################################################################################################
+
+
 func _on_cell_click(row, column):
 	if(not pos0):
 		pos0 = [row, column]
@@ -17,24 +36,29 @@ func _on_cell_click(row, column):
 		print(get_cell_value(pos1))
 		
 		if(execute_movement()):
-			get_parent().update_score(get_cell_value(pos0)+get_cell_value(pos1))
+			get_cell(pos0).set_value("")
+			get_cell(pos1).set_value("")
 			print('CORRECT')
 		else:
 			print('INCORRECT')
-		# clearEmptyRows();
+		clear_empty_rows();
 		get_cell(pos0).clean_colour()
 		pos0 = null
 		pos1 = null
 
-
-
-func get_cell(pos):
-	var i = pos[0]*10 + pos[1]
-	return get_child(i)
+func get_row_count():
+	return ceil(float(self.get_child_count()) / columns)
 	
-func get_cell_value(pos):
-	var i = pos[0]*10 + pos[1]
-	return int(get_child(i).cell_value)
+func remove_row(row):
+	var start_index = row * columns  
+
+	for i in range(columns):
+		if(start_index < self.get_child_count()):
+			var cell = self.get_child(start_index)
+			self.remove_child(cell)
+			cell.queue_free()
+	# Optionally, refresh the grid layout to avoid gaps
+	self.queue_sort()
 
 func get_incr(diff):
 		if(diff > 0):
@@ -42,7 +66,6 @@ func get_incr(diff):
 		if(diff < 0):
 			return +1
 		return 0
-
 
 func check_mid_line_empty(pos, dir):
 	if(dir == 1):
@@ -56,6 +79,35 @@ func check_mid_line_empty(pos, dir):
 				return false;
 		return true;
 
+func clear_empty_rows():
+	var empty0 = check_mid_line_empty([pos0[0],-1],1)
+
+	if(empty0):
+		remove_row(pos0[0])
+		get_parent().update_score(100)
+		# statistics.rowsCleared+=1
+	
+	if(empty0 && pos1[0]>pos0[0]):
+		pos0[0] = pos0[0]-1
+		pos1[0] = pos1[0]-1
+
+	if(pos0[0]!=pos1[0]):
+		var empty1 = check_mid_line_empty([pos1[0],-1],1)
+		if(empty1):
+			remove_row(pos1[0])
+			get_parent().update_score(100);
+			# statistics.rowsCleared+=1
+
+
+	if(get_row_count()==0):
+		get_parent().update_score(1000);
+		# statistics.tablesCleared+=1;
+		# expandsLeft = maxExpands;
+		# initTable();
+
+##########################################################################################################################
+##########################################################################################################################
+##########################################################################################################################
 
 
 
@@ -71,7 +123,7 @@ func execute_movement():
 	var dx = pos0[0]-pos1[0];
 	var dy = pos0[1]-pos1[1];
 	
-	# if  Horizontal     or      vertical      or           diagonal
+	# if   Horizontal	 or	  vertical	  or	  diagonal
 	if((pos0[0]==pos1[0]) || (pos0[1]==pos1[1]) || (abs(dx)==abs(dy))):
 		# iterates direct path between selections
 		var x = pos0[0]
@@ -91,12 +143,8 @@ func execute_movement():
 				# a number in the middle makes move not valid
 				print("number in the middle")
 				return false
-		
 
-		get_cell(pos0).set_value("")
-		get_cell(pos1).set_value("")
-		
-		# updateScore(n0+n1);
+		get_parent().update_score(get_cell_value(pos0)+get_cell_value(pos1))
 		return true;
 	else:
 		# Possible Endline move needs different treatment.
@@ -114,11 +162,10 @@ func execute_movement():
 			right = check_mid_line_empty(pos1, -1)
 			left =  check_mid_line_empty(pos0, 1)
 	
-
 		if(left and right):
-			get_cell(pos0).set_value("")
-			get_cell(pos1).set_value("")
-			# updateScore(n0+n1);
+			get_parent().update_score(
+				2*(get_cell_value(pos0)+get_cell_value(pos1))
+			)
 			return true;
 		else:
 			print("endline not possible line with numbers")
