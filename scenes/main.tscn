@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c18n0g4g50i48"]
+
+[ext_resource type="PackedScene" uid="uid://tbaic4widduy" path="res://scenes/table.tscn" id="1_lgopx"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_sm3gm"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_sm3gm")
+
+[node name="Table" parent="." instance=ExtResource("1_lgopx")]
+custom_minimum_size = Vector2(100, 100)

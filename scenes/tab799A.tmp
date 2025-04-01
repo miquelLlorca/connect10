@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://tbaic4widduy"]
+
+[ext_resource type="Script" path="res://scripts/table.gd" id="1_ucl1s"]
+
+[node name="Table" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ucl1s")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
