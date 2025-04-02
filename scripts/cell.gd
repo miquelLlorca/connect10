@@ -18,7 +18,6 @@ func set_colour():
 func clean_colour():
 	self.modulate = original_colour
 	
-
 func _on_cell_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var column = int((position.x-parentPos.x) / cell_width)

@@ -13,6 +13,8 @@ func get_cell(pos):
 	
 func get_cell_value(pos):
 	var i = pos[0]*10 + pos[1]
+	if(i>=self.get_child_count()):
+		return 0 # trying to read at the right of an unfinished line
 	var value = get_child(i).cell_value
 	if(typeof(value)==TYPE_STRING and value==""):
 			return 0
@@ -41,8 +43,8 @@ func _on_cell_click(row, column):
 			print('CORRECT')
 		else:
 			print('INCORRECT')
-		clear_empty_rows();
 		get_cell(pos0).clean_colour()
+		clear_empty_rows();
 		pos0 = null
 		pos1 = null
 
@@ -70,6 +72,7 @@ func get_incr(diff):
 func check_mid_line_empty(pos, dir):
 	if(dir == 1):
 		for i in range(pos[1]+1, initColumns):
+
 			if(get_cell_value([pos[0], i]) != 0):
 				return false
 		return true;
