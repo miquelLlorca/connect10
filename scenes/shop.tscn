@@ -1,0 +1,107 @@
+[gd_scene load_steps=2 format=3 uid="uid://bquswwgor62pj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5vc3"]
+bg_color = Color(0.162066, 0.162066, 0.162065, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1
+
+[node name="Score" type="Panel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 125)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u5vc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Score"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 4.0
+offset_right = 136.0
+offset_bottom = 116.0
+
+[node name="Title" type="Label" parent="HBoxContainer/Score/VBoxContainer"]
+layout_mode = 2
+text = "Score Multiplier"
+
+[node name="Descr" type="Label" parent="HBoxContainer/Score/VBoxContainer"]
+layout_mode = 2
+text = "1.0x"
+
+[node name="Price" type="Label" parent="HBoxContainer/Score/VBoxContainer"]
+layout_mode = 2
+text = "10$"
+
+[node name="Button" type="Button" parent="HBoxContainer/Score/VBoxContainer"]
+layout_mode = 2
+text = "BUY"
+
+[node name="Money" type="Panel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 125)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u5vc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Money"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 4.0
+offset_right = 141.0
+offset_bottom = 116.0
+
+[node name="Title" type="Label" parent="HBoxContainer/Money/VBoxContainer"]
+layout_mode = 2
+text = "Money Multiplier"
+
+[node name="Descr" type="Label" parent="HBoxContainer/Money/VBoxContainer"]
+layout_mode = 2
+text = "1.0x"
+
+[node name="Price" type="Label" parent="HBoxContainer/Money/VBoxContainer"]
+layout_mode = 2
+text = "10$"
+
+[node name="Button" type="Button" parent="HBoxContainer/Money/VBoxContainer"]
+layout_mode = 2
+text = "BUY"
+
+[node name="Expands" type="Panel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 125)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u5vc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Expands"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 4.0
+offset_right = 135.0
+offset_bottom = 116.0
+
+[node name="Title" type="Label" parent="HBoxContainer/Expands/VBoxContainer"]
+layout_mode = 2
+text = "Max Expands"
+
+[node name="Descr" type="Label" parent="HBoxContainer/Expands/VBoxContainer"]
+layout_mode = 2
+text = "1.0x"
+
+[node name="Price" type="Label" parent="HBoxContainer/Expands/VBoxContainer"]
+layout_mode = 2
+text = "10$"
+
+[node name="Button" type="Button" parent="HBoxContainer/Expands/VBoxContainer"]
+layout_mode = 2
+text = "BUY"

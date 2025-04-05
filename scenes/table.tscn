@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/table_grid.gd" id="2_rhmw8"]
 
 [node name="Table" type="Control"]
+custom_minimum_size = Vector2(720, 0)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -11,6 +12,7 @@ offset_bottom = 40.0
 script = ExtResource("1_ucl1s")
 
 [node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(720, 0)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
