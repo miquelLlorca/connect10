@@ -3,6 +3,7 @@ extends GridContainer
 
 var pos0
 var pos1
+var main
 var initColumns = 10
 var initRows = 3
 
@@ -103,10 +104,12 @@ func clear_empty_rows():
 
 
 	if(get_row_count()==0):
-		get_parent().update_score(1000);
+		main.update_score(1000);
 		# statistics.tablesCleared+=1;
+		main.reset_expands()
 		# expandsLeft = maxExpands;
 		# initTable();
+		get_parent().populate_table(3,10);
 
 ##########################################################################################################################
 ##########################################################################################################################
@@ -187,7 +190,7 @@ func execute_movement():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	main = get_parent().get_parent()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

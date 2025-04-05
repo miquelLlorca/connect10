@@ -26,17 +26,19 @@ func expand_table():
 		expand_button.text = "Expand ("+str(expands_available)+")"
 		table.expand_table()
 
+func reset_expands():
+	expands_available = MAX_EXPANDS
+	expand_button.text = "Expand ("+str(expands_available)+")"
+
 func end_run():	
 	# updates data: money, stats...
 	update_money(score / 1000.0)
 
 	# checks missions
 
-	# resets expands
-	expands_available = MAX_EXPANDS
-	expand_button.text = "Expand ("+str(expands_available)+")"
-	# resets score
-	score = 0
+	reset_expands()
+	update_score(-score)
+	
 	table.end_run()
 ##########################################################################################################################
 ##########################################################################################################################

@@ -3,7 +3,7 @@ Table:
     ✔ Implement expand button @done (4/2/2025, 1:17:19 PM)
     ✔ Implement end run button @done (4/2/2025, 1:17:20 PM)
     ✔ Implement cleaning rows @done (4/1/2025, 7:39:13 PM)
-    ☐ Table should be reset when it is cleared
+    ✔ Table should be reset when it is cleared @done (4/5/2025, 11:15:30 AM)
 
 Missions:
     ☐ Implement mission system

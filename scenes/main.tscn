@@ -53,6 +53,7 @@ offset_bottom = 249.0
 text = "Expand (5)"
 
 [node name="Score_Label" type="Label" parent="."]
+layout_mode = 0
 offset_left = 122.0
 offset_top = 124.0
 offset_right = 315.0
@@ -63,6 +64,7 @@ label_settings = SubResource("LabelSettings_0hjvk")
 horizontal_alignment = 1
 
 [node name="Money_Label" type="Label" parent="."]
+layout_mode = 0
 offset_left = 400.0
 offset_top = 125.0
 offset_right = 597.0
