@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c18n0g4g50i48"]
+[gd_scene load_steps=8 format=3 uid="uid://c18n0g4g50i48"]
 
 [ext_resource type="PackedScene" uid="uid://tbaic4widduy" path="res://scenes/table.tscn" id="1_lgopx"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_sm3gm"]
 [ext_resource type="PackedScene" uid="uid://bquswwgor62pj" path="res://scenes/shop.tscn" id="3_uvth1"]
+[ext_resource type="PackedScene" uid="uid://bheabgiu8oofm" path="res://scenes/mission_list.tscn" id="4_i2lef"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ar11i"]
 line_spacing = 30.0
@@ -95,4 +96,9 @@ custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="Shop" parent="Main_V" instance=ExtResource("3_uvth1")]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="MissionList" parent="Main_V" instance=ExtResource("4_i2lef")]
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
