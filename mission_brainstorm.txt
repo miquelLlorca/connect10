@@ -1,0 +1,16 @@
+Missions will check a countable stat and will be completed when you get to the specified limit
+Missions will be differentiated by family and they will depend on previous ones
+Each family will give some kind of upgrade
+
+
+Ideas:
+    Clearing X number of cells
+    Clearing X number of rows
+    Clearing X number of tables
+
+    Clearing same number pairs (mission family for each pair, each one will upgrade a number)
+    Clearing sum 10s
+
+    Getting to certain high scores
+    Getting to certain TOTAL amount of money
+    Getting to certain amount of money in a run
