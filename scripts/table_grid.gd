@@ -88,7 +88,7 @@ func clear_empty_rows():
 
 	if(empty0):
 		remove_row(pos0[0])
-		get_parent().update_score(100)
+		main.update_score(100)
 		# statistics.rowsCleared+=1
 	
 	if(empty0 && pos1[0]>pos0[0]):
@@ -99,7 +99,7 @@ func clear_empty_rows():
 		var empty1 = check_mid_line_empty([pos1[0],-1],1)
 		if(empty1):
 			remove_row(pos1[0])
-			get_parent().update_score(100);
+			main.update_score(100);
 			# statistics.rowsCleared+=1
 
 
@@ -150,7 +150,7 @@ func execute_movement():
 				print("number in the middle")
 				return false
 
-		get_parent().update_score(get_cell_value(pos0)+get_cell_value(pos1))
+		main.update_score(get_cell_value(pos0)+get_cell_value(pos1))
 		return true;
 	else:
 		# Possible Endline move needs different treatment.
@@ -169,7 +169,7 @@ func execute_movement():
 			left =  check_mid_line_empty(pos0, 1)
 	
 		if(left and right):
-			get_parent().update_score(
+			main.update_score(
 				2*(get_cell_value(pos0)+get_cell_value(pos1))
 			)
 			return true;

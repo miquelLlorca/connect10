@@ -4,11 +4,12 @@ Table:
     ✔ Implement end run button @done (4/2/2025, 1:17:20 PM)
     ✔ Implement cleaning rows @done (4/1/2025, 7:39:13 PM)
     ✔ Table should be reset when it is cleared @done (4/5/2025, 11:15:30 AM)
-    ☐ Center table
-    
+    ✔ Center table @done (4/7/2025, 12:33:47 PM)
+
 Missions:
+    ☐ Create and locate mission template
     ☐ Implement mission system
-    ☐ Create Missions
+    ☐ Write Missions
     ☐ Add statistics
 
 Upgrade shop:
@@ -16,3 +17,6 @@ Upgrade shop:
     ☐ Implement upgrade shop
     ☐ Test balance of shop
 
+Data management:
+    ☐ Save stats, money...
+    ☐ Read data when starting game

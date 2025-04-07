@@ -1,7 +1,7 @@
 extends Control
 
 # Reference to the GridContainer to hold the cells
-@onready var grid = $GridContainer
+@onready var grid = $CenterContainer/GridContainer
 var main
 
 
