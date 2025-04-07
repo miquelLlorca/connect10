@@ -41,6 +41,9 @@ func _on_cell_click(row, column):
 		if(execute_movement()):
 			get_cell(pos0).set_value("")
 			get_cell(pos1).set_value("")
+			if(not main.game_ongoing):
+				main.hide_shop_and_missions()
+				main.game_ongoing = true
 			print('CORRECT')
 		else:
 			print('INCORRECT')

@@ -4,6 +4,7 @@ const MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
 var score = 0
 var money_available = 0
+var game_ongoing = false
 @onready var table = $Main_V/Table
 @onready var shop = $Main_V/Shop
 @onready var score_label = $GridContainer/CenterContainer/Score_Label
@@ -31,6 +32,17 @@ func reset_expands():
 	expands_available = MAX_EXPANDS
 	expand_button.text = "Expand ("+str(expands_available)+")"
 
+
+func show_shop_and_missions():
+	var tween = create_tween()
+	tween.tween_property(shop, "position:y", shop.position.y - 1000, 0.5)  # Slide down
+	tween.tween_property(shop, "modulate:a", 1.0, 0.25)
+
+func hide_shop_and_missions():
+	var tween = create_tween()
+	tween.tween_property(shop, "position:y", shop.position.y + 1000, 0.5)  # Slide down
+	tween.tween_property(shop, "modulate:a", 0.0, 0.25)
+
 func end_run():	
 	# updates data: money, stats...
 	update_money(score / 1000.0)
@@ -41,6 +53,7 @@ func end_run():
 	update_score(-score)
 	
 	table.end_run()
+	show_shop_and_missions()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################

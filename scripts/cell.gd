@@ -31,7 +31,8 @@ func _on_cell_input(event):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	parentPos = get_parent().position
+	# gets the pos of the center container as when the table is resetted the position gets messed up
+	parentPos = get_parent().get_parent().position
 	original_colour = self.modulate
 	self.connect("gui_input", _on_cell_input)
 

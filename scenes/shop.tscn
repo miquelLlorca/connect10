@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bquswwgor62pj"]
+[gd_scene load_steps=3 format=3 uid="uid://bquswwgor62pj"]
+
+[ext_resource type="Script" path="res://scripts/shop.gd" id="1_bsr1k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5vc3"]
 bg_color = Color(0.162066, 0.162066, 0.162065, 1)
@@ -14,6 +16,7 @@ corner_radius_bottom_left = 2
 [node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_bsr1k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(720, 0)

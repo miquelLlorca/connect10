@@ -5,17 +5,19 @@ Table:
     ✔ Implement cleaning rows @done (4/1/2025, 7:39:13 PM)
     ✔ Table should be reset when it is cleared @done (4/5/2025, 11:15:30 AM)
     ✔ Center table @done (4/7/2025, 12:33:47 PM)
-
+    
 Missions:
     ☐ Create and locate mission template
     ☐ Implement mission system
     ☐ Write Missions
     ☐ Add statistics
+    ☐ Hide missions when playing
 
 Upgrade shop:
     ✔ Create and locate shop template @done (4/5/2025, 12:58:06 PM)
     ☐ Implement upgrade shop
     ☐ Test balance of shop
+    ✔ Hide shop when playing @done (4/7/2025, 12:54:36 PM)
 
 Data management:
     ☐ Save stats, money...
