@@ -1,10 +1,15 @@
 extends Control
 
-const MAX_EXPANDS = 5
+var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
 var score = 0
-var money_available = 0
+var money_available = 100
 var game_ongoing = false
+
+var score_multiplier = 1
+var money_multiplier = 1
+var shop_levels = {'score':1, 'money':1, 'expands':1}
+
 @onready var table = $Main_V/Table
 @onready var shop = $Main_V/Shop
 @onready var score_label = $GridContainer/CenterContainer/Score_Label
@@ -14,11 +19,17 @@ var game_ongoing = false
 
 
 func update_score(points):
-	score += points
+	if(points<0): # when resetting score mult does not apply
+		score += points
+	else:
+		score += points*score_multiplier
 	score_label.text = "Score:\n"+str(score)
 	
 func update_money(money):
-	money_available += money
+	if(money<0): # when buying mult does not apply
+		money_available += money
+	else:
+		money_available += money*money_multiplier
 	money_label.text = "Money:\n"+str(money_available)+"$"
 
 func expand_table():
@@ -35,7 +46,7 @@ func reset_expands():
 
 func show_shop_and_missions():
 	var tween = create_tween()
-	tween.tween_property(shop, "position:y", shop.position.y - 1000, 0.5)  # Slide down
+	tween.tween_property(shop, "position:y", shop.position.y - 1000, 0.1)  # Slide down
 	tween.tween_property(shop, "modulate:a", 1.0, 0.25)
 
 func hide_shop_and_missions():
@@ -44,16 +55,18 @@ func hide_shop_and_missions():
 	tween.tween_property(shop, "modulate:a", 0.0, 0.25)
 
 func end_run():	
-	# updates data: money, stats...
-	update_money(score / 1000.0)
+	if(game_ongoing):
+		game_ongoing = false
+		# updates data: money, stats...
+		update_money(score / 1000.0)
 
-	# checks missions
+		# checks missions
 
-	reset_expands()
-	update_score(-score)
-	
-	table.end_run()
-	show_shop_and_missions()
+		reset_expands()
+		update_score(-score)
+		
+		table.end_run()
+		show_shop_and_missions()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################

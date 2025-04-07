@@ -99,11 +99,11 @@ text = "Max Expands"
 
 [node name="Descr" type="Label" parent="HBoxContainer/Expands/VBoxContainer"]
 layout_mode = 2
-text = "1.0x"
+text = "5"
 
 [node name="Price" type="Label" parent="HBoxContainer/Expands/VBoxContainer"]
 layout_mode = 2
-text = "10$"
+text = "100$"
 
 [node name="Button" type="Button" parent="HBoxContainer/Expands/VBoxContainer"]
 layout_mode = 2
