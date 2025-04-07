@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c18n0g4g50i48"]
-
-[ext_resource type="PackedScene" uid="uid://tbaic4widduy" path="res://scenes/table.tscn" id="1_lgopx"]
-
-[node name="Main" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="Table" parent="." instance=ExtResource("1_lgopx")]
