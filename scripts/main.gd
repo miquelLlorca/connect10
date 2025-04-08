@@ -1,5 +1,7 @@
 extends Control
 
+var statistics
+
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
 var score = 0
@@ -12,6 +14,7 @@ var shop_levels = {'score':1, 'money':1, 'expands':1}
 
 @onready var table = $Main_V/Table
 @onready var shop = $Main_V/Shop
+@onready var mission_list = $Main_V/MissionList
 @onready var score_label = $GridContainer/CenterContainer/Score_Label
 @onready var money_label = $GridContainer/CenterContainer2/Money_Label
 @onready var expand_button = $GridContainer/CenterContainer3/Expand_Button
@@ -66,10 +69,59 @@ func end_run():
 		update_score(-score)
 		
 		table.end_run()
+		save_stats()
 		show_shop_and_missions()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
+# Data Management
+
+func set_default_stats():
+	statistics = {
+		"cellsCleared":0,
+		"rowsCleared":0,
+		"tablesCleared":0,
+		"sum10s":0,
+		"pairs":{
+			"11":0,
+			"22":0,
+			"33":0,
+			"44":0,
+			"55":0,
+			"66":0,
+			"77":0,
+			"88":0,
+			"99":0
+		},
+		"highScore":0,
+		"totalAmountOfMoney":0,
+		"maxMoneyInARun":0,
+		"upgradesBought":0
+	}
+
+func save_stats():
+	var file = FileAccess.open("user://statistics.json", FileAccess.WRITE)
+	print(str(statistics))
+	file.close()
+
+func read_stats_file():
+	if FileAccess.file_exists("user://statistics.json"):
+		var file = FileAccess.open("user://statistics.json", FileAccess.READ)
+		var data = file.get_as_text()
+		file.close()
+		statistics = JSON.parse_string(data)
+	else:
+		print('Setting up empty stats file')
+		set_default_stats()
+		save_stats()
+
+
+
+##########################################################################################################################
+##########################################################################################################################
+##########################################################################################################################
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -79,7 +131,12 @@ func _ready():
 	expand_button.text = "Expand ("+str(expands_available)+")"
 	expand_button.connect("pressed", Callable(self, "expand_table"))
 	end_run_button.connect("pressed", Callable(self, "end_run"))
-	table.populate_table(3,10) 
+	table.populate_table(3,10)
+	read_stats_file()
+	print(statistics)
+	mission_list.init_missions()
+
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
