@@ -8,9 +8,8 @@ var stat: String # the stat to look for
 var objective: int # will be determined by level
 var main
 
-func init(init_level, stat_to_check, main_reference):
+func init(init_level, main_reference):
 	level = init_level
-	stat = stat_to_check
 	main = main_reference
 
 func get_progress_percentage():

@@ -1,12 +1,12 @@
 extends Mission
-class_name MissionClearCells
+class_name MissionClearRows
 
 func set_objective():
-	objective = 1000*level
+	objective = 100*level
 
 func init(init_level, main_reference):
 	super.init(init_level, main_reference)
-	stat = "cellsCleared"
+	stat = "rowsCleared"
 	set_objective()
 
 func complete_mission():
@@ -15,4 +15,4 @@ func complete_mission():
 		reward()
 
 func reward():
-	main.cell_multiplier += 0.25
+	main.row_multiplier += 0.25

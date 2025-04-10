@@ -1,6 +1,12 @@
 extends Control
 
 var statistics
+var cell_multiplier
+var row_multiplier
+var table_multiplier
+var score_to_money
+
+
 
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
@@ -12,7 +18,7 @@ var score_multiplier = 1
 var money_multiplier = 1
 var shop_levels = {'score':1, 'money':1, 'expands':1}
 
-@onready var table = $Main_V/Table
+@onready var table = $Table
 @onready var shop = $Main_V/Shop
 @onready var mission_list = $Main_V/MissionList
 @onready var score_label = $GridContainer/CenterContainer/Score_Label
@@ -50,13 +56,13 @@ func reset_expands():
 
 func show_shop_and_missions():
 	var tween = create_tween()
-	tween.tween_property(shop, "position:y", shop.position.y - 1000, 0.1)  # Slide down
-	tween.tween_property(shop, "modulate:a", 1.0, 0.25)
+	tween.tween_property($Main_V, "position:y", $Main_V.position.y - 1000, 0.25)
+	tween.tween_property($Main_V, "modulate:a", 1.0, 0.25)
 
 func hide_shop_and_missions():
 	var tween = create_tween()
-	tween.tween_property(shop, "position:y", shop.position.y + 1000, 0.5)  # Slide down
-	tween.tween_property(shop, "modulate:a", 0.0, 0.25)
+	tween.tween_property($Main_V, "position:y", $Main_V.position.y + 1000, 0.25)
+	tween.tween_property($Main_V, "modulate:a", 0.0, 0.25)
 
 
 func end_run():	

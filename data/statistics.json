@@ -1,8 +1,8 @@
 {
-    "cellsCleared":0,
-    "rowsCleared":0,
-    "tablesCleared":0,
-    "gamesPlayed":0,
+    "cellsCleared":0, cellMultiplier
+    "rowsCleared":0,rowMultiplier
+    "tablesCleared":0,tableMultiplier
+    "gamesPlayed":0,scoreToMoney
 
     "sum10s":0,
     "pairs":{
