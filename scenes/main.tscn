@@ -84,16 +84,19 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "End run"
 
+[node name="Table" parent="." instance=ExtResource("1_lgopx")]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+offset_top = 285.0
+offset_right = 720.0
+offset_bottom = 485.0
+
 [node name="Main_V" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(720, 0)
 layout_mode = 0
-offset_top = 285.0
+offset_top = 475.0
 offset_right = 720.0
-offset_bottom = 489.0
-
-[node name="Table" parent="Main_V" instance=ExtResource("1_lgopx")]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
+offset_bottom = 1129.0
 
 [node name="Shop" parent="Main_V" instance=ExtResource("3_uvth1")]
 custom_minimum_size = Vector2(0, 150)
