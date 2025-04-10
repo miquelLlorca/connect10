@@ -34,9 +34,10 @@ func _on_cell_click(row, column):
 		get_cell(pos0).set_colour()
 	elif(not (pos0[0]==row and pos0[1]==column)):
 		pos1 = [row, column]
-		print(pos0, " -> ", pos1)
-		print(get_cell_value(pos0))
-		print(get_cell_value(pos1))
+		var n0 = get_cell_value(pos0)
+		var n1 = get_cell_value(pos1)
+		# print(pos0, " -> ", pos1)
+		# print(n0,n1)
 		
 		if(execute_movement()):
 			get_cell(pos0).set_value("")
@@ -44,6 +45,12 @@ func _on_cell_click(row, column):
 			if(not main.game_ongoing):
 				main.hide_shop_and_missions()
 				main.game_ongoing = true
+			main.statistics['cellsCleared'] += 2
+			if(n0==n1):
+				main.statistics['pairs'][str(n0)+str(n0)] += 1
+				print(main.statistics['pairs'])
+			else:
+				main.statistics['sum10s'] += 1
 			print('CORRECT')
 		else:
 			print('INCORRECT')
@@ -76,7 +83,6 @@ func get_incr(diff):
 func check_mid_line_empty(pos, dir):
 	if(dir == 1):
 		for i in range(pos[1]+1, initColumns):
-
 			if(get_cell_value([pos[0], i]) != 0):
 				return false
 		return true;
@@ -92,8 +98,8 @@ func clear_empty_rows():
 	if(empty0):
 		remove_row(pos0[0])
 		main.update_score(100)
-		# statistics.rowsCleared+=1
-	
+		main.statistics['rowsCleared'] += 1
+
 	if(empty0 && pos1[0]>pos0[0]):
 		pos0[0] = pos0[0]-1
 		pos1[0] = pos1[0]-1
@@ -103,15 +109,13 @@ func clear_empty_rows():
 		if(empty1):
 			remove_row(pos1[0])
 			main.update_score(100);
-			# statistics.rowsCleared+=1
+			main.statistics['rowsCleared'] += 1
 
 
 	if(get_row_count()==0):
 		main.update_score(1000);
-		# statistics.tablesCleared+=1;
+		main.statistics['tablesCleared'] += 1
 		main.reset_expands()
-		# expandsLeft = maxExpands;
-		# initTable();
 		get_parent().get_parent().populate_table(3,10);
 
 ##########################################################################################################################
@@ -132,7 +136,7 @@ func execute_movement():
 	var dx = pos0[0]-pos1[0];
 	var dy = pos0[1]-pos1[1];
 	
-	# if   Horizontal	 or	  vertical	  or	  diagonal
+	# if   Horizontal	  or	  vertical	    or	    diagonal
 	if((pos0[0]==pos1[0]) || (pos0[1]==pos1[1]) || (abs(dx)==abs(dy))):
 		# iterates direct path between selections
 		var x = pos0[0]

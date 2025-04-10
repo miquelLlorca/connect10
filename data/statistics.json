@@ -2,6 +2,8 @@
     "cellsCleared":0,
     "rowsCleared":0,
     "tablesCleared":0,
+    "gamesPlayed":0,
+
     "sum10s":0,
     "pairs":{
         "11":0,
@@ -14,6 +16,7 @@
         "88":0,
         "99":0
     },
+    
     "highScore":0,
     "totalAmountOfMoney":0,
     "maxMoneyInARun":0,
