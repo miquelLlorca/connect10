@@ -1,11 +1,11 @@
-extends Mission
+extends BaseMission
 class_name MissionClearTables
 
 func set_objective():
 	objective = 10*level
 
-func init(init_level, main_reference):
-	super.init(init_level, main_reference)
+func init(init_level, mission_name, mission_description, main_reference):
+	super.init(init_level, mission_name, mission_description, main_reference)
 	stat = "tablesCleared"
 	set_objective()
 

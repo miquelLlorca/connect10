@@ -151,7 +151,7 @@ func _ready():
 	# save_stats()
 	read_stats_file()
 	print(statistics)
-	# mission_list.init_missions()
+	mission_list.init_missions()
 	update_money(0) #! will read from saved data
 	update_score(0)
 

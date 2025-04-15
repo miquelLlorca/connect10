@@ -1,11 +1,11 @@
-extends Mission
+extends BaseMission
 class_name MissionPlayGames
 
 func set_objective():
 	objective = 10*level
 
-func init(init_level, main_reference):
-	super.init(init_level, main_reference)
+func init(init_level, mission_name, mission_description, main_reference):
+	super.init(init_level, mission_name, mission_description, main_reference)
 	stat = "gamesPlayed"
 	set_objective()
 

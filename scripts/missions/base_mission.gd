@@ -1,17 +1,20 @@
 # mission.gd
 extends Resource
-class_name Mission
+class_name BaseMission
 
 var name: String
+var description: String
 var level: int
 var stat: String # the stat to look for
 var objective: int # will be determined by level
 var main
 
-func init(init_level, main_reference):
+func init(init_level, mission_name, mission_description, main_reference):
 	level = init_level
 	main = main_reference
-
+	name = mission_name
+	description = mission_description
+	
 func get_progress_percentage():
 	return 100 * main.statistics[stat] / objective
 
