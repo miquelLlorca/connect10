@@ -1,12 +1,12 @@
 extends BaseMission
-class_name MissionClearRows
+class_name MissionHighScore
 
 func set_objective():
-	objective = 100*level
+	objective = 10000*level
 
 func init(init_level, mission_name, mission_description, main_reference):
 	super.init(init_level, mission_name, mission_description, main_reference)
-	stat = "rowsCleared"
+	stat = "highScore"
 	set_objective()
 
 func complete_mission():
@@ -15,6 +15,10 @@ func complete_mission():
 		reward()
 		return true
 	return false
-
+		
 func reward():
-	main.row_multiplier += 0.25
+	if(main.score_to_money<=100):
+		main.score_to_money = 1
+	else:
+		main.score_to_money -= 100
+

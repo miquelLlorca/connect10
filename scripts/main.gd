@@ -1,11 +1,12 @@
 extends Control
 
 var statistics
-var cell_multiplier
-var row_multiplier
-var table_multiplier
-var score_to_money
-
+var cell_multiplier = 1.0
+var row_multiplier = 1.0
+var table_multiplier = 1.0
+var score_to_money = 1000.0
+var mission_money_multiplier = 1.0
+var shop_discount = 1.0
 
 
 var MAX_EXPANDS = 5
@@ -71,7 +72,7 @@ func end_run():
 		game_ongoing = false
 		# updates data: money, stats...
 		var aux = money_available
-		update_money(score / 1000.0)
+		update_money(score / score_to_money)
 		if(money_available-aux > statistics['maxMoneyInARun']):
 			statistics['maxMoneyInARun'] = money_available-aux
 

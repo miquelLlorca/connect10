@@ -13,6 +13,8 @@ func complete_mission():
 	if(super.complete_mission()):
 		set_objective()
 		reward()
+		return true
+	return false
 		
 func reward():
 	if(main.score_to_money<=10):

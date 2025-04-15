@@ -1,12 +1,12 @@
 extends BaseMission
-class_name MissionClearRows
+class_name MissionBuyUpgrades
 
 func set_objective():
-	objective = 100*level
+	objective = 10*level
 
 func init(init_level, mission_name, mission_description, main_reference):
 	super.init(init_level, mission_name, mission_description, main_reference)
-	stat = "rowsCleared"
+	stat = "upgradesBought"
 	set_objective()
 
 func complete_mission():
@@ -15,6 +15,10 @@ func complete_mission():
 		reward()
 		return true
 	return false
-
+		
 func reward():
-	main.row_multiplier += 0.25
+	if(main.shop_discount<=0.1):
+		main.shop_discount = 1
+	else:
+		main.shop_discount -= 0.05
+

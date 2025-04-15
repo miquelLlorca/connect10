@@ -22,5 +22,9 @@ func complete_mission():
 	# this is implemented in parent class
 	if(get_progress_percentage()>=100):
 		level += 1
+		print('AAAAAAAA')
 		return true
 	return false
+
+func get_progress_string():
+	return str(main.statistics[stat]) + " / " + str(objective)

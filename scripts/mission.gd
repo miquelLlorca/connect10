@@ -10,13 +10,19 @@ var mission
 
 func init(mission_obj):
 	mission = mission_obj
-	print(mission.name)
-	print(title)
+
+func complete_mission():
+	if(mission.complete_mission()):
+		render()
+		print(mission.level)
+		print(mission.objective)
+
 
 func render():
 	title.text = mission.name
 	description.text = mission.description
-	progress.text = str(main.statistics[mission.stat]) + " / " + str(mission.objective)
+	progress.text = mission.get_progress_string()
+
 
 func init_complete():
 	# used when first loading game,
@@ -29,6 +35,7 @@ func init_complete():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
+	claim_button.connect("pressed", Callable(self, "complete_mission"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
