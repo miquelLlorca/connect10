@@ -122,90 +122,14 @@ func init_missions():
 		aux_mission_scene.call_deferred("init_complete")
 		aux_mission_scene.call_deferred("render")
 
+	self.call_deferred("adjust_height")
+	await get_tree().process_frame
+	list.queue_sort()
+	list.queue_redraw()
 
 
-
-
-
-
-
-
-	# Sum 10s
-
-	# Sum 10s
-	aux_mission_scene = load("res://scenes/mission.tscn").instantiate()
-	aux_mission = load("res://scripts/missions/mission_sum_10s.gd")
-	aux_mission = aux_mission.new()
-	aux_mission.init(1, 'GAME NAME :O', 
-		'Clear cells that sum 10 to increase their multiplier.', main)
-	aux_mission_scene.init(aux_mission)
-	list.add_child(aux_mission_scene)
-	aux_mission_scene.call_deferred("init_complete")
-	aux_mission_scene.call_deferred("render")
-
-	# Sum 10s
-	aux_mission_scene = load("res://scenes/mission.tscn").instantiate()
-	aux_mission = load("res://scripts/missions/mission_sum_10s.gd")
-	aux_mission = aux_mission.new()
-	aux_mission.init(1, 'GAME NAME :O', 
-		'Clear cells that sum 10 to increase their multiplier.', main)
-	aux_mission_scene.init(aux_mission)
-	list.add_child(aux_mission_scene)
-	aux_mission_scene.call_deferred("init_complete")
-	aux_mission_scene.call_deferred("render")
-
-	# Sum 10s
-	aux_mission_scene = load("res://scenes/mission.tscn").instantiate()
-	aux_mission = load("res://scripts/missions/mission_sum_10s.gd")
-	aux_mission = aux_mission.new()
-	aux_mission.init(1, 'GAME NAME :O', 
-		'Clear cells that sum 10 to increase their multiplier.', main)
-	aux_mission_scene.init(aux_mission)
-	list.add_child(aux_mission_scene)
-	aux_mission_scene.call_deferred("init_complete")
-	aux_mission_scene.call_deferred("render")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##########################################################################################################################
-##########################################################################################################################
-##########################################################################################################################
-
-func complete_missions():
-	pass
-func render_missions():
-	for i in range(list.get_child_count()):
-		list.get_child(i).render()
+func adjust_height():
+	list.custom_minimum_size.y = list.get_theme_constant("separation") * list.get_child_count()
 
 ##########################################################################################################################
 ##########################################################################################################################

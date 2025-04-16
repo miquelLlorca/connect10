@@ -7,7 +7,7 @@ var table_multiplier = 1.0
 var score_to_money = 1000.0
 var mission_money_multiplier = 1.0
 var shop_discount = 1.0
-
+var pair_mult = {'11':1,'22':1,'33':1,'44':1,'55':1,'66':1,'77':1,'88':1,'99':1}
 
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
@@ -42,6 +42,7 @@ func update_money(money):
 	else:
 		money_available += money*money_multiplier
 		statistics['totalAmountOfMoney'] += money*money_multiplier
+	money_available = round(money_available*100)/100
 	money_label.text = "Money:\n"+str(money_available)+"$"
 
 func expand_table():

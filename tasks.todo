@@ -13,6 +13,7 @@ Missions:
     ✔ Write Missions @done (4/15/2025, 6:05:21 PM)
     ✔ Add statistics @done (4/15/2025, 6:05:19 PM)
     ✔ Hide missions when playing @done (4/10/2025, 5:31:09 PM)
+    ☐ Complete missions at the start of game
     ☐ Order missions by progress %
     ☐ Change buttons colours according to state
 
@@ -26,7 +27,15 @@ Upgrade shop:
 Data management:
     ✔ Save and read stats @done (4/15/2025, 1:47:10 PM)
     ☐ Save and read money
-            
+
+Aesthetics:
+    ✔ Make everything bigger @done (4/16/2025, 2:34:46 PM)
+    ☐ Tweak colours
+    ☐ Add light/dark mode
+
+Bugs:
+    ☐ Expand should start the game and then hide shop and missions
+
 APK:
     ☐ Add scrolling ability
     ✔ Adjust component size to screen size @done (4/15/2025, 1:47:14 PM)

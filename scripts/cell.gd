@@ -3,17 +3,17 @@ extends Panel
 var parentPos
 var original_colour
 var cell_value = 0
-@onready var label = $Label  # This will access the 'NumberLabel' child node
+@onready var label = $Label
 
-var cell_width = 50  # Set your cell width
-var cell_height = 50  # Set your cell height
+var cell_width = self.size.x
+var cell_height = self.size.y
 	
 func set_value(value):
 	cell_value = value
-	label.text = str(cell_value)  # Update the label with the new number.
+	label.text = str(cell_value)
 
 func set_colour():
-	self.modulate = Color(0.1, 0.5, 0.9)  # RGB for red
+	self.modulate = Color(0.1, 0.5, 0.9)
 
 func clean_colour():
 	self.modulate = original_colour

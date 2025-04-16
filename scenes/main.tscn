@@ -7,13 +7,13 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_ar11i"]
 line_spacing = 30.0
-font_size = 50
+font_size = 70
 
 [sub_resource type="LabelSettings" id="LabelSettings_0hjvk"]
-font_size = 20
+font_size = 30
 
 [sub_resource type="LabelSettings" id="LabelSettings_jthx0"]
-font_size = 20
+font_size = 30
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -23,8 +23,9 @@ script = ExtResource("1_sm3gm")
 [node name="CenterContainer" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(720, 0)
 layout_mode = 0
+offset_top = 22.0
 offset_right = 720.0
-offset_bottom = 69.0
+offset_bottom = 118.0
 
 [node name="Title" type="Label" parent="CenterContainer"]
 layout_mode = 2
@@ -35,9 +36,9 @@ horizontal_alignment = 1
 [node name="GridContainer" type="GridContainer" parent="."]
 custom_minimum_size = Vector2(720, 0)
 layout_mode = 0
-offset_top = 120.0
+offset_top = 130.0
 offset_right = 720.0
-offset_bottom = 247.0
+offset_bottom = 292.0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 25
 columns = 2
@@ -69,9 +70,9 @@ custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
 
 [node name="Expand_Button" type="Button" parent="GridContainer/CenterContainer3"]
-custom_minimum_size = Vector2(150, 30)
+custom_minimum_size = Vector2(170, 30)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 30
 text = "Expand (5)"
 
 [node name="CenterContainer4" type="CenterContainer" parent="GridContainer"]
@@ -79,24 +80,25 @@ custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
 
 [node name="End_Run_Button" type="Button" parent="GridContainer/CenterContainer4"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 30
 text = "End run"
 
 [node name="Table" parent="." instance=ExtResource("1_lgopx")]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-offset_top = 285.0
+offset_top = 314.0
 offset_right = 720.0
-offset_bottom = 485.0
+offset_bottom = 514.0
 
 [node name="Main_V" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(720, 0)
 layout_mode = 0
-offset_top = 475.0
+offset_top = 542.0
 offset_right = 720.0
-offset_bottom = 1129.0
+offset_bottom = 1196.0
+theme_override_constants/separation = 30
 
 [node name="Shop" parent="Main_V" instance=ExtResource("3_uvth1")]
 custom_minimum_size = Vector2(0, 150)

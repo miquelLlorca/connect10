@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/mission.gd" id="1_vowwm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nn14b"]
-font_size = 25
+font_size = 30
 
 [node name="Mission" type="Control"]
 layout_mode = 3
@@ -17,7 +17,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Panel" type="Panel" parent="CenterContainer"]
-custom_minimum_size = Vector2(450, 150)
+custom_minimum_size = Vector2(600, 160)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
@@ -29,18 +29,23 @@ offset_bottom = 128.0
 
 [node name="Title" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Number destroyer"
 label_settings = SubResource("LabelSettings_nn14b")
 
 [node name="Description" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Remove 100 cells"
 
 [node name="Progress" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "34/100"
 
 [node name="Claim" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(550, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "CLAIM
 "
