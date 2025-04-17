@@ -1,13 +1,38 @@
 extends Control
 
-var statistics
+var statistics = {
+		"cellsCleared":0,
+		"rowsCleared":0,
+		"tablesCleared":0,
+		"gamesPlayed":0,
+		"sum10s":0,
+		"pairs":{
+			"11":0,
+			"22":0,
+			"33":0,
+			"44":0,
+			"55":0,
+			"66":0,
+			"77":0,
+			"88":0,
+			"99":0
+		},
+		"highScore":0,
+		"totalAmountOfMoney":0,
+		"maxMoneyInARun":0,
+		"upgradesBought":0
+	}
+var pair_mult = {'11':1,'22':1,'33':1,'44':1,'55':1,'66':1,'77':1,'88':1,'99':1}
+var shop_levels = {'score':1, 'money':1, 'expands':1}
+
+
+
 var cell_multiplier = 1.0
 var row_multiplier = 1.0
 var table_multiplier = 1.0
 var score_to_money = 1000.0
 var mission_money_multiplier = 1.0
 var shop_discount = 1.0
-var pair_mult = {'11':1,'22':1,'33':1,'44':1,'55':1,'66':1,'77':1,'88':1,'99':1}
 
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
@@ -17,7 +42,6 @@ var game_ongoing = false
 
 var score_multiplier = 1
 var money_multiplier = 1
-var shop_levels = {'score':1, 'money':1, 'expands':1}
 
 @onready var table = $Table
 @onready var shop = $Main_V/Shop
@@ -44,6 +68,7 @@ func update_money(money):
 		statistics['totalAmountOfMoney'] += money*money_multiplier
 	money_available = round(money_available*100)/100
 	money_label.text = "Money:\n"+str(money_available)+"$"
+	save_money()
 
 func expand_table():
 	if(expands_available>0):
@@ -87,40 +112,18 @@ func end_run():
 		
 		table.end_run()
 		save_stats()
+		save_shop_levels()
+		save_money()
 		show_shop_and_missions()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
 # Data Management
 
-func set_default_stats():
-	statistics = {
-		"cellsCleared":0,
-		"rowsCleared":0,
-		"tablesCleared":0,
-		"gamesPlayed":0,
-		"sum10s":0,
-		"pairs":{
-			"11":0,
-			"22":0,
-			"33":0,
-			"44":0,
-			"55":0,
-			"66":0,
-			"77":0,
-			"88":0,
-			"99":0
-		},
-		"highScore":0,
-		"totalAmountOfMoney":0,
-		"maxMoneyInARun":0,
-		"upgradesBought":0
-	}
 
 func save_stats():
 	var file = FileAccess.open("user://statistics.json", FileAccess.WRITE)
 	file.store_string(str(statistics))
-	print(str(statistics))
 	file.close()
 
 func read_stats_file():
@@ -131,8 +134,40 @@ func read_stats_file():
 		statistics = JSON.parse_string(data)
 	else:
 		print('Setting up empty stats file')
-		set_default_stats()
 		save_stats()
+
+
+func save_money():
+	var file = FileAccess.open("user://money.txt", FileAccess.WRITE)
+	file.store_string(str(money_available))
+	file.close()
+
+func read_money_file():
+	if FileAccess.file_exists("user://money.txt"):
+		var file = FileAccess.open("user://money.txt", FileAccess.READ)
+		var data = file.get_as_text()
+		file.close()
+		money_available = int(data)
+	else:
+		print('Setting up empty money file')
+		save_money()
+	money_label.text = "Money:\n"+str(money_available)+"$"
+
+
+func save_shop_levels():
+	var file = FileAccess.open("user://shop_levels.json", FileAccess.WRITE)
+	file.store_string(str(shop_levels))
+	file.close()
+
+func read_shop_levels_file():
+	if FileAccess.file_exists("user://shop_levels.json"):
+		var file = FileAccess.open("user://shop_levels.json", FileAccess.READ)
+		var data = file.get_as_text()
+		file.close()
+		shop_levels = JSON.parse_string(data)
+	else:
+		print('Setting up empty shop levels file')
+		save_shop_levels()
 
 
 
@@ -149,12 +184,20 @@ func _ready():
 	expand_button.connect("pressed", Callable(self, "expand_table"))
 	end_run_button.connect("pressed", Callable(self, "end_run"))
 	table.populate_table(3,10)
-	# set_default_stats()
-	# save_stats()
+
+	# REset data
+	# money_available = 10000
+	# save_money()
+	# save_shop_levels()
+	
+	# Read player data
 	read_stats_file()
+	read_money_file()
+	read_shop_levels_file()
+
 	print(statistics)
+	shop.init_shops()
 	mission_list.init_missions()
-	update_money(0) #! will read from saved data
 	update_score(0)
 
 

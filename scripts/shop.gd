@@ -15,24 +15,20 @@ func get_price_from_level(level):
 
 
 func get_multiplier_from_level(level):
-	return BASE_MULTIPLIER * (1 + level * 0.1)
-
-
+	return round((BASE_MULTIPLIER * (1 + (level-1) * 0.1))*100.0)/100.0
 
 
 func upgrade_score_mult():
 	var level = main.shop_levels['score']
 	var price = get_price_from_level(level)
-	print('SCORE')
-	print(main.money_available)
-	print(level, " ", price)
 	if(main.money_available >= price):
-		main.shop_levels['score'] += 1;
-		main.update_money(-price);
-		main.score_multiplier = get_multiplier_from_level(main.shop_levels['score']);
-		$HBoxContainer/Score/VBoxContainer/Descr.text = str(round(main.score_multiplier*100.0)/100.0)+"x"
-		$HBoxContainer/Score/VBoxContainer/Price.text = str(get_price_from_level(level+1))+"$"
-		# setCookieData('shopLevels', shopLevels);
+		level += 1
+		main.shop_levels['score'] = level
+		main.update_money(-price)
+		main.score_multiplier = get_multiplier_from_level(level)
+		$HBoxContainer/Score/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
+		$HBoxContainer/Score/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
+		main.save_shop_levels()
 	else:
 		print('Not enough money');
 		var tween = create_tween()
@@ -41,17 +37,15 @@ func upgrade_score_mult():
 
 func upgrade_money_mult():
 	var level = main.shop_levels['money']
-	var price = get_price_from_level(level);
-	print('MONEY')
-	print(main.money_available)
-	print(level, " ", price)
+	var price = get_price_from_level(level)
 	if(main.money_available >= price):
-		main.shop_levels['money'] += 1;
-		main.update_money(-price);
-		main.money_multiplier = get_multiplier_from_level(main.shop_levels['money']);
-		$HBoxContainer/Money/VBoxContainer/Descr.text = str(round(main.money_multiplier*100.0)/100.0)+"x"
-		$HBoxContainer/Money/VBoxContainer/Price.text = str(get_price_from_level(level+1))+"$"
-		# setCookieData('shopLevels', shopLevels);
+		level += 1
+		main.shop_levels['money'] = level
+		main.update_money(-price)
+		main.money_multiplier = get_multiplier_from_level(level)
+		$HBoxContainer/Money/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
+		$HBoxContainer/Money/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
+		main.save_shop_levels()
 	else:
 		print('Not enough money');
 		var tween = create_tween()
@@ -60,22 +54,41 @@ func upgrade_money_mult():
 
 func upgrade_max_expands():
 	var level = main.shop_levels['expands']
-	var price = get_price_from_level(level)*10;
-	print(main.money_available, price)
+	var price = get_price_from_level(level)*10
 	if(main.money_available >= price and level<MAX_EXPAND_LEVEL):
-		main.shop_levels['expands'] += 1;
-		main.update_money(-price);
+		main.shop_levels['expands'] += 1
+		main.update_money(-price)
 		main.MAX_EXPANDS += 1
-		$HBoxContainer/Expands/VBoxContainer/Descr.text = str(main.MAX_EXPANDS)
-		$HBoxContainer/Expands/VBoxContainer/Price.text = str(get_price_from_level(level+1)*10)+"$"
+		$HBoxContainer/Expands/VBoxContainer/Descr.text = str(main.MAX_EXPANDS+1)
+		$HBoxContainer/Expands/VBoxContainer/Price.text = str(get_price_from_level(level)*10)+"$"
 		main.reset_expands()
-		# setCookieData('shopLevels', shopLevels);
+		main.save_shop_levels()
 	else:
 		print('Not enough money');
 		var tween = create_tween()
 		tween.tween_property($HBoxContainer/Expands, "modulate", Color(1,0,0), 0.25)
 		tween.tween_property($HBoxContainer/Expands, "modulate", original_colour, 0.25)
 
+
+
+func init_shops():
+	var level
+	level = main.shop_levels['score'] 
+	main.score_multiplier = get_multiplier_from_level(level);
+	$HBoxContainer/Score/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
+	$HBoxContainer/Score/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
+	
+	level = main.shop_levels['money'] 
+	main.money_multiplier = get_multiplier_from_level(level);
+	$HBoxContainer/Money/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
+	$HBoxContainer/Money/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
+
+	level = main.shop_levels['expands'] 
+	for i in range(1,level):
+		main.MAX_EXPANDS += 1
+	$HBoxContainer/Expands/VBoxContainer/Descr.text = str(main.MAX_EXPANDS+1)
+	$HBoxContainer/Expands/VBoxContainer/Price.text = str(get_price_from_level(level)*10)+"$"
+		
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
