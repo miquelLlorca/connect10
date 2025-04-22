@@ -17,8 +17,5 @@ func complete_mission():
 	return false
 		
 func reward():
-	if(main.score_to_money<=10):
-		main.score_to_money = 1
-	else:
-		main.score_to_money -= 10
+	main.sum_10_mult += 0.25
 

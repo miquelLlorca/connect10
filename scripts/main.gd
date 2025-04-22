@@ -22,22 +22,23 @@ var statistics = {
 		"maxMoneyInARun":0,
 		"upgradesBought":0
 	}
-var pair_mult = {'11':1,'22':1,'33':1,'44':1,'55':1,'66':1,'77':1,'88':1,'99':1}
 var shop_levels = {'score':1, 'money':1, 'expands':1}
 
 
-
+# mission rewards
+var pair_mult = {'11':1,'22':1,'33':1,'44':1,'55':1,'66':1,'77':1,'88':1,'99':1}
 var cell_multiplier = 1.0
 var row_multiplier = 1.0
 var table_multiplier = 1.0
 var score_to_money = 1000.0
 var mission_money_multiplier = 1.0
 var shop_discount = 1.0
+var sum_10_mult = 1
 
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
 var score = 0
-var money_available = 100
+var money_available = 0
 var game_ongoing = false
 
 var score_multiplier = 1
@@ -98,7 +99,7 @@ func end_run():
 
 		# updates data: money, stats...
 		var aux = money_available
-		update_money(score / score_to_money)
+		update_money(mission_money_multiplier * score / score_to_money)
 		if(money_available-aux > statistics['maxMoneyInARun']):
 			statistics['maxMoneyInARun'] = money_available-aux
 

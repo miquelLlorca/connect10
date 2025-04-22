@@ -97,7 +97,7 @@ func clear_empty_rows():
 
 	if(empty0):
 		remove_row(pos0[0])
-		main.update_score(100)
+		main.update_score(100*main.row_multiplier)
 		main.statistics['rowsCleared'] += 1
 
 	if(empty0 && pos1[0]>pos0[0]):
@@ -108,12 +108,12 @@ func clear_empty_rows():
 		var empty1 = check_mid_line_empty([pos1[0],-1],1)
 		if(empty1):
 			remove_row(pos1[0])
-			main.update_score(100);
+			main.update_score(100*main.row_multiplier);
 			main.statistics['rowsCleared'] += 1
 
 
 	if(get_row_count()==0):
-		main.update_score(1000);
+		main.update_score(1000*main.table_multiplier);
 		main.statistics['tablesCleared'] += 1
 		main.reset_expands()
 		get_parent().get_parent().populate_table(3,10);
@@ -157,7 +157,19 @@ func execute_movement():
 				print("number in the middle")
 				return false
 
-		main.update_score(get_cell_value(pos0)+get_cell_value(pos1))
+
+		var base_score = get_cell_value(pos0)+get_cell_value(pos1)
+		var distance = max(abs(i),abs(j))
+		var full_score = base_score*main.cell_multiplier*distance
+		if(n0==n1):
+			full_score = full_score*main.pair_mult[str(n0)+str(n1)]
+			if(n0==5):
+				full_score = full_score*main.sum_10_mult
+		else:
+			full_score = full_score*main.sum_10_mult
+			
+		main.update_score(full_score)
+
 		return true;
 	else:
 		# Possible Endline move needs different treatment.
@@ -176,9 +188,17 @@ func execute_movement():
 			left =  check_mid_line_empty(pos0, 1)
 	
 		if(left and right):
-			main.update_score(
-				2*(get_cell_value(pos0)+get_cell_value(pos1))
-			)
+			var base_score = get_cell_value(pos0)+get_cell_value(pos1)
+			var full_score = base_score*main.cell_multiplier
+			if(n0==n1):
+				full_score = full_score*main.pair_mult[str(n0)+str(n1)]
+				if(n0==5):
+					full_score = full_score*main.sum_10_mult
+			else:
+				full_score = full_score*main.sum_10_mult
+				
+			main.update_score(full_score)
+
 			return true;
 		else:
 			print("endline not possible line with numbers")
