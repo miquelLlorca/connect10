@@ -77,7 +77,7 @@ func init_missions():
 	aux_mission_scene = load("res://scenes/mission.tscn").instantiate()
 	aux_mission = load("res://scripts/missions/mission_high_score.gd")
 	aux_mission = aux_mission.new()
-	aux_mission.init(1, 'Absolute gamer', 
+	aux_mission.init(1, 'Pro gamer', 
 		'Get better high scores to improve money earned each run.', main)
 	aux_mission_scene.init(aux_mission)
 	list.add_child(aux_mission_scene)
@@ -122,8 +122,11 @@ func init_missions():
 		aux_mission_scene.call_deferred("init_complete")
 		aux_mission_scene.call_deferred("render")
 
+	# needed to dynamically adjust container size so all missions are showed correctly
 	self.call_deferred("adjust_height")
 	await get_tree().process_frame
+	sort_missions()
+	complete_missions_at_init()
 	list.queue_sort()
 	list.queue_redraw()
 
@@ -131,6 +134,47 @@ func init_missions():
 func adjust_height():
 	list.custom_minimum_size.y = list.get_theme_constant("separation") * list.get_child_count()
 
+func sort_missions():
+	var mission_nodes = list.get_children()
+	mission_nodes.sort_custom(func(a, b):
+		return a.mission.get_progress_percentage() > b.mission.get_progress_percentage()
+	)
+	for node in mission_nodes:
+		list.remove_child(node)
+		list.add_child(node)
+
+func check_claimable_missions():
+	for node in list.get_children():
+		var tween = create_tween()
+		if node.mission.get_progress_percentage() < 100:
+			node.claim_button.disabled = true
+			tween.tween_property(
+				node.get_node('CenterContainer/Panel'), 
+				"modulate", Color(1,1,1), 0.25
+			)
+		else:
+			node.claim_button.disabled = false
+			tween.tween_property(
+				node.get_node('CenterContainer/Panel'), 
+				"modulate", Color(0.5, 1, 0.5), 0.25
+			)
+
+func render_missions():
+	for node in list.get_children():
+		node.render()
+
+func update_layout():
+	render_missions()
+	sort_missions()
+	check_claimable_missions()
+
+
+
+func complete_missions_at_init():
+	for node in list.get_children():
+		while(node.mission.complete_mission()):
+			continue
+		node.render()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
@@ -139,9 +183,6 @@ func adjust_height():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
-	# if OS.has_feature("mobile"):
-	# 	$ScrollContainer.scroll_vertical_visibility = $ScrollContainer.SCROLLBAR_NEVER
-
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

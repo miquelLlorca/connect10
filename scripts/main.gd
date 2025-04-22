@@ -72,7 +72,6 @@ func update_money(money):
 
 func expand_table():
 	if(expands_available>0):
-		print(expands_available)
 		expands_available -= 1
 		expand_button.text = "Expand ("+str(expands_available)+")"
 		table.expand_table()
@@ -96,6 +95,7 @@ func end_run():
 	if(game_ongoing):
 		statistics['gamesPlayed'] += 1
 		game_ongoing = false
+
 		# updates data: money, stats...
 		var aux = money_available
 		update_money(score / score_to_money)
@@ -104,22 +104,24 @@ func end_run():
 
 		if(score>statistics['highScore']):
 			statistics['highScore'] = score
-		# checks missions
 
 		# resets
 		reset_expands()
 		update_score(-score)
-		
 		table.end_run()
+
+		# save data
 		save_stats()
 		save_shop_levels()
 		save_money()
+
+		# update missions and show them
+		mission_list.update_layout()
 		show_shop_and_missions()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
 # Data Management
-
 
 func save_stats():
 	var file = FileAccess.open("user://statistics.json", FileAccess.WRITE)
@@ -169,8 +171,6 @@ func read_shop_levels_file():
 		print('Setting up empty shop levels file')
 		save_shop_levels()
 
-
-
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
@@ -180,12 +180,11 @@ func read_shop_levels_file():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
-	expand_button.text = "Expand ("+str(expands_available)+")"
 	expand_button.connect("pressed", Callable(self, "expand_table"))
 	end_run_button.connect("pressed", Callable(self, "end_run"))
 	table.populate_table(3,10)
 
-	# REset data
+	# Reset data
 	# money_available = 10000
 	# save_money()
 	# save_shop_levels()
@@ -194,9 +193,12 @@ func _ready():
 	read_stats_file()
 	read_money_file()
 	read_shop_levels_file()
-
+	
 	print(statistics)
+
 	shop.init_shops()
+	reset_expands()
+
 	mission_list.init_missions()
 	update_score(0)
 

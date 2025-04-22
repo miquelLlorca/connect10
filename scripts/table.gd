@@ -20,7 +20,9 @@ func update_score(points):
 
 
 func expand_table():
-	print("expand")
+	if(not main.game_ongoing):
+		main.hide_shop_and_missions()
+		main.game_ongoing = true
 	var values = []
 	for i in range(grid.get_child_count()):
 		var row = i/10

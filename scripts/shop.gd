@@ -64,7 +64,7 @@ func upgrade_max_expands():
 		main.reset_expands()
 		main.save_shop_levels()
 	else:
-		print('Not enough money');
+		print('Not enough money')
 		var tween = create_tween()
 		tween.tween_property($HBoxContainer/Expands, "modulate", Color(1,0,0), 0.25)
 		tween.tween_property($HBoxContainer/Expands, "modulate", original_colour, 0.25)

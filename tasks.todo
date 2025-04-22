@@ -13,9 +13,9 @@ Missions:
     ✔ Write Missions @done (4/15/2025, 6:05:21 PM)
     ✔ Add statistics @done (4/15/2025, 6:05:19 PM)
     ✔ Hide missions when playing @done (4/10/2025, 5:31:09 PM)
-    ☐ Complete missions at the start of game
-    ☐ Order missions by progress %
-    ☐ Change buttons colours according to state
+    ✔ Complete missions at the start of game @done (4/22/2025, 1:49:46 PM)
+    ✔ Order missions by progress % @done (4/22/2025, 12:42:05 PM)
+    ✔ Change container colours according to state @done (4/22/2025, 12:42:27 PM)
 
 
 Upgrade shop:
@@ -35,12 +35,12 @@ Aesthetics:
     ☐ Add light/dark mode
 
 Bugs:
-    ☐ Expand should start the game and then hide shop and missions
-    ☐ Scroll not working on apk
+    ✔ Expand should start the game and then hide shop and missions @done (4/22/2025, 2:04:23 PM)
+    ✔ Scroll not working on apk @done (4/22/2025, 12:41:53 PM)
     ☐ Some data seems to not be saved in android?
 
 APK:
-    ☐ Add scrolling ability
+    ☐ Add table scrolling ability
     ✔ Adjust component size to screen size @done (4/15/2025, 1:47:14 PM)
     ☐ Fix black bars
     ☐ Add ads
