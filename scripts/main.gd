@@ -20,7 +20,8 @@ var statistics = {
 		"highScore":0,
 		"totalAmountOfMoney":0,
 		"maxMoneyInARun":0,
-		"upgradesBought":0
+		"upgradesBought":0,
+		"maxDistance":0
 	}
 var shop_levels = {'score':1, 'money':1, 'expands':1}
 
@@ -34,6 +35,7 @@ var score_to_money = 1000.0
 var mission_money_multiplier = 1.0
 var shop_discount = 1.0
 var sum_10_mult = 1
+var distance_multiplier = 1
 
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
@@ -43,6 +45,8 @@ var game_ongoing = false
 
 var score_multiplier = 1
 var money_multiplier = 1
+
+# @onready var admob = Engine.get_singleton("AdMob")
 
 @onready var table = $Table
 @onready var shop = $Main_V/Shop
@@ -194,7 +198,7 @@ func _ready():
 	read_stats_file()
 	read_money_file()
 	read_shop_levels_file()
-	
+	# statistics['maxDistance'] = 0
 	print(statistics)
 
 	shop.init_shops()
@@ -202,6 +206,20 @@ func _ready():
 
 	mission_list.init_missions()
 	update_score(0)
+	# admob.init('ca-app-pub-9221900563273591~4549362904')
+	# admob.load_banner('ca-app-pub-3940256099942544/9214589741', true)
+	# admob.set_banner_position(admob.BANNER_BOTTOM)
+	# await get_tree().create_timer(1.0).timeout
+	# admob.show_banner()
+	'''
+	APP ID:
+		ca-app-pub-9221900563273591~4549362904
+	BANNER inf ID:
+		ca-app-pub-9221900563273591/8219054725
+		
+	IDS TESTING
+	Banner: ca-app-pub-3940256099942544/9214589741
+	'''
 
 
 

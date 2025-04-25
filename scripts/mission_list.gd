@@ -106,7 +106,16 @@ func init_missions():
 	aux_mission_scene.call_deferred("init_complete")
 	aux_mission_scene.call_deferred("render")
 
-
+	# Max distance
+	aux_mission_scene = load("res://scenes/mission.tscn").instantiate()
+	aux_mission = load("res://scripts/missions/mission_max_distance.gd")
+	aux_mission = aux_mission.new()
+	aux_mission.init(1, 'Hawkeye!', 
+		'Clear cells further apart to upgrade the distance multiplier.', main)
+	aux_mission_scene.init(aux_mission)
+	list.add_child(aux_mission_scene)
+	aux_mission_scene.call_deferred("init_complete")
+	aux_mission_scene.call_deferred("render")
 
 	# Clear pairs
 	for i in range(1,10):

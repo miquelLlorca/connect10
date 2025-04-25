@@ -113,7 +113,7 @@ func clear_empty_rows():
 
 
 	if(get_row_count()==0):
-		main.update_score(1000*main.table_multiplier);
+		main.update_score(1000*main.table_multiplier*main.expands_available);
 		main.statistics['tablesCleared'] += 1
 		main.reset_expands()
 		get_parent().get_parent().populate_table(3,10);
@@ -128,7 +128,7 @@ func execute_movement():
 	# Are the numbers compatible? Numbers must be equal or sum 10
 	var n0 = get_cell_value(pos0)
 	var n1 = get_cell_value(pos1)
-	if(not ((n0==n1) or (n0+n1==10))):
+	if(not ((n0==n1) or (n0+n1==10)) or ((n0==0) or (n1==0))):
 		print('not compatible numbers')
 		return false;
 	
@@ -159,8 +159,11 @@ func execute_movement():
 
 
 		var base_score = get_cell_value(pos0)+get_cell_value(pos1)
-		var distance = max(abs(i),abs(j))
+		var distance = max(abs(i),abs(j))*main.distance_multiplier
 		var full_score = base_score*main.cell_multiplier*distance
+		if(main.statistics['maxDistance']<distance):
+			main.statistics['maxDistance'] = distance
+
 		if(n0==n1):
 			full_score = full_score*main.pair_mult[str(n0)+str(n1)]
 			if(n0==5):
