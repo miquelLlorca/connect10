@@ -62,6 +62,7 @@ func update_score(points):
 		score += points
 	else:
 		score += points*score_multiplier
+	score = round(score*100)/100
 	score_label.text = "Score:\n"+str(score)
 	
 func update_money(money):
@@ -71,6 +72,7 @@ func update_money(money):
 	else:
 		money_available += money*money_multiplier
 		statistics['totalAmountOfMoney'] += money*money_multiplier
+		statistics['totalAmountOfMoney'] = round(statistics['totalAmountOfMoney']*100)/100
 	money_available = round(money_available*100)/100
 	money_label.text = "Money:\n"+str(money_available)+"$"
 	save_money()

@@ -159,8 +159,8 @@ func execute_movement():
 
 
 		var base_score = get_cell_value(pos0)+get_cell_value(pos1)
-		var distance = max(abs(i),abs(j))*main.distance_multiplier
-		var full_score = base_score*main.cell_multiplier*distance
+		var distance = max(abs(i),abs(j))
+		var full_score = base_score*main.cell_multiplier*distance*main.distance_multiplier
 		if(main.statistics['maxDistance']<distance):
 			main.statistics['maxDistance'] = distance
 
