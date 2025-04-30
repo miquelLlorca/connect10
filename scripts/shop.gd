@@ -15,7 +15,7 @@ func get_price_from_level(level):
 
 
 func get_multiplier_from_level(level):
-	return round((main.shop_discount * BASE_MULTIPLIER * (1 + (level-1) * 0.1))*100.0)/100.0
+	return main.round_to((main.shop_discount * BASE_MULTIPLIER * (1 + (level-1) * 0.1)), 2)
 
 
 func upgrade_score_mult():

@@ -22,6 +22,40 @@ func get_cell_value(pos):
 	return int(value)
 
 
+func spawn_circle(pos: Vector2):
+	var circle = TextureRect.new()
+	circle.texture = preload("res://assets/circle.png")  # Adjust the path as needed
+	circle.expand = true
+	circle.stretch_mode = TextureRect.STRETCH_SCALE
+	circle.z_index = 100
+	circle.size = Vector2(20, 20)
+	circle.position = pos #- circle.size / 2  # Center the circle
+	circle.modulate = Color(1, 0.5, 0, 1)  # Orange tint
+	# print(pos)
+	# print(pos- circle.size / 2)
+	get_parent().add_child(circle)
+	var tween = create_tween()
+	tween.set_parallel()
+	tween.tween_property(circle, "scale", Vector2(1.5, 1.1), 3)
+	# tween.tween_property(circle, "modulate:a", 0.0, 0.3)
+	tween.tween_callback(Callable(circle, "queue_free"))
+
+
+
+
+func clear_cell_animation():
+	var start = Vector2(pos0[1]*64+32, pos0[0]*64+32)
+	var end = Vector2(pos1[1]*64+32, pos1[0]*64+32)
+	var line = Line2D.new()
+	line.width = 4
+	line.default_color = Color(1, 0.5, 0, 1)  # orange
+	line.points = [start, end]
+	add_child(line)
+	spawn_circle(start)
+	spawn_circle(end)
+	var tween = create_tween()
+	tween.tween_property(line, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(Callable(line, "queue_free"))
 
 ##########################################################################################################################
 ##########################################################################################################################
@@ -40,6 +74,7 @@ func _on_cell_click(row, column):
 		# print(n0,n1)
 		
 		if(execute_movement()):
+			clear_cell_animation()
 			get_cell(pos0).set_value("")
 			get_cell(pos1).set_value("")
 			if(not main.game_ongoing):
@@ -136,7 +171,7 @@ func execute_movement():
 	var dx = pos0[0]-pos1[0];
 	var dy = pos0[1]-pos1[1];
 	
-	# if   Horizontal	  or	  vertical	    or	    diagonal
+	# if   Horizontal	  or	  vertical		or		diagonal
 	if((pos0[0]==pos1[0]) || (pos0[1]==pos1[1]) || (abs(dx)==abs(dy))):
 		# iterates direct path between selections
 		var x = pos0[0]

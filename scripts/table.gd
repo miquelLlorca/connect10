@@ -7,11 +7,26 @@ var main
 
 # Method to populate the table with rows and columns of cells
 func populate_table(rows, cols):
+	var first_cell_pos
+
 	for row in range(rows):
 		for col in range(cols):
 			var cell = preload("res://scenes/cell.tscn").instantiate()
+
 			grid.add_child(cell)
-			cell.set_value(round(randf_range(1, 9)))  
+			# await get_tree().process_frame
+			cell.set_value(round(randf_range(1, 9)))
+
+			var tween = create_tween()
+			tween.set_parallel()
+
+			var delay = (row * cols + col) * 0.01
+			cell.modulate.a = 0.0
+			cell.position = Vector2(0,0)
+
+			tween.tween_property(cell, "position", Vector2(0,0), 0.0001).set_delay(delay)
+			tween.tween_property(cell, "position", Vector2(col*64, row*64), 0.2).set_delay(delay)
+			tween.tween_property(cell, "modulate:a", 1.0, 0.4).set_delay(delay)
 
 
 func update_score(points):
@@ -38,6 +53,20 @@ func expand_table():
 		var cell = preload("res://scenes/cell.tscn").instantiate()
 		grid.add_child(cell)
 		cell.set_value(values[i]) 
+		var tween = create_tween()
+		tween.set_parallel()
+		var row = (grid.get_child_count()-1)/10
+		var delay = i * 0.04
+		cell.modulate.a = 0.0
+		cell.position = Vector2(0,0)
+
+		# tween.tween_property(cell, "position", Vector2(0,0), 0.001).set_delay(delay)
+		# tween.tween_property(cell, "position", Vector2(col*64, row*64), 0.2).set_delay(delay)
+		tween.tween_property(cell, "position:y", 64*row-25, 0.0001).set_delay(delay)
+		tween.tween_property(cell, "position:y", 64*row, 0.1).set_delay(delay)
+		tween.tween_property(cell, "modulate:a", 1.0, 0.2).set_delay(delay)
+
+
 
 func end_run():
 	print("end run")

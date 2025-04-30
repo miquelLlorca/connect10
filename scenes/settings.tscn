@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh1w7usnxbyy"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_gyqow"]
+
+[node name="Settings" type="Panel"]
+custom_minimum_size = Vector2(600, 800)
+script = ExtResource("1_gyqow")
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 497.0
+offset_top = 29.0
+offset_right = 560.0
+offset_bottom = 88.0
+text = "X"
+
+[node name="ResetButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 118.0
+offset_right = 345.0
+offset_bottom = 189.0
+text = "Reset"

@@ -55,14 +55,18 @@ var money_multiplier = 1
 @onready var money_label = $GridContainer/CenterContainer2/Money_Label
 @onready var expand_button = $GridContainer/CenterContainer3/Expand_Button
 @onready var end_run_button = $GridContainer/CenterContainer4/End_Run_Button
+@onready var settings_button = $Settings
+var settings_window: Control
 
+func round_to(x, n):
+	return round(x*10.0**n)/10.0**n
 
 func update_score(points):
 	if(points<0): # when resetting score mult does not apply
 		score += points
 	else:
 		score += points*score_multiplier
-	score = round(score*100)/100
+	score = round_to(score, 2)
 	score_label.text = "Score:\n"+str(score)
 	
 func update_money(money):
@@ -72,10 +76,16 @@ func update_money(money):
 	else:
 		money_available += money*money_multiplier
 		statistics['totalAmountOfMoney'] += money*money_multiplier
-		statistics['totalAmountOfMoney'] = round(statistics['totalAmountOfMoney']*100)/100
-	money_available = round(money_available*100)/100
+		statistics['totalAmountOfMoney'] = round_to(statistics['totalAmountOfMoney'], 2)
+	money_available = round_to(money_available, 2)
 	money_label.text = "Money:\n"+str(money_available)+"$"
 	save_money()
+
+func show_settings():
+	var screen_size = get_viewport_rect().size
+	var window_size = settings_window.size
+	settings_window.position = (screen_size - window_size) / 2
+	settings_window.show()
 
 func expand_table():
 	if(expands_available>0):
@@ -178,6 +188,40 @@ func read_shop_levels_file():
 		print('Setting up empty shop levels file')
 		save_shop_levels()
 
+
+
+func reset_data():
+	money_available = 0
+	statistics = {
+		"cellsCleared":0,
+		"rowsCleared":0,
+		"tablesCleared":0,
+		"gamesPlayed":0,
+		"sum10s":0,
+		"pairs":{
+			"11":0,
+			"22":0,
+			"33":0,
+			"44":0,
+			"55":0,
+			"66":0,
+			"77":0,
+			"88":0,
+			"99":0
+		},
+		"highScore":0,
+		"totalAmountOfMoney":0,
+		"maxMoneyInARun":0,
+		"upgradesBought":0,
+		"maxDistance":0
+	}
+	shop_levels = {'score':1, 'money':1, 'expands':1}
+
+
+	save_money()
+	save_shop_levels()
+	save_stats()
+
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
@@ -187,25 +231,24 @@ func read_shop_levels_file():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
+	settings_button.connect("pressed", Callable(self, "show_settings"))
 	expand_button.connect("pressed", Callable(self, "expand_table"))
 	end_run_button.connect("pressed", Callable(self, "end_run"))
 	table.populate_table(3,10)
 
-	# Reset data
-	# money_available = 10000
-	# save_money()
-	# save_shop_levels()
+	settings_window = preload("res://scenes/settings.tscn").instantiate()
+	add_child(settings_window)
+	settings_window.hide()
+	# reset_data()
 	
 	# Read player data
 	read_stats_file()
 	read_money_file()
 	read_shop_levels_file()
-	# statistics['maxDistance'] = 0
 	print(statistics)
 
 	shop.init_shops()
 	reset_expands()
-
 	mission_list.init_missions()
 	update_score(0)
 	# admob.init('ca-app-pub-9221900563273591~4549362904')
@@ -213,15 +256,15 @@ func _ready():
 	# admob.set_banner_position(admob.BANNER_BOTTOM)
 	# await get_tree().create_timer(1.0).timeout
 	# admob.show_banner()
-	'''
-	APP ID:
-		ca-app-pub-9221900563273591~4549362904
-	BANNER inf ID:
-		ca-app-pub-9221900563273591/8219054725
+	# '''
+	# APP ID:
+	# 	ca-app-pub-9221900563273591~4549362904
+	# BANNER inf ID:
+	# 	ca-app-pub-9221900563273591/8219054725
 		
-	IDS TESTING
-	Banner: ca-app-pub-3940256099942544/9214589741
-	'''
+	# IDS TESTING
+	# Banner: ca-app-pub-3940256099942544/9214589741
+	# '''
 
 
 

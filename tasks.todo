@@ -29,10 +29,24 @@ Data management:
     ✔ Save and read money @done (4/17/2025, 3:10:36 PM)
     ✔ Save and read shop levels @done (4/17/2025, 3:10:35 PM)
 
+Settings:
+    ✔ Add setting button and panel @done (4/30/2025, 7:00:49 PM)
+    ✔ Add reset button in Settings @done (4/30/2025, 7:16:06 PM)
+    ☐ Add silence button (when sound is added)
+
 Aesthetics:
     ✔ Make everything bigger @done (4/16/2025, 2:34:46 PM)
     ☐ Tweak colours
     ☐ Add light/dark mode
+    ☐ Add theme personalization shop
+    ☐ Add icons to each mission
+    Animations:
+        ✔ Table population @done (4/30/2025, 5:43:39 PM)
+        ✔ Expanding @done (4/30/2025, 5:43:40 PM)
+        ☐ Clearing cells
+        ☐ Clearing rows
+        ☐ Clearing tables
+
 
 Bugs:
     ✔ Expand should start the game and then hide shop and missions @done (4/22/2025, 2:04:23 PM)
