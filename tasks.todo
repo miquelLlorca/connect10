@@ -28,6 +28,7 @@ Data management:
     ✔ Save and read stats @done (4/15/2025, 1:47:10 PM)
     ✔ Save and read money @done (4/17/2025, 3:10:36 PM)
     ✔ Save and read shop levels @done (4/17/2025, 3:10:35 PM)
+    ☐ Save mission levels and init them directly
 
 Settings:
     ✔ Add setting button and panel @done (4/30/2025, 7:00:49 PM)
@@ -43,7 +44,7 @@ Aesthetics:
     Animations:
         ✔ Table population @done (4/30/2025, 5:43:39 PM)
         ✔ Expanding @done (4/30/2025, 5:43:40 PM)
-        ☐ Clearing cells
+        ✔ Clearing cells @done (5/2/2025, 12:30:09 PM)
         ☐ Clearing rows
         ☐ Clearing tables
 
@@ -62,3 +63,4 @@ APK:
 Other features to think about:
     ☐ Classic Prestige mechanic
     ☐ Research tree (upgrades numbers?)
+    ☐ Power ups mechanic similar to balatro's rounds

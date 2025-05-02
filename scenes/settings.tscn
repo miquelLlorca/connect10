@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bh1w7usnxbyy"]
+[gd_scene load_steps=3 format=3 uid="uid://bh1w7usnxbyy"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_gyqow"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bvwek"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 0.968627)
+
 [node name="Settings" type="Panel"]
 custom_minimum_size = Vector2(600, 800)
+theme_override_styles/panel = SubResource("StyleBoxFlat_bvwek")
 script = ExtResource("1_gyqow")
 
 [node name="CloseButton" type="Button" parent="."]
@@ -14,10 +18,18 @@ offset_right = 560.0
 offset_bottom = 88.0
 text = "X"
 
-[node name="ResetButton" type="Button" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 237.0
-offset_top = 118.0
-offset_right = 345.0
-offset_bottom = 189.0
-text = "Reset"
+offset_left = 153.0
+offset_top = 114.0
+offset_right = 453.0
+offset_bottom = 154.0
+
+[node name="ResetButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Reset game data"
+
+[node name="StatsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Statistics"

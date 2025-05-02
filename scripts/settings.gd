@@ -1,7 +1,7 @@
 extends Panel
 
 @onready var close_button = $CloseButton
-@onready var reset_button = $ResetButton
+@onready var reset_button = $VBoxContainer/ResetButton
 var main
 
 func hide_window():

@@ -7,6 +7,7 @@ var main
 var initColumns = 10
 var initRows = 3
 
+const CLEAR_CELLS_ANIMATION_DURATION = 0.3
 
 func get_cell(pos):
 	var i = pos[0]*10 + pos[1]
@@ -21,41 +22,72 @@ func get_cell_value(pos):
 			return 0
 	return int(value)
 
-
 func spawn_circle(pos: Vector2):
 	var circle = TextureRect.new()
+	circle.set_anchors_preset(Control.PRESET_CENTER)
 	circle.texture = preload("res://assets/circle.png")  # Adjust the path as needed
 	circle.expand = true
 	circle.stretch_mode = TextureRect.STRETCH_SCALE
-	circle.z_index = 100
+	circle.pivot_offset = circle.size / 2
+	# circle.z_index = 100
 	circle.size = Vector2(20, 20)
-	circle.position = pos #- circle.size / 2  # Center the circle
+	circle.position = pos  - (circle.size / 2)  # Center the circle
 	circle.modulate = Color(1, 0.5, 0, 1)  # Orange tint
-	# print(pos)
-	# print(pos- circle.size / 2)
-	get_parent().add_child(circle)
+
+	main.add_child(circle)
 	var tween = create_tween()
 	tween.set_parallel()
-	tween.tween_property(circle, "scale", Vector2(1.5, 1.1), 3)
-	# tween.tween_property(circle, "modulate:a", 0.0, 0.3)
-	tween.tween_callback(Callable(circle, "queue_free"))
+	# tween.tween_property(circle, "scale", Vector2(10.5, 10.5), 3)
+	# tween.tween_property(circle, "scale", Vector2(0.1, 0.1), 0.5)
+
+
+	var scale_target = Vector2(0.1, 0.1)
+	var duration = CLEAR_CELLS_ANIMATION_DURATION
+	var initial_size = circle.size
+	var delta_size = initial_size * (scale_target - Vector2.ONE)
+
+	tween.tween_property(circle, "scale", scale_target, duration)
+	tween.tween_property(circle, "position", circle.position - (delta_size / 2), duration)
+	tween.tween_property(circle, "modulate:a", 0.0, duration)
+	tween.tween_callback(Callable(circle, "queue_free")).set_delay(1)
 
 
 
-
-func clear_cell_animation():
-	var start = Vector2(pos0[1]*64+32, pos0[0]*64+32)
-	var end = Vector2(pos1[1]*64+32, pos1[0]*64+32)
+func clear_cell_animation(p0, p1, draw_ends):
+	''' 
+	Draw ends {-1:none, 0:p0, 1:p1, 2:both}
+	'''
+	var x = self.get_global_rect().position.x
+	var y = self.get_global_rect().position.y
+	var start = Vector2(x+p0[1]*64+32, y+p0[0]*64+32)
+	var end = Vector2(x+p1[1]*64+32, y+p1[0]*64+32)
 	var line = Line2D.new()
 	line.width = 4
 	line.default_color = Color(1, 0.5, 0, 1)  # orange
 	line.points = [start, end]
-	add_child(line)
-	spawn_circle(start)
-	spawn_circle(end)
+	main.add_child(line)
+
+	if(draw_ends==0):
+		spawn_circle(start)
+	elif(draw_ends==1):
+		spawn_circle(end)
+	elif(draw_ends==2):
+		spawn_circle(start)
+		spawn_circle(end)
+
 	var tween = create_tween()
-	tween.tween_property(line, "modulate:a", 0.0, 0.5)
-	tween.tween_callback(Callable(line, "queue_free"))
+	tween.tween_property(line, "modulate:a", 0.0, CLEAR_CELLS_ANIMATION_DURATION)
+	tween.tween_callback(Callable(line, "queue_free")).set_delay(1)
+
+
+func clear_cell_animation_endline():
+	print('endilen anim')
+	if(pos0[0]<pos1[0]):
+		clear_cell_animation(pos0, Vector2(pos0[0],9.4), 0)
+		clear_cell_animation(Vector2(pos1[0],-0.5), pos1, 1)
+	else:
+		clear_cell_animation(pos1, Vector2(pos1[0],9.4), 0)
+		clear_cell_animation(Vector2(pos0[0],-0.5), pos0, 1)
 
 ##########################################################################################################################
 ##########################################################################################################################
@@ -74,7 +106,6 @@ func _on_cell_click(row, column):
 		# print(n0,n1)
 		
 		if(execute_movement()):
-			clear_cell_animation()
 			get_cell(pos0).set_value("")
 			get_cell(pos1).set_value("")
 			if(not main.game_ongoing):
@@ -83,7 +114,6 @@ func _on_cell_click(row, column):
 			main.statistics['cellsCleared'] += 2
 			if(n0==n1):
 				main.statistics['pairs'][str(n0)+str(n0)] += 1
-				print(main.statistics['pairs'])
 			else:
 				main.statistics['sum10s'] += 1
 			print('CORRECT')
@@ -148,7 +178,7 @@ func clear_empty_rows():
 
 
 	if(get_row_count()==0):
-		main.update_score(1000*main.table_multiplier*main.expands_available);
+		main.update_score(1000*main.table_multiplier*main.expands_available+1);
 		main.statistics['tablesCleared'] += 1
 		main.reset_expands()
 		get_parent().get_parent().populate_table(3,10);
@@ -164,7 +194,6 @@ func execute_movement():
 	var n0 = get_cell_value(pos0)
 	var n1 = get_cell_value(pos1)
 	if(not ((n0==n1) or (n0+n1==10)) or ((n0==0) or (n1==0))):
-		print('not compatible numbers')
 		return false;
 	
 	# Is the move horizontal, vertical or diagonal?
@@ -189,7 +218,6 @@ func execute_movement():
 		
 			if(get_cell_value([x+i, y+j])!=0):
 				# a number in the middle makes move not valid
-				print("number in the middle")
 				return false
 
 
@@ -207,13 +235,12 @@ func execute_movement():
 			full_score = full_score*main.sum_10_mult
 			
 		main.update_score(full_score)
-
+		clear_cell_animation(pos0, pos1, 2)
 		return true;
 	else:
 		# Possible Endline move needs different treatment.
 		if(abs(dx)>1):
 			# impossible because this move only works for the next row
-			print("endline not possible too many rows")
 			return false
 		
 		var right
@@ -236,10 +263,9 @@ func execute_movement():
 				full_score = full_score*main.sum_10_mult
 				
 			main.update_score(full_score)
-
+			clear_cell_animation_endline()
 			return true;
 		else:
-			print("endline not possible line with numbers")
 			return false;
 		
 
