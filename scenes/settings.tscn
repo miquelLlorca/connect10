@@ -33,3 +33,6 @@ text = "Reset game data"
 [node name="StatsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Statistics"
+
+[node name="ResetConfirmDialog" type="ConfirmationDialog" parent="."]
+dialog_text = "Are you sure you want to reset all data?"

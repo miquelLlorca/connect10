@@ -142,11 +142,11 @@ func reset_data():
 	money_available = 0
 	statistics = default_statistics.duplicate(true)
 	shop_levels = default_shop_levels.duplicate(true)
-
+	game_state = null
+	clear_game_state()
 	save_money()
 	save_shop_levels()
 	save_stats()
-	clear_game_state()
 	# get_tree().change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
 	# get_tree().reload_current_scene()
 

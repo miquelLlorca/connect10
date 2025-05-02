@@ -28,10 +28,6 @@ func populate_table(rows, cols):
 			tween.tween_property(cell, "position", Vector2(col*64, row*64), 0.2).set_delay(delay)
 			tween.tween_property(cell, "modulate:a", 1.0, 0.4).set_delay(delay)
 
-
-func update_score(points):
-	main.update_score(points)
-
 func get_table_values(keep_zeros):
 	'''
 	Keep zeros indicates if the empty spaces should be added to the list as 0s
@@ -44,7 +40,6 @@ func get_table_values(keep_zeros):
 		if(cell_value!=0 or keep_zeros):
 			values.append(cell_value)
 	return values
-
 
 func populate_table_with_list(values, keep_zeros):
 	for i in range(len(values)):
@@ -64,7 +59,6 @@ func populate_table_with_list(values, keep_zeros):
 			tween.tween_property(cell, "position:y", 64*row, 0.1).set_delay(delay)
 			tween.tween_property(cell, "modulate:a", 1.0, 0.2).set_delay(delay)
 
-
 func expand_table():
 	if(not main.game_ongoing):
 		main.hide_shop_and_missions()
@@ -74,8 +68,6 @@ func expand_table():
 	var values = get_table_values(keep_zeros)
 	populate_table_with_list(values, keep_zeros)
 	Data.save_game_state()
-
-
 
 func end_run():
 	print("end run")

@@ -120,19 +120,7 @@ func end_run():
 ##########################################################################################################################
 ##########################################################################################################################
 
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-
-	settings_button.connect("pressed", Callable(self, "show_settings"))
-	expand_button.connect("pressed", Callable(self, "expand_table"))
-	end_run_button.connect("pressed", Callable(self, "end_run"))
-	
-	settings_window = preload("res://scenes/settings.tscn").instantiate()
-	add_child(settings_window)
-	settings_window.hide()
-	
+func init_main():
 	Data.init_data()
 	print(Data.statistics)
 	
@@ -151,6 +139,18 @@ func _ready():
 	else:
 		table.populate_table(3,10)
 		set_score(0)
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+
+	settings_button.connect("pressed", Callable(self, "show_settings"))
+	expand_button.connect("pressed", Callable(self, "expand_table"))
+	end_run_button.connect("pressed", Callable(self, "end_run"))
+	
+	settings_window = preload("res://scenes/settings.tscn").instantiate()
+	add_child(settings_window)
+	settings_window.hide()
+	init_main()
 	# admob.init('ca-app-pub-9221900563273591~4549362904')
 	# admob.load_banner('ca-app-pub-3940256099942544/9214589741', true)
 	# admob.set_banner_position(admob.BANNER_BOTTOM)
