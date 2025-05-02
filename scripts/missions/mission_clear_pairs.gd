@@ -14,7 +14,7 @@ func set_pair(pair_stat):
 	pair = pair_stat
 
 func get_progress_percentage():
-	return 100 * main.statistics[stat][pair] / objective
+	return 100 * Data.statistics[stat][pair] / objective
 
 
 func complete_mission():
@@ -30,4 +30,4 @@ func reward():
 	main.pair_mult[pair] += float("0."+pair)
 
 func get_progress_string():
-	return str(main.statistics[stat][pair]) + " / " + str(objective)
+	return str(Data.statistics[stat][pair]) + " / " + str(objective)

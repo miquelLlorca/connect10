@@ -16,7 +16,7 @@ func init(init_level, mission_name, mission_description, main_reference):
 	description = mission_description
 	
 func get_progress_percentage():
-	return 100 * main.statistics[stat] / objective
+	return 100 * Data.statistics[stat] / objective
 
 func complete_mission():
 	# this is implemented in parent class
@@ -26,4 +26,4 @@ func complete_mission():
 	return false
 
 func get_progress_string():
-	return str(main.statistics[stat]) + " / " + str(objective)
+	return str(Data.statistics[stat]) + " / " + str(objective)

@@ -1,29 +1,5 @@
 extends Control
 
-var statistics = {
-		"cellsCleared":0,
-		"rowsCleared":0,
-		"tablesCleared":0,
-		"gamesPlayed":0,
-		"sum10s":0,
-		"pairs":{
-			"11":0,
-			"22":0,
-			"33":0,
-			"44":0,
-			"55":0,
-			"66":0,
-			"77":0,
-			"88":0,
-			"99":0
-		},
-		"highScore":0,
-		"totalAmountOfMoney":0,
-		"maxMoneyInARun":0,
-		"upgradesBought":0,
-		"maxDistance":0
-	}
-var shop_levels = {'score':1, 'money':1, 'expands':1}
 
 
 # mission rewards
@@ -40,7 +16,6 @@ var distance_multiplier = 1
 var MAX_EXPANDS = 5
 var expands_available = MAX_EXPANDS
 var score = 0
-var money_available = 0
 var game_ongoing = false
 
 var score_multiplier = 1
@@ -71,15 +46,15 @@ func update_score(points):
 	
 func update_money(money):
 	if(money<0): # when buying mult does not apply
-		money_available += money
-		statistics['upgradesBought'] += 1
+		Data.money_available += money
+		Data.statistics['upgradesBought'] += 1
 	else:
-		money_available += money*money_multiplier
-		statistics['totalAmountOfMoney'] += money*money_multiplier
-		statistics['totalAmountOfMoney'] = round_to(statistics['totalAmountOfMoney'], 2)
-	money_available = round_to(money_available, 2)
-	money_label.text = "Money:\n"+str(money_available)+"$"
-	save_money()
+		Data.money_available += money*money_multiplier
+		Data.statistics['totalAmountOfMoney'] += money*money_multiplier
+		Data.statistics['totalAmountOfMoney'] = round_to(Data.statistics['totalAmountOfMoney'], 2)
+	Data.money_available = round_to(Data.money_available, 2)
+	money_label.text = "Money:\n"+str(Data.money_available)+"$"
+	Data.save_money()
 
 func show_settings():
 	var screen_size = get_viewport_rect().size
@@ -110,17 +85,17 @@ func hide_shop_and_missions():
 
 func end_run():	
 	if(game_ongoing):
-		statistics['gamesPlayed'] += 1
+		Data.statistics['gamesPlayed'] += 1
 		game_ongoing = false
 
 		# updates data: money, stats...
-		var aux = money_available
+		var aux = Data.money_available
 		update_money(mission_money_multiplier * score / score_to_money)
-		if(money_available-aux > statistics['maxMoneyInARun']):
-			statistics['maxMoneyInARun'] = money_available-aux
+		if(Data.money_available-aux > Data.statistics['maxMoneyInARun']):
+			Data.statistics['maxMoneyInARun'] = Data.money_available-aux
 
-		if(score>statistics['highScore']):
-			statistics['highScore'] = score
+		if(score>Data.statistics['highScore']):
+			Data.statistics['highScore'] = score
 
 		# resets
 		reset_expands()
@@ -128,99 +103,14 @@ func end_run():
 		table.end_run()
 
 		# save data
-		save_stats()
-		save_shop_levels()
-		save_money()
+		Data.save_stats()
+		Data.save_shop_levels()
+		Data.save_money()
 
 		# update missions and show them
 		mission_list.update_layout()
 		show_shop_and_missions()
-##########################################################################################################################
-##########################################################################################################################
-##########################################################################################################################
-# Data Management
 
-func save_stats():
-	var file = FileAccess.open("user://statistics.json", FileAccess.WRITE)
-	file.store_string(str(statistics))
-	file.close()
-
-func read_stats_file():
-	if FileAccess.file_exists("user://statistics.json"):
-		var file = FileAccess.open("user://statistics.json", FileAccess.READ)
-		var data = file.get_as_text()
-		file.close()
-		statistics = JSON.parse_string(data)
-	else:
-		print('Setting up empty stats file')
-		save_stats()
-
-
-func save_money():
-	var file = FileAccess.open("user://money.txt", FileAccess.WRITE)
-	file.store_string(str(money_available))
-	file.close()
-
-func read_money_file():
-	if FileAccess.file_exists("user://money.txt"):
-		var file = FileAccess.open("user://money.txt", FileAccess.READ)
-		var data = file.get_as_text()
-		file.close()
-		money_available = int(data)
-	else:
-		print('Setting up empty money file')
-		save_money()
-	money_label.text = "Money:\n"+str(money_available)+"$"
-
-
-func save_shop_levels():
-	var file = FileAccess.open("user://shop_levels.json", FileAccess.WRITE)
-	file.store_string(str(shop_levels))
-	file.close()
-
-func read_shop_levels_file():
-	if FileAccess.file_exists("user://shop_levels.json"):
-		var file = FileAccess.open("user://shop_levels.json", FileAccess.READ)
-		var data = file.get_as_text()
-		file.close()
-		shop_levels = JSON.parse_string(data)
-	else:
-		print('Setting up empty shop levels file')
-		save_shop_levels()
-
-
-
-func reset_data():
-	money_available = 0
-	statistics = {
-		"cellsCleared":0,
-		"rowsCleared":0,
-		"tablesCleared":0,
-		"gamesPlayed":0,
-		"sum10s":0,
-		"pairs":{
-			"11":0,
-			"22":0,
-			"33":0,
-			"44":0,
-			"55":0,
-			"66":0,
-			"77":0,
-			"88":0,
-			"99":0
-		},
-		"highScore":0,
-		"totalAmountOfMoney":0,
-		"maxMoneyInARun":0,
-		"upgradesBought":0,
-		"maxDistance":0
-	}
-	shop_levels = {'score':1, 'money':1, 'expands':1}
-
-
-	save_money()
-	save_shop_levels()
-	save_stats()
 
 ##########################################################################################################################
 ##########################################################################################################################
@@ -242,10 +132,8 @@ func _ready():
 	# reset_data()
 	
 	# Read player data
-	read_stats_file()
-	read_money_file()
-	read_shop_levels_file()
-	print(statistics)
+	Data.init_data()
+	print(Data.statistics)
 
 	shop.init_shops()
 	reset_expands()

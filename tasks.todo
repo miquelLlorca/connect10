@@ -29,6 +29,9 @@ Data management:
     ✔ Save and read money @done (4/17/2025, 3:10:36 PM)
     ✔ Save and read shop levels @done (4/17/2025, 3:10:35 PM)
     ☐ Save mission levels and init them directly
+    ☐ Manage new stats added to game for future-proofing
+    ☐ Save game state each move
+    ✔ Refactor all data management to different script @done (5/2/2025, 1:02:06 PM)
 
 Settings:
     ✔ Add setting button and panel @done (4/30/2025, 7:00:49 PM)
@@ -48,6 +51,10 @@ Aesthetics:
         ☐ Clearing rows
         ☐ Clearing tables
 
+Tutorial:
+    ☐ Write simple Tutorial
+    ☐ Show it first time opening
+    ☐ Add button to show Tutorial
 
 Bugs:
     ✔ Expand should start the game and then hide shop and missions @done (4/22/2025, 2:04:23 PM)

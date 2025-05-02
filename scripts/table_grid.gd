@@ -111,11 +111,11 @@ func _on_cell_click(row, column):
 			if(not main.game_ongoing):
 				main.hide_shop_and_missions()
 				main.game_ongoing = true
-			main.statistics['cellsCleared'] += 2
+			Data.statistics['cellsCleared'] += 2
 			if(n0==n1):
-				main.statistics['pairs'][str(n0)+str(n0)] += 1
+				Data.statistics['pairs'][str(n0)+str(n0)] += 1
 			else:
-				main.statistics['sum10s'] += 1
+				Data.statistics['sum10s'] += 1
 			print('CORRECT')
 		else:
 			print('INCORRECT')
@@ -163,7 +163,7 @@ func clear_empty_rows():
 	if(empty0):
 		remove_row(pos0[0])
 		main.update_score(100*main.row_multiplier)
-		main.statistics['rowsCleared'] += 1
+		Data.statistics['rowsCleared'] += 1
 
 	if(empty0 && pos1[0]>pos0[0]):
 		pos0[0] = pos0[0]-1
@@ -174,12 +174,12 @@ func clear_empty_rows():
 		if(empty1):
 			remove_row(pos1[0])
 			main.update_score(100*main.row_multiplier);
-			main.statistics['rowsCleared'] += 1
+			Data.statistics['rowsCleared'] += 1
 
 
 	if(get_row_count()==0):
 		main.update_score(1000*main.table_multiplier*main.expands_available+1);
-		main.statistics['tablesCleared'] += 1
+		Data.statistics['tablesCleared'] += 1
 		main.reset_expands()
 		get_parent().get_parent().populate_table(3,10);
 
@@ -224,8 +224,8 @@ func execute_movement():
 		var base_score = get_cell_value(pos0)+get_cell_value(pos1)
 		var distance = max(abs(i),abs(j))
 		var full_score = base_score*main.cell_multiplier*distance*main.distance_multiplier
-		if(main.statistics['maxDistance']<distance):
-			main.statistics['maxDistance'] = distance
+		if(Data.statistics['maxDistance']<distance):
+			Data.statistics['maxDistance'] = distance
 
 		if(n0==n1):
 			full_score = full_score*main.pair_mult[str(n0)+str(n1)]
