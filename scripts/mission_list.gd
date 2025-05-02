@@ -178,6 +178,7 @@ func update_layout():
 	render_missions()
 	sort_missions()
 	check_claimable_missions()
+	$ScrollContainer.scroll_vertical = 0
 
 
 
