@@ -24,7 +24,7 @@ func _on_cell_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var column = int((position.x-parentPos.x) / cell_width)
 		var row = int((position.y-parentPos.y) / cell_height)
-		print("Cell clicked at: ", self.position, " -> ", row, ",", column) 
+		#print("Cell clicked at: ", self.position, " -> ", row, ",", column) 
 		get_parent()._on_cell_click(row, column)
 		
 ##########################################################################################################################

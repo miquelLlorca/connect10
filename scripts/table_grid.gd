@@ -32,14 +32,11 @@ func spawn_circle(pos: Vector2):
 	# circle.z_index = 100
 	circle.size = Vector2(20, 20)
 	circle.position = pos  - (circle.size / 2)  # Center the circle
-	circle.modulate = Color(1, 0.5, 0, 1)  # Orange tint
+	circle.modulate = Color(0.1, 0.5, 0.9, 1 )  # Blue tint
 
 	main.add_child(circle)
 	var tween = create_tween()
 	tween.set_parallel()
-	# tween.tween_property(circle, "scale", Vector2(10.5, 10.5), 3)
-	# tween.tween_property(circle, "scale", Vector2(0.1, 0.1), 0.5)
-
 
 	var scale_target = Vector2(0.1, 0.1)
 	var duration = CLEAR_CELLS_ANIMATION_DURATION
@@ -63,7 +60,7 @@ func clear_cell_animation(p0, p1, draw_ends):
 	var end = Vector2(x+p1[1]*64+32, y+p1[0]*64+32)
 	var line = Line2D.new()
 	line.width = 4
-	line.default_color = Color(1, 0.5, 0, 1)  # orange
+	line.default_color = Color(0.1, 0.5, 0.9, 1 )  # Blue tint
 	line.points = [start, end]
 	main.add_child(line)
 
