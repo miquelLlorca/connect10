@@ -29,7 +29,7 @@ Data management:
     ✔ Save and read money @done (4/17/2025, 3:10:36 PM)
     ✔ Save and read shop levels @done (4/17/2025, 3:10:35 PM)
     ☐ Save mission levels and init them directly
-    ☐ Manage new stats added to game for future-proofing
+    ✔ Manage new stats added to game for future-proofing @done (5/2/2025, 1:09:47 PM)
     ☐ Save game state each move
     ✔ Refactor all data management to different script @done (5/2/2025, 1:02:06 PM)
 

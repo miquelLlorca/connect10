@@ -1,7 +1,11 @@
 extends Node
 var main
 
-var statistics = {
+var statistics
+var shop_levels
+var money_available = 0
+
+var default_statistics = {
 		"cellsCleared":0,
 		"rowsCleared":0,
 		"tablesCleared":0,
@@ -24,8 +28,7 @@ var statistics = {
 		"upgradesBought":0,
 		"maxDistance":0
 	}
-var shop_levels = {'score':1, 'money':1, 'expands':1}
-var money_available = 0
+var default_shop_levels = {'score':1, 'money':1, 'expands':1}
 
 
 
@@ -61,8 +64,17 @@ func read_stats_file():
 		var data = file.get_as_text()
 		file.close()
 		statistics = JSON.parse_string(data)
+		# future-proofing for new stats added
+		var default_keys = default_statistics.keys()
+		var saved_keys = statistics.keys()
+		var missing_keys = default_keys.filter(func(k): return not saved_keys.has(k))
+		if(len(missing_keys)>0):
+			for key in missing_keys:
+				statistics[key] = default_statistics[key]
+			save_stats()
 	else:
 		print('Setting up empty stats file')
+		statistics = default_statistics.duplicate(true)
 		save_stats()
 
 func read_money_file():
@@ -73,6 +85,7 @@ func read_money_file():
 		money_available = int(data)
 	else:
 		print('Setting up empty money file')
+		money_available = 0
 		save_money()
 	main.money_label.text = "Money:\n"+str(money_available)+"$"
 
@@ -84,6 +97,7 @@ func read_shop_levels_file():
 		shop_levels = JSON.parse_string(data)
 	else:
 		print('Setting up empty shop levels file')
+		shop_levels = default_shop_levels.duplicate(true)
 		save_shop_levels()
 
 func init_data():
