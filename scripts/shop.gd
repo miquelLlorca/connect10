@@ -11,11 +11,11 @@ const BASE_MULTIPLIER = 1
 const MAX_EXPAND_LEVEL = 10
 
 func get_price_from_level(level):
-	return floor(BASE_PRICE * pow(1.2, level-1))
+	return floor(main.shop_discount * BASE_PRICE * pow(1.2, level-1))
 
 
 func get_multiplier_from_level(level):
-	return main.round_to((main.shop_discount * BASE_MULTIPLIER * (1 + (level-1) * 0.1)), 2)
+	return main.round_to((BASE_MULTIPLIER * (1 + (level-1) * 0.1)), 2)
 
 
 func upgrade_score_mult():
@@ -28,7 +28,7 @@ func upgrade_score_mult():
 		main.score_multiplier = get_multiplier_from_level(level)
 		$HBoxContainer/Score/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
 		$HBoxContainer/Score/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
-		main.save_shop_levels()
+		Data.save_shop_levels()
 	else:
 		print('Not enough money');
 		var tween = create_tween()
@@ -45,7 +45,7 @@ func upgrade_money_mult():
 		main.money_multiplier = get_multiplier_from_level(level)
 		$HBoxContainer/Money/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
 		$HBoxContainer/Money/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
-		main.save_shop_levels()
+		Data.save_shop_levels()
 	else:
 		print('Not enough money');
 		var tween = create_tween()
@@ -62,7 +62,7 @@ func upgrade_max_expands():
 		$HBoxContainer/Expands/VBoxContainer/Descr.text = str(main.MAX_EXPANDS+1)
 		$HBoxContainer/Expands/VBoxContainer/Price.text = str(get_price_from_level(level)*10)+"$"
 		main.reset_expands()
-		main.save_shop_levels()
+		Data.save_shop_levels()
 	else:
 		print('Not enough money')
 		var tween = create_tween()
@@ -70,24 +70,25 @@ func upgrade_max_expands():
 		tween.tween_property($HBoxContainer/Expands, "modulate", original_colour, 0.25)
 
 
-
-func init_shops():
+func render_shops():
 	var level
 	level = Data.shop_levels['score'] 
-	main.score_multiplier = get_multiplier_from_level(level);
 	$HBoxContainer/Score/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
 	$HBoxContainer/Score/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
-	
 	level = Data.shop_levels['money'] 
-	main.money_multiplier = get_multiplier_from_level(level);
 	$HBoxContainer/Money/VBoxContainer/Descr.text = str(get_multiplier_from_level(level+1))+"x"
 	$HBoxContainer/Money/VBoxContainer/Price.text = str(get_price_from_level(level))+"$"
-
 	level = Data.shop_levels['expands'] 
-	for i in range(1,level):
-		main.MAX_EXPANDS += 1
 	$HBoxContainer/Expands/VBoxContainer/Descr.text = str(main.MAX_EXPANDS+1)
 	$HBoxContainer/Expands/VBoxContainer/Price.text = str(get_price_from_level(level)*10)+"$"
+
+
+func init_shops():
+	render_shops()
+	main.score_multiplier = get_multiplier_from_level(Data.shop_levels['score'])
+	main.money_multiplier = get_multiplier_from_level(Data.shop_levels['money'])
+	for i in range(1,Data.shop_levels['expands']):
+		main.MAX_EXPANDS += 1
 		
 ##########################################################################################################################
 ##########################################################################################################################

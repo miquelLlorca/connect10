@@ -29,7 +29,7 @@ var default_statistics = {
 		"maxDistance":0
 	}
 var default_shop_levels = {'score':1, 'money':1, 'expands':1}
-
+var game_state = null
 
 
 ##########################################################################################################################
@@ -51,6 +51,16 @@ func save_shop_levels():
 	file.store_string(str(shop_levels))
 	file.close()
 
+func save_game_state():
+	game_state = {
+		"score": main.score,
+		"expands_available": main.expands_available,
+		"table": main.table.get_table_values(true)
+	}
+	print(game_state)
+	var file = FileAccess.open("user://game_state.json", FileAccess.WRITE)
+	file.store_string(str(game_state))
+	file.close()
 
 
 
@@ -100,47 +110,45 @@ func read_shop_levels_file():
 		shop_levels = default_shop_levels.duplicate(true)
 		save_shop_levels()
 
+func read_game_state_file():
+	if FileAccess.file_exists("user://game_state.json"):
+		var file = FileAccess.open("user://game_state.json", FileAccess.READ)
+		var data = file.get_as_text()
+		file.close()
+		game_state = JSON.parse_string(data)
+	
+
+
 func init_data():
 	read_stats_file()
 	read_money_file()
 	read_shop_levels_file()
+	read_game_state_file()
 
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
+# Other
 
+func remove_file(path):
+	if FileAccess.file_exists(path):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+
+
+func clear_game_state():
+	remove_file('user://game_state.json')
 
 func reset_data():
 	money_available = 0
-	statistics = {
-		"cellsCleared":0,
-		"rowsCleared":0,
-		"tablesCleared":0,
-		"gamesPlayed":0,
-		"sum10s":0,
-		"pairs":{
-			"11":0,
-			"22":0,
-			"33":0,
-			"44":0,
-			"55":0,
-			"66":0,
-			"77":0,
-			"88":0,
-			"99":0
-		},
-		"highScore":0,
-		"totalAmountOfMoney":0,
-		"maxMoneyInARun":0,
-		"upgradesBought":0,
-		"maxDistance":0
-	}
-	shop_levels = {'score':1, 'money':1, 'expands':1}
-
+	statistics = default_statistics.duplicate(true)
+	shop_levels = default_shop_levels.duplicate(true)
 
 	save_money()
 	save_shop_levels()
 	save_stats()
+	clear_game_state()
+	# get_tree().change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
+	# get_tree().reload_current_scene()
 
 
 

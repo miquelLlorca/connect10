@@ -36,11 +36,13 @@ var settings_window: Control
 func round_to(x, n):
 	return round(x*10.0**n)/10.0**n
 
+func set_score(points):
+	score = points
+	score = round_to(score, 2)
+	score_label.text = "Score:\n"+str(score)
+
 func update_score(points):
-	if(points<0): # when resetting score mult does not apply
-		score += points
-	else:
-		score += points*score_multiplier
+	score += points*score_multiplier
 	score = round_to(score, 2)
 	score_label.text = "Score:\n"+str(score)
 	
@@ -99,16 +101,18 @@ func end_run():
 
 		# resets
 		reset_expands()
-		update_score(-score)
+		set_score(0)
 		table.end_run()
 
 		# save data
 		Data.save_stats()
 		Data.save_shop_levels()
 		Data.save_money()
+		Data.clear_game_state()
 
-		# update missions and show them
+		# update missions and shop and show them
 		mission_list.update_layout()
+		shop.render_shops()
 		show_shop_and_missions()
 
 
@@ -124,21 +128,29 @@ func _ready():
 	settings_button.connect("pressed", Callable(self, "show_settings"))
 	expand_button.connect("pressed", Callable(self, "expand_table"))
 	end_run_button.connect("pressed", Callable(self, "end_run"))
-	table.populate_table(3,10)
-
+	
 	settings_window = preload("res://scenes/settings.tscn").instantiate()
 	add_child(settings_window)
 	settings_window.hide()
-	# reset_data()
 	
-	# Read player data
 	Data.init_data()
 	print(Data.statistics)
-
+	
+	mission_list.init_missions()
+	await mission_list.missions_ready
 	shop.init_shops()
 	reset_expands()
-	mission_list.init_missions()
-	update_score(0)
+	
+	if(Data.game_state != null):
+		table.populate_table_with_list(Data.game_state['table'], true)
+		set_score(Data.game_state['score'])
+		expands_available = Data.game_state['expands_available']
+		expand_button.text = "Expand ("+str(expands_available)+")"
+		game_ongoing = true
+		hide_shop_and_missions()
+	else:
+		table.populate_table(3,10)
+		set_score(0)
 	# admob.init('ca-app-pub-9221900563273591~4549362904')
 	# admob.load_banner('ca-app-pub-3940256099942544/9214589741', true)
 	# admob.set_banner_position(admob.BANNER_BOTTOM)

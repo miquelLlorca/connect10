@@ -2,6 +2,7 @@ extends Node
 
 var main
 @onready var list = $ScrollContainer/VBoxContainer
+signal missions_ready
 
 func init_missions():
 	for child in list.get_children():
@@ -138,6 +139,7 @@ func init_missions():
 	complete_missions_at_init()
 	list.queue_sort()
 	list.queue_redraw()
+	emit_signal("missions_ready")
 
 
 func adjust_height():

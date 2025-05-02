@@ -12,7 +12,7 @@ func hide_window():
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
 	close_button.connect("pressed", Callable(self, "hide_window"))
-	reset_button.connect("pressed", Callable(main, "reset_data"))
+	reset_button.connect("pressed", Callable(Data, "reset_data"))
 
 
 

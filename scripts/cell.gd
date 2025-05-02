@@ -9,6 +9,8 @@ var cell_width = self.size.x
 var cell_height = self.size.y
 	
 func set_value(value):
+	if(value==0):
+		value = ""
 	cell_value = value
 	label.text = str(cell_value)
 

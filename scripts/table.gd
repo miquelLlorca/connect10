@@ -32,39 +32,48 @@ func populate_table(rows, cols):
 func update_score(points):
 	main.update_score(points)
 
+func get_table_values(keep_zeros):
+	'''
+	Keep zeros indicates if the empty spaces should be added to the list as 0s
+	'''
+	var values = []
+	for i in range(grid.get_child_count()):
+		var row = i/10
+		var column = i%10
+		var cell_value = grid.get_cell_value([row, column])
+		if(cell_value!=0 or keep_zeros):
+			values.append(cell_value)
+	return values
+
+
+func populate_table_with_list(values, keep_zeros):
+	for i in range(len(values)):
+		if(values[i]!=0 or keep_zeros):
+			var cell = preload("res://scenes/cell.tscn").instantiate()
+			grid.add_child(cell)
+			cell.set_value(values[i])
+			
+			var tween = create_tween()
+			tween.set_parallel()
+			var row = (grid.get_child_count()-1)/10
+			var delay = i * 0.04
+			cell.modulate.a = 0.0
+			cell.position = Vector2(0,0)
+
+			tween.tween_property(cell, "position:y", 64*row-25, 0.0001).set_delay(delay)
+			tween.tween_property(cell, "position:y", 64*row, 0.1).set_delay(delay)
+			tween.tween_property(cell, "modulate:a", 1.0, 0.2).set_delay(delay)
 
 
 func expand_table():
 	if(not main.game_ongoing):
 		main.hide_shop_and_missions()
 		main.game_ongoing = true
-	var values = []
-	for i in range(grid.get_child_count()):
-		var row = i/10
-		var column = i%10
-		var cell_value = grid.get_cell_value([row, column])
-		if(cell_value!=0):
-			values.append(cell_value)
 
-	print(values)
-	# for row in range(rows):
-	# 	for col in range(cols):	
-	for i in range(len(values)):
-		var cell = preload("res://scenes/cell.tscn").instantiate()
-		grid.add_child(cell)
-		cell.set_value(values[i]) 
-		var tween = create_tween()
-		tween.set_parallel()
-		var row = (grid.get_child_count()-1)/10
-		var delay = i * 0.04
-		cell.modulate.a = 0.0
-		cell.position = Vector2(0,0)
-
-		# tween.tween_property(cell, "position", Vector2(0,0), 0.001).set_delay(delay)
-		# tween.tween_property(cell, "position", Vector2(col*64, row*64), 0.2).set_delay(delay)
-		tween.tween_property(cell, "position:y", 64*row-25, 0.0001).set_delay(delay)
-		tween.tween_property(cell, "position:y", 64*row, 0.1).set_delay(delay)
-		tween.tween_property(cell, "modulate:a", 1.0, 0.2).set_delay(delay)
+	var keep_zeros = false
+	var values = get_table_values(keep_zeros)
+	populate_table_with_list(values, keep_zeros)
+	Data.save_game_state()
 
 
 

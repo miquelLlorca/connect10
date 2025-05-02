@@ -106,8 +106,8 @@ func _on_cell_click(row, column):
 		# print(n0,n1)
 		
 		if(execute_movement()):
-			get_cell(pos0).set_value("")
-			get_cell(pos1).set_value("")
+			get_cell(pos0).set_value(0)
+			get_cell(pos1).set_value(0)
 			if(not main.game_ongoing):
 				main.hide_shop_and_missions()
 				main.game_ongoing = true
@@ -120,7 +120,8 @@ func _on_cell_click(row, column):
 		else:
 			print('INCORRECT')
 		get_cell(pos0).clean_colour()
-		clear_empty_rows();
+		clear_empty_rows()
+		Data.save_game_state()
 		pos0 = null
 		pos1 = null
 
