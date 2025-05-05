@@ -22,7 +22,7 @@ Missions:
         ☐ sum10 needs to be more spaced or less rewarding
         ☐ high score needs to be more spaced or less rewarding
         ☐ Total money earned needs to be much less rewarding AND more space
-
+        ☐ Distance needs to be less rewarding
 
 
 
@@ -30,7 +30,7 @@ Upgrade shop:
     ✔ Create and locate shop template @done (4/5/2025, 12:58:06 PM)
     ✔ Implement upgrade shop @done (4/7/2025, 2:54:11 PM)
     ✔ Hide shop when playing @done (4/7/2025, 12:54:36 PM)
-    ☐ Test balance of shop
+    ☐ Test balance of shop (in progress)
         
 Data management:
     ✔ Save and read stats @done (4/15/2025, 1:47:10 PM)
@@ -59,7 +59,7 @@ Aesthetics:
         ✔ Clearing cells @done (5/2/2025, 12:30:09 PM)
         ☐ Clearing rows
         ☐ Clearing tables
-        ☐ Money and score updates
+        ✔ Money and score updates @done (5/5/2025, 3:23:17 PM)
 
 Tutorial:
     ✔ Write tutorial mock @done (5/2/2025, 4:23:28 PM)

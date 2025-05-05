@@ -41,21 +41,105 @@ func set_score(points):
 	score = round_to(score, 2)
 	score_label.text = "Score:\n"+str(score)
 
+func show_score_diff(amount: float, origin_pos: Vector2):
+	origin_pos = origin_pos + Vector2(10, +45)
+	var panel = Panel.new()
+	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	panel.z_index = 100
+	panel.position = origin_pos
+	add_child(panel)
+
+	# Set style with rounded corners and color
+	var stylebox = StyleBoxFlat.new()
+	stylebox.bg_color = Color(0, 0.75, 0, 0.8) if (amount >= 0) else Color(0.75, 0, 0, 0.8)
+	stylebox.corner_radius_top_left = 10
+	stylebox.corner_radius_top_right = 10
+	stylebox.corner_radius_bottom_left = 10
+	stylebox.corner_radius_bottom_right = 10
+	stylebox.corner_detail = 4  # Optional: smoother corners
+	panel.add_theme_stylebox_override("panel", stylebox)
+
+	var label = Label.new()
+	label.text = " " + str(amount)
+	label.add_theme_color_override("font_color", Color(1, 1, 1))
+
+	var label_settings = LabelSettings.new()
+	label_settings.font_size = 30
+	label.label_settings = label_settings
+
+	label.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	panel.add_child(label)
+
+	await get_tree().process_frame
+	panel.size = label.get_minimum_size() + Vector2(10, 6)
+
+	var tween = create_tween()
+	tween.set_parallel()
+	tween.tween_property(panel, "position", origin_pos + Vector2(0, -50), 1)
+	tween.tween_property(panel, "modulate:a", 0.0, 1)
+	tween.tween_callback(Callable(panel, "queue_free")).set_delay(2)
+
+
 func update_score(points):
-	score += points*score_multiplier
-	score = round_to(score, 2)
+	var diff = round_to(points*score_multiplier, 2)
+	score += diff
 	score_label.text = "Score:\n"+str(score)
-	
+	show_score_diff(diff, score_label.global_position)
+
+
+func show_money_diff(amount: float, origin_pos: Vector2):
+	print(amount)
+	origin_pos = origin_pos + Vector2(10, +45)
+	var panel = Panel.new()
+	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	panel.z_index = 100
+	panel.position = origin_pos
+	add_child(panel)
+
+	# Set style with rounded corners and color
+	var stylebox = StyleBoxFlat.new()
+	stylebox.bg_color = Color(0, 0.75, 0, 0.8) if (amount >= 0) else Color(0.75, 0, 0, 0.8)
+	stylebox.corner_radius_top_left = 10
+	stylebox.corner_radius_top_right = 10
+	stylebox.corner_radius_bottom_left = 10
+	stylebox.corner_radius_bottom_right = 10
+	stylebox.corner_detail = 4  # Optional: smoother corners
+	panel.add_theme_stylebox_override("panel", stylebox)
+
+	var label = Label.new()
+	label.text = " " + str(amount) + " $"
+	label.add_theme_color_override("font_color", Color(1, 1, 1))
+
+	var label_settings = LabelSettings.new()
+	label_settings.font_size = 30
+	label.label_settings = label_settings
+
+	label.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	panel.add_child(label)
+
+	await get_tree().process_frame
+	panel.size = label.get_minimum_size() + Vector2(10, 6)
+
+	var tween = create_tween()
+	tween.set_parallel()
+	tween.tween_property(panel, "position", origin_pos + Vector2(0, -50), 3)
+	tween.tween_property(panel, "modulate:a", 0.0, 3)
+	tween.tween_callback(Callable(panel, "queue_free")).set_delay(2)
+
 func update_money(money):
+	var diff
 	if(money<0): # when buying mult does not apply
-		Data.money_available += money
+		diff = round_to(money,2)	
+		Data.money_available += diff
 		Data.statistics['upgradesBought'] += 1
 	else:
-		Data.money_available += money*money_multiplier
-		Data.statistics['totalAmountOfMoney'] += money*money_multiplier
+		diff = round_to(money*money_multiplier,2)
+		Data.money_available += diff
+		Data.statistics['totalAmountOfMoney'] += diff
 		Data.statistics['totalAmountOfMoney'] = round_to(Data.statistics['totalAmountOfMoney'], 2)
 	Data.money_available = round_to(Data.money_available, 2)
 	money_label.text = "Money:\n"+str(Data.money_available)+"$"
+	show_money_diff(diff, money_label.global_position)
 	Data.save_money()
 
 func show_settings():
@@ -123,7 +207,6 @@ func end_run():
 func init_main():
 	Data.init_data()
 	print(Data.statistics)
-	
 	mission_list.init_missions()
 	await mission_list.missions_ready
 	shop.init_shops()
@@ -139,6 +222,10 @@ func init_main():
 	else:
 		table.populate_table(3,10)
 		set_score(0)
+	
+	if(game_ongoing):
+		# a reset coming from an ongoing game
+		show_shop_and_missions()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
