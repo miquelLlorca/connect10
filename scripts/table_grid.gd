@@ -98,6 +98,7 @@ func _on_cell_click(row, column):
 		pos1 = [row, column]
 		var n0 = get_cell_value(pos0)
 		var n1 = get_cell_value(pos1)
+		get_cell(pos0).clean_colour()
 		
 		if(execute_movement()):
 			get_cell(pos0).set_value(0)
@@ -111,28 +112,17 @@ func _on_cell_click(row, column):
 			else:
 				Data.statistics['sum10s'] += 1
 			print('CORRECT')
-			clear_empty_rows()
+			await clear_empty_rows()
 			Data.save_game_state()
 		else:
 			print('INCORRECT')
-		get_cell(pos0).clean_colour()
+
 		pos0 = null
 		pos1 = null
 
 func get_row_count():
 	return ceil(float(self.get_child_count()) / columns)
 	
-func remove_row(row):
-	var start_index = row * columns  
-
-	for i in range(columns):
-		if(start_index < self.get_child_count()):
-			var cell = self.get_child(start_index)
-			self.remove_child(cell)
-			cell.queue_free()
-	# Optionally, refresh the grid layout to avoid gaps
-	self.queue_sort()
-
 func get_incr(diff):
 		if(diff > 0):
 			return -1
@@ -151,12 +141,26 @@ func check_mid_line_empty(pos, dir):
 			if(get_cell_value([pos[0], i]) != 0):
 				return false;
 		return true;
+		
+
+func remove_row(row):
+	var start_index = row * columns  
+
+	for i in range(columns):
+		var cell = self.get_child(start_index+i)
+		var tween = create_tween()
+		tween.set_parallel()
+		tween.tween_property(cell, "position:x", 0, 0.2)
+		tween.tween_property(cell, "modulate:a", 0.0, 0.2)
+		tween.tween_callback(Callable(cell, "queue_free")).set_delay(0.2)
+	await get_tree().create_timer(0.2).timeout  # Wait for the animation to finish
+	self.queue_sort()
 
 func clear_empty_rows():
 	var empty0 = check_mid_line_empty([pos0[0],-1],1)
 
 	if(empty0):
-		remove_row(pos0[0])
+		await remove_row(pos0[0])
 		main.update_score(100*main.row_multiplier)
 		Data.statistics['rowsCleared'] += 1
 
@@ -167,7 +171,7 @@ func clear_empty_rows():
 	if(pos0[0]!=pos1[0]):
 		var empty1 = check_mid_line_empty([pos1[0],-1],1)
 		if(empty1):
-			remove_row(pos1[0])
+			await remove_row(pos1[0])
 			main.update_score(100*main.row_multiplier);
 			Data.statistics['rowsCleared'] += 1
 

@@ -72,8 +72,8 @@ func expand_table():
 func end_run():
 	# resets the table
 	var n = grid.get_row_count()
-	for i in range(n):
-		grid.remove_row(0)
+	for i in range(n-1,-1,-1):
+		await grid.remove_row(i)
 	populate_table(3,10)
 
 ##########################################################################################################################

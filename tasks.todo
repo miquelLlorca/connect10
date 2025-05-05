@@ -71,6 +71,7 @@ Bugs:
     ✔ Expand should start the game and then hide shop and missions @done (4/22/2025, 2:04:23 PM)
     ✔ Scroll not working on apk @done (4/22/2025, 12:41:53 PM)
     ☐ Some data seems to not be saved in android?
+    ☐ When only 2 lines remain and you select in top-down order, the 2nd row is not deleted. Possible fix is to order positions before checking empty lines.
 
 APK:
     ☐ Add table scrolling ability

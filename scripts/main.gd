@@ -79,13 +79,11 @@ func show_score_diff(amount: float, origin_pos: Vector2):
 	tween.tween_property(panel, "modulate:a", 0.0, 1)
 	tween.tween_callback(Callable(panel, "queue_free")).set_delay(2)
 
-
 func update_score(points):
-	var diff = round_to(points*score_multiplier, 2)
-	score += diff
+	var diff = points*score_multiplier
+	score = round_to(score + diff,2)
 	score_label.text = "Score:\n"+str(score)
 	show_score_diff(diff, score_label.global_position)
-
 
 func show_money_diff(amount: float, origin_pos: Vector2):
 	print(amount)
