@@ -17,6 +17,7 @@ Missions:
     ✔ Order missions by progress % @done (4/22/2025, 12:42:05 PM)
     ✔ Change container colours according to state @done (4/22/2025, 12:42:27 PM)
     ✔ Scroll should be reseted each run @done (5/2/2025, 3:02:35 PM)
+    ✔ Refactored init missions with a mission factory singleton @done (5/5/2025, 2:59:58 PM)
     Rebalance: 
         ☐ sum10 needs to be more spaced or less rewarding
         ☐ high score needs to be more spaced or less rewarding
@@ -44,7 +45,7 @@ Settings:
     ✔ Add setting button and panel @done (4/30/2025, 7:00:49 PM)
     ✔ Add reset button in Settings @done (4/30/2025, 7:16:06 PM)
     ☐ Add silence button (when sound is added)
-    ☐ Reset button should reload the game
+    ✔ Reset button should reload the game @done (5/5/2025, 2:59:24 PM)
 
 Aesthetics:
     ✔ Make everything bigger @done (4/16/2025, 2:34:46 PM)
@@ -58,6 +59,7 @@ Aesthetics:
         ✔ Clearing cells @done (5/2/2025, 12:30:09 PM)
         ☐ Clearing rows
         ☐ Clearing tables
+        ☐ Money and score updates
 
 Tutorial:
     ✔ Write tutorial mock @done (5/2/2025, 4:23:28 PM)
