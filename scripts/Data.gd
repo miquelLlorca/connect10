@@ -57,12 +57,9 @@ func save_game_state():
 		"expands_available": main.expands_available,
 		"table": main.table.get_table_values(true)
 	}
-	print(game_state)
 	var file = FileAccess.open("user://game_state.json", FileAccess.WRITE)
 	file.store_string(str(game_state))
 	file.close()
-
-
 
 ##########################################################################################################################
 ##########################################################################################################################
@@ -117,8 +114,6 @@ func read_game_state_file():
 		file.close()
 		game_state = JSON.parse_string(data)
 	
-
-
 func init_data():
 	read_stats_file()
 	read_money_file()
@@ -134,7 +129,6 @@ func remove_file(path):
 	if FileAccess.file_exists(path):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 
-
 func clear_game_state():
 	remove_file('user://game_state.json')
 
@@ -147,10 +141,6 @@ func reset_data():
 	save_money()
 	save_shop_levels()
 	save_stats()
-	# get_tree().change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
-	# get_tree().reload_current_scene()
-
-
 
 
 func _ready():

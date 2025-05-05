@@ -223,9 +223,9 @@ func init_main():
 		table.populate_table(3,10)
 		set_score(0)
 	
-	if(game_ongoing):
-		# a reset coming from an ongoing game
-		show_shop_and_missions()
+		if(game_ongoing):
+			# this can only be accesed by a reset coming from an ongoing game
+			show_shop_and_missions()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

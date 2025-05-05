@@ -12,11 +12,8 @@ func init(mission_obj):
 	mission = mission_obj
 
 func complete_mission():
-	print('CLAIMING')
 	if(mission.complete_mission()):
 		render()
-		print(mission.level)
-		print(mission.objective)
 		if mission.get_progress_percentage() < 100:
 			claim_button.disabled = true
 			# $CenterContainer/Panel.modulate = Color(1,1,1)

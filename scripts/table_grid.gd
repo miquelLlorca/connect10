@@ -78,7 +78,6 @@ func clear_cell_animation(p0, p1, draw_ends):
 
 
 func clear_cell_animation_endline():
-	print('endilen anim')
 	if(pos0[0]<pos1[0]):
 		clear_cell_animation(pos0, Vector2(pos0[0],9.4), 0)
 		clear_cell_animation(Vector2(pos1[0],-0.5), pos1, 1)
@@ -99,8 +98,6 @@ func _on_cell_click(row, column):
 		pos1 = [row, column]
 		var n0 = get_cell_value(pos0)
 		var n1 = get_cell_value(pos1)
-		# print(pos0, " -> ", pos1)
-		# print(n0,n1)
 		
 		if(execute_movement()):
 			get_cell(pos0).set_value(0)
@@ -114,11 +111,11 @@ func _on_cell_click(row, column):
 			else:
 				Data.statistics['sum10s'] += 1
 			print('CORRECT')
+			clear_empty_rows()
+			Data.save_game_state()
 		else:
 			print('INCORRECT')
 		get_cell(pos0).clean_colour()
-		clear_empty_rows()
-		Data.save_game_state()
 		pos0 = null
 		pos1 = null
 
@@ -280,7 +277,6 @@ func execute_movement():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
-	print(main)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

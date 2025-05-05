@@ -70,8 +70,6 @@ func expand_table():
 	Data.save_game_state()
 
 func end_run():
-	print("end run")
-
 	# resets the table
 	var n = grid.get_row_count()
 	for i in range(n):
