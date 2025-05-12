@@ -20,31 +20,13 @@ func spawn_circle(table, pos: Vector2):
 	circle.size = Vector2(15, 15)
 	circle.position = pos  - (circle.size / 2) - Vector2(32,32)  # Center the circle
 	circle.modulate = Color(0.1, 0.5, 0.9, 0.9 )  # Blue tint
-
 	table.get_child(0).add_child(circle)
-	var tween = create_tween()
-	tween.set_parallel()
-
-	# var scale_target = Vector2(0.1, 0.1)
-	# var duration = CLEAR_CELLS_ANIMATION_DURATION
-	# var initial_size = circle.size
-	# var delta_size = initial_size * (scale_target - Vector2.ONE)
-
-	# tween.tween_property(circle, "scale", scale_target, duration)
-	# tween.tween_property(circle, "position", circle.position - (delta_size / 2), duration)
-	# tween.tween_property(circle, "modulate:a", 0.0, duration)
-	# tween.tween_callback(Callable(circle, "queue_free")).set_delay(1)
-
 
 
 func clear_cell_connector(table, p0, p1, draw_ends):
 	''' 
 	Draw ends {-1:none, 0:p0, 1:p1, 2:both}
 	'''
-	var x = table.get_global_rect().position.x
-	var y = table.get_global_rect().position.y
-	# var start = Vector2(x+p0[1]*64+32, y+p0[0]*64+32)
-	# var end = Vector2(x+p1[1]*64+32, y+p1[0]*64+32)
 	var start = Vector2(p0[1]*64+32, p0[0]*64+32)
 	var end = Vector2(p1[1]*64+32, p1[0]*64+32)
 	var line = Line2D.new()
@@ -61,10 +43,6 @@ func clear_cell_connector(table, p0, p1, draw_ends):
 	elif(draw_ends==2):
 		spawn_circle(table, start)
 		spawn_circle(table, end)
-
-	# var tween = create_tween()
-	# tween.tween_property(line, "modulate:a", 0.0, CLEAR_CELLS_ANIMATION_DURATION)
-	# tween.tween_callback(Callable(line, "queue_free")).set_delay(1)
 
 
 func clear_cell_connector_endline(table, pos0, pos1):
@@ -150,7 +128,7 @@ func setup_table3():
 	clear_cell_connector(grid3, Vector2(1,-0.5), Vector2(1,4), 1)
 	
 	set_mouse_filter_recursive(grid3, Control.MOUSE_FILTER_IGNORE)
-	
+
 
 func hide_window():
 	self.hide()

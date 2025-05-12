@@ -43,7 +43,7 @@ func _ready() -> void:
 	reset_button.connect("pressed", Callable(self, "_on_reset_pressed"))
 	$ResetConfirmDialog.connect("confirmed", Callable(self, "_on_reset_confirmed"))
 
-	tutorial_window = preload("res://scenes/tutorial.tscn").instantiate()
+	tutorial_window = preload("res://scenes/tutorial_window.tscn").instantiate()
 	main.add_child(tutorial_window)
 	# tutorial_window.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	tutorial_window.set_anchors_preset(Control.PRESET_FULL_RECT)
