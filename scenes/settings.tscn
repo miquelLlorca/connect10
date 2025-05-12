@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bh1w7usnxbyy"]
+[gd_scene load_steps=6 format=3 uid="uid://bh1w7usnxbyy"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_gyqow"]
+[ext_resource type="Texture2D" uid="uid://wfhv3y5g5awj" path="res://assets/help.png" id="2_ejfc4"]
+[ext_resource type="Texture2D" uid="uid://bffhgxfav2rl5" path="res://assets/mute.png" id="3_ipigx"]
+[ext_resource type="Texture2D" uid="uid://h2o6leocbyxm" path="res://assets/close.png" id="4_fqidj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bvwek"]
 bg_color = Color(0.156863, 0.156863, 0.156863, 0.968627)
@@ -9,14 +12,6 @@ bg_color = Color(0.156863, 0.156863, 0.156863, 0.968627)
 custom_minimum_size = Vector2(600, 800)
 theme_override_styles/panel = SubResource("StyleBoxFlat_bvwek")
 script = ExtResource("1_gyqow")
-
-[node name="CloseButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 497.0
-offset_top = 29.0
-offset_right = 560.0
-offset_bottom = 88.0
-text = "X"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -36,3 +31,22 @@ text = "Statistics"
 
 [node name="ResetConfirmDialog" type="ConfirmationDialog" parent="."]
 dialog_text = "Are you sure you want to reset all data?"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 599.0
+offset_bottom = 100.0
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="HelpButton" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_ejfc4")
+
+[node name="SilenceButton" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_ipigx")
+
+[node name="CloseButton" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_fqidj")
