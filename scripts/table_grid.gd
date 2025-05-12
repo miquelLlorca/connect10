@@ -145,7 +145,7 @@ func check_mid_line_empty(pos, dir):
 
 func remove_row(row):
 	var start_index = row * columns  
-
+	var timer = 0.2 if get_row_count()>1 else 0.4
 	for i in range(columns):
 		var cell = self.get_child(start_index+i)
 		var tween = create_tween()
@@ -153,25 +153,28 @@ func remove_row(row):
 		tween.tween_property(cell, "position:x", 0, 0.2)
 		tween.tween_property(cell, "modulate:a", 0.0, 0.2)
 		tween.tween_callback(Callable(cell, "queue_free")).set_delay(0.2)
-	await get_tree().create_timer(0.2).timeout  # Wait for the animation to finish
+	await get_tree().create_timer(timer).timeout  # Wait for the animation to finish
 	self.queue_sort()
 
 func clear_empty_rows():
-	var empty0 = check_mid_line_empty([pos0[0],-1],1)
+	var row0 = pos0[0]
+	var row1 = pos1[0]
+	if(row1>row0):
+		var aux = row0
+		row0 = row1
+		row1 = aux
+		
+	var empty0 = check_mid_line_empty([row0,-1],1)
 
 	if(empty0):
-		await remove_row(pos0[0])
+		await remove_row(row0)
 		main.update_score(100*main.row_multiplier)
 		Data.statistics['rowsCleared'] += 1
 
-	if(empty0 && pos1[0]>pos0[0]):
-		pos0[0] = pos0[0]-1
-		pos1[0] = pos1[0]-1
-
-	if(pos0[0]!=pos1[0]):
-		var empty1 = check_mid_line_empty([pos1[0],-1],1)
+	if(row1!=row0):
+		var empty1 = check_mid_line_empty([row1,-1],1)
 		if(empty1):
-			await remove_row(pos1[0])
+			await remove_row(row1)
 			main.update_score(100*main.row_multiplier);
 			Data.statistics['rowsCleared'] += 1
 

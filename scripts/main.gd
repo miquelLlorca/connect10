@@ -80,7 +80,7 @@ func show_score_diff(amount: float, origin_pos: Vector2):
 	tween.tween_callback(Callable(panel, "queue_free")).set_delay(2)
 
 func update_score(points):
-	var diff = points*score_multiplier
+	var diff = round_to(points*score_multiplier, 2)
 	score = round_to(score + diff,2)
 	score_label.text = "Score:\n"+str(score)
 	show_score_diff(diff, score_label.global_position)
@@ -181,17 +181,17 @@ func end_run():
 		if(score>Data.statistics['highScore']):
 			Data.statistics['highScore'] = score
 
-		# resets
-		reset_expands()
-		set_score(0)
-		table.end_run()
-
 		# save data
 		Data.save_stats()
 		Data.save_shop_levels()
 		Data.save_money()
 		Data.clear_game_state()
 
+		# resets
+		reset_expands()
+		set_score(0)
+		await table.end_run()
+		
 		# update missions and shop and show them
 		mission_list.update_layout()
 		shop.render_shops()
@@ -209,7 +209,7 @@ func init_main():
 	await mission_list.missions_ready
 	shop.init_shops()
 	reset_expands()
-	
+	# Data.game_state['table'] = [1,0,0,1,0,1,0,0,0,0,0,0,1]
 	if(Data.game_state != null):
 		table.populate_table_with_list(Data.game_state['table'], true)
 		set_score(Data.game_state['score'])
