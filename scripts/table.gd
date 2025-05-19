@@ -62,7 +62,6 @@ func populate_table_with_list(values, keep_zeros):
 func expand_table():
 	if(not main.game_ongoing):
 		main.hide_shop_and_missions()
-		main.game_ongoing = true
 
 	var keep_zeros = false
 	var values = get_table_values(keep_zeros)

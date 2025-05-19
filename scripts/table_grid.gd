@@ -105,7 +105,6 @@ func _on_cell_click(row, column):
 			get_cell(pos1).set_value(0)
 			if(not main.game_ongoing):
 				main.hide_shop_and_missions()
-				main.game_ongoing = true
 			Data.statistics['cellsCleared'] += 2
 			if(n0==n1):
 				Data.statistics['pairs'][str(n0)+str(n0)] += 1

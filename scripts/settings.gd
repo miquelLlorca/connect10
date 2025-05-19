@@ -29,9 +29,10 @@ func _on_reset_confirmed():
 	main.distance_multiplier = 1
 
 	self.hide()
+	main.hide_shop_and_missions()
 	var n = main.table.grid.get_row_count()
-	for i in range(n):
-		main.table.grid.remove_row(0)
+	for i in range(n-1,-1,-1):
+		await main.table.grid.remove_row(i)
 	main.init_main()
 
 # Called when the node enters the scene tree for the first time.

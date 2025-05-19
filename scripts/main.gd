@@ -157,20 +157,23 @@ func reset_expands():
 	expand_button.text = "Expand ("+str(expands_available)+")"
 
 func show_shop_and_missions():
-	var tween = create_tween()
-	tween.tween_property($Main_V, "position:y", $Main_V.position.y - 1000, 0.25)
-	tween.tween_property($Main_V, "modulate:a", 1.0, 0.25)
+	if(game_ongoing):
+		game_ongoing = false
+		var tween = create_tween()
+		tween.tween_property($Main_V, "position:y", $Main_V.position.y - 1000, 0.25)
+		tween.tween_property($Main_V, "modulate:a", 1.0, 0.25)
 
 func hide_shop_and_missions():
-	var tween = create_tween()
-	tween.tween_property($Main_V, "position:y", $Main_V.position.y + 1000, 0.25)
-	tween.tween_property($Main_V, "modulate:a", 0.0, 0.25)
+	if(not game_ongoing):
+		game_ongoing = true
+		var tween = create_tween()
+		tween.tween_property($Main_V, "position:y", $Main_V.position.y + 1000, 0.25)
+		tween.tween_property($Main_V, "modulate:a", 0.0, 0.25)
 
 
 func end_run():	
 	if(game_ongoing):
 		Data.statistics['gamesPlayed'] += 1
-		game_ongoing = false
 
 		# updates data: money, stats...
 		var aux = Data.money_available
@@ -215,15 +218,11 @@ func init_main():
 		set_score(Data.game_state['score'])
 		expands_available = Data.game_state['expands_available']
 		expand_button.text = "Expand ("+str(expands_available)+")"
-		game_ongoing = true
 		hide_shop_and_missions()
 	else:
 		table.populate_table(3,10)
 		set_score(0)
-	
-		if(game_ongoing):
-			# this can only be accesed by a reset coming from an ongoing game
-			show_shop_and_missions()
+		show_shop_and_missions()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
