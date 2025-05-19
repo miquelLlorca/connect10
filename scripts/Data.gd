@@ -36,6 +36,11 @@ var game_state = null
 ##########################################################################################################################
 ##########################################################################################################################
 # SAVE DATA
+func save_new_player():
+	var file = FileAccess.open("user://new_player.txt", FileAccess.WRITE)
+	file.store_string(str(1))
+	file.close()
+
 func save_stats():
 	var file = FileAccess.open("user://statistics.json", FileAccess.WRITE)
 	file.store_string(str(statistics))
@@ -65,6 +70,16 @@ func save_game_state():
 ##########################################################################################################################
 ##########################################################################################################################
 # READ DATA
+func read_new_player_file():
+	if FileAccess.file_exists("user://new_player.txt"):
+		var file = FileAccess.open("user://new_player.txt", FileAccess.READ)
+		var data = file.get_as_text()
+		file.close()
+		return int(data) == 1
+	else:
+		save_new_player()
+		return true
+
 func read_stats_file():
 	if FileAccess.file_exists("user://statistics.json"):
 		var file = FileAccess.open("user://statistics.json", FileAccess.READ)
@@ -119,7 +134,7 @@ func init_data():
 	read_money_file()
 	read_shop_levels_file()
 	read_game_state_file()
-
+	return read_new_player_file()
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
@@ -138,6 +153,7 @@ func reset_data():
 	shop_levels = default_shop_levels.duplicate(true)
 	game_state = null
 	clear_game_state()
+	remove_file('user://new_player.txt')
 	save_money()
 	save_shop_levels()
 	save_stats()

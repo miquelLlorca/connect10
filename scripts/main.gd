@@ -140,11 +140,6 @@ func update_money(money):
 	show_money_diff(diff, money_label.global_position)
 	Data.save_money()
 
-func show_settings():
-	var screen_size = get_viewport_rect().size
-	var window_size = settings_window.size
-	settings_window.position = (screen_size - window_size) / 2
-	settings_window.show()
 
 func expand_table():
 	if(expands_available>0):
@@ -155,6 +150,7 @@ func expand_table():
 func reset_expands():
 	expands_available = MAX_EXPANDS
 	expand_button.text = "Expand ("+str(expands_available)+")"
+
 
 func show_shop_and_missions():
 	if(game_ongoing):
@@ -169,6 +165,16 @@ func hide_shop_and_missions():
 		var tween = create_tween()
 		tween.tween_property($Main_V, "position:y", $Main_V.position.y + 1000, 0.25)
 		tween.tween_property($Main_V, "modulate:a", 0.0, 0.25)
+
+func show_settings():
+	var screen_size = get_viewport_rect().size
+	var window_size = settings_window.size
+	settings_window.position = (screen_size - window_size) / 2
+	settings_window.show()
+
+func show_tutorial():
+	show_settings()
+	settings_window.tutorial_window.show()
 
 
 func end_run():	
@@ -206,7 +212,7 @@ func end_run():
 ##########################################################################################################################
 
 func init_main():
-	Data.init_data()
+	var new_player = Data.init_data()
 	print(Data.statistics)
 	mission_list.init_missions()
 	await mission_list.missions_ready
@@ -223,6 +229,8 @@ func init_main():
 		table.populate_table(3,10)
 		set_score(0)
 		show_shop_and_missions()
+		if(new_player):
+			show_tutorial()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

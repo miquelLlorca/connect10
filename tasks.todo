@@ -44,7 +44,7 @@ Data management:
 Settings:
     ✔ Add setting button and panel @done (4/30/2025, 7:00:49 PM)
     ✔ Add reset button in Settings @done (4/30/2025, 7:16:06 PM)
-    ☐ Add silence button (when sound is added)
+    ☐ Add silence button functionality (when sound is added)
     ✔ Reset button should reload the game @done (5/5/2025, 2:59:24 PM)
 
 Aesthetics:
@@ -57,14 +57,14 @@ Aesthetics:
         ✔ Table population @done (4/30/2025, 5:43:39 PM)
         ✔ Expanding @done (4/30/2025, 5:43:40 PM)
         ✔ Clearing cells @done (5/2/2025, 12:30:09 PM)
-        ☐ Clearing rows
-        ☐ Clearing tables
+        ✔ Clearing rows @done (5/19/2025, 12:42:24 PM)
+        ✔ Clearing tables @done (5/19/2025, 12:42:25 PM)
         ✔ Money and score updates @done (5/5/2025, 3:23:17 PM)
 
 Tutorial:
     ✔ Write tutorial mock @done (5/2/2025, 4:23:28 PM)
     ✔ Clean up and finish mock @done (5/12/2025, 5:01:58 PM)
-    ☐ Show it first time opening
+    ✔ Show it first time opening @done (5/19/2025, 1:17:55 PM)
     ✔ Add button to show Tutorial @done (5/12/2025, 5:02:02 PM)
 
 Bugs:

@@ -86,7 +86,7 @@ offset_top = 2.0
 offset_right = 596.0
 offset_bottom = 92.0
 theme_override_font_sizes/font_size = 20
-text = "Clickin on the expand button will copy all the numbers in 
+text = "Clicking on the expand button will copy all the numbers in 
 the table following the same order but ignoring the gaps, 
 in the button you will see how many expands you have left."
 
