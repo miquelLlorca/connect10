@@ -36,3 +36,4 @@ pointing/android/enable_pan_and_scale_gestures=true
 
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.0313726, 0.345098, 0.133333, 1)
