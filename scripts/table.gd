@@ -15,7 +15,7 @@ func populate_table(rows, cols):
 
 			grid.add_child(cell)
 			# await get_tree().process_frame
-			cell.set_value(round(randf_range(1, 9)))
+			cell.set_value(round(randf_range(1, 9)), false)
 
 			var tween = create_tween()
 			tween.set_parallel()
@@ -46,7 +46,7 @@ func populate_table_with_list(values, keep_zeros):
 		if(values[i]!=0 or keep_zeros):
 			var cell = preload("res://scenes/cell.tscn").instantiate()
 			grid.add_child(cell)
-			cell.set_value(values[i])
+			cell.set_value(values[i], false)
 			
 			var tween = create_tween()
 			tween.set_parallel()

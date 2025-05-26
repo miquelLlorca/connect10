@@ -3,61 +3,60 @@ extends Panel
 var parentPos
 var original_colour
 var cell_value = 0
-@onready var label = $Label
+@onready var shadow = $Shadow
+@onready var card = $Card
 
 var cell_width = self.size.x
 var cell_height = self.size.y
 
-var suit 
-var suit_textures
-const SPADES = "♠"
-const HEARTS = "♥"
-const DIAMONDS = "♦"
-const CLUBS = "♣"
-const SUITS = [SPADES, HEARTS, DIAMONDS, CLUBS]
-
-@export var back_texture: Texture2D
-@export var base_texture: Texture2D
-@export var icon_texture: Texture2D
-@export var font: Font
-@export var label_text: String = "Card"
 
 
-func _draw():
-	if(cell_value==0):
-		if(back_texture):
-			draw_texture(back_texture, Vector2.ZERO)
-	else:
-		if(base_texture):
-			draw_texture(base_texture, Vector2.ZERO)
-		if(suit_textures and suit_textures[suit]):
-			draw_texture(suit_textures[suit], Vector2(43, 2))
-			# draw_texture(suit_textures[suit], Vector2(2, 42))
-		if(font):
-			# draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
-			if(suit==CLUBS or suit==SPADES):
-				draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
-				draw_string(font, Vector2(15,46), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.BLACK)
-			elif(suit==HEARTS or suit==DIAMONDS):
-				draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.BLACK)
-				draw_string(font, Vector2(15,46), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
+const SELECTION_OFFSET = 15
 
 
 
-		
-func set_value(value):
+func select_cell():
+	shadow.visible = true
+	var tween = create_tween()
+	tween.tween_property(self, "position:y", self.position.y - SELECTION_OFFSET, 0.1)
+
+func deselect_cell():
+	shadow.visible = false
+	var tween = create_tween()
+	tween.tween_property(self, "position:y", self.position.y + SELECTION_OFFSET, 0.1)
+
+
+
+
+func flip_animation(value):
+	var duration = 0.08
+	var tween1 = create_tween()
+	tween1.tween_property(self, "scale:x", 0.1, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	var tween2 = create_tween()
+	tween2.tween_property(self, "position:x", self.position.x + 25, duration).set_ease(Tween.EASE_IN)
+	await tween1.finished
+	await tween2.finished
+
 	cell_value = value
-	if(cell_value!=0):
-		var n = randi_range(0, 3)
-		suit = SUITS[n]
-		call_deferred('queue_redraw')
-	else:
-		cell_value = 1
-		var tween = create_tween()
-		tween.tween_property(self, "scale:x", 0.1, 1).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN).set_delay(0.1)
+	card.set_value(value)
+	queue_redraw()
+
+	var tween3 = create_tween()
+	tween3.tween_property(self, "position:x", self.position.x - 25, duration).set_ease(Tween.EASE_IN)
+	var tween4 = create_tween()
+	tween4.tween_property(self, "scale:x", 1.0, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	await tween3.finished
+	await tween4.finished
+
+	
+func set_value(value, animation):
+	if(value!=0):
 		cell_value = value
-		tween.tween_callback(Callable(self, "queue_redraw")).set_delay(0.1)
-		tween.tween_property(self, "scale:x", 1.0, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN).set_delay(0.2)
+		card.set_value(value)
+		call_deferred('queue_redraw')
+	elif(value==0 and animation):
+			flip_animation(value)
+			
 
 
 	
@@ -84,18 +83,12 @@ func _ready():
 	parentPos = get_parent().get_parent().position
 	original_colour = self.modulate
 	self.connect("gui_input", _on_cell_input)
-	base_texture = load("res://assets/decks/default/front_template.png")
-	back_texture = load("res://assets/decks/default/back.png")
-	font = ThemeDB.fallback_font;
-	# font.size = 20
-	suit_textures = {
-		HEARTS: load("res://assets/decks/default/corazones.png"),
-		SPADES: load("res://assets/decks/default/picas.png"),
-		CLUBS: load("res://assets/decks/default/treboles.png"),
-		DIAMONDS: load("res://assets/decks/default/diamantes.png"),
-	}
+	self.z_as_relative = true
+	shadow.z_index = 0
+	card.z_index = 1
+	shadow.position.y += SELECTION_OFFSET
 
-
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

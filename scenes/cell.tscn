@@ -1,9 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://ltlj8npdbu2o"]
+[gd_scene load_steps=6 format=3 uid="uid://ltlj8npdbu2o"]
 
 [ext_resource type="Script" path="res://scripts/cell.gd" id="1_dl0um"]
+[ext_resource type="Script" path="res://scripts/card.gd" id="2_dsjdf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3x5tw"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpeuy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tv4u8"]
+bg_color = Color(0.194349, 0.194349, 0.194349, 0.682353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Panel" type="Panel"]
 custom_minimum_size = Vector2(60, 60)
@@ -11,6 +23,24 @@ offset_right = 60.0
 offset_bottom = 60.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3x5tw")
 script = ExtResource("1_dl0um")
+
+[node name="Card" type="Panel" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fpeuy")
+script = ExtResource("2_dsjdf")
+
+[node name="Shadow" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tv4u8")
 
 [node name="Button" type="Button" parent="."]
 visible = false

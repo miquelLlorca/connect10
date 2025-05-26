@@ -49,9 +49,8 @@ Settings:
 
 Aesthetics:
     ✔ Make everything bigger @done (4/16/2025, 2:34:46 PM)
-    ☐ Turn cells into cards
+    ✔ Turn cells into cards @done (5/26/2025, 8:25:19 PM)
     ☐ Tweak colours
-    ☐ Add light/dark mode
     ☐ Add theme personalization shop
     ☐ Add icons to each mission
     Animations:
@@ -61,6 +60,7 @@ Aesthetics:
         ✔ Clearing rows @done (5/19/2025, 12:42:24 PM)
         ✔ Clearing tables @done (5/19/2025, 12:42:25 PM)
         ✔ Money and score updates @done (5/5/2025, 3:23:17 PM)
+        ✔ Cleared cards get flipped @done (5/26/2025, 8:25:39 PM)
 
 Tutorial:
     ✔ Write tutorial mock @done (5/2/2025, 4:23:28 PM)
@@ -71,7 +71,6 @@ Tutorial:
 Bugs:
     ✔ Expand should start the game and then hide shop and missions @done (4/22/2025, 2:04:23 PM)
     ✔ Scroll not working on apk @done (4/22/2025, 12:41:53 PM)
-    ☐ Some data seems to not be saved in android?
     ✔ When only 2 lines remain and you select in top-down order, the 2nd row is not deleted. Possible fix is to order positions before checking empty lines. @done (5/12/2025, 12:57:01 PM)
 
 APK:

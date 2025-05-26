@@ -20,7 +20,7 @@ var game_ongoing = false
 
 var score_multiplier = 1
 var money_multiplier = 1
-
+var background
 # @onready var admob = Engine.get_singleton("AdMob")
 
 @onready var table = $Table
@@ -33,6 +33,15 @@ var money_multiplier = 1
 @onready var settings_button = $Settings
 var settings_window: Control
 
+func wait(seconds: float) -> void:
+	var t := Timer.new()
+	t.wait_time = seconds
+	t.one_shot = true
+	add_child(t)
+	t.start()
+	await t.timeout
+	t.queue_free()
+	
 func round_to(x, n):
 	return round(x*10.0**n)/10.0**n
 
@@ -242,6 +251,9 @@ func _ready():
 	settings_window = preload("res://scenes/settings.tscn").instantiate()
 	add_child(settings_window)
 	settings_window.hide()
+	settings_window.z_index = 10
+	settings_window.tutorial_window.z_index = 20
+	background = load("res://assets/background.png")
 	init_main()
 	# admob.init('ca-app-pub-9221900563273591~4549362904')
 	# admob.load_banner('ca-app-pub-3940256099942544/9214589741', true)

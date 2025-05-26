@@ -75,7 +75,7 @@ func setup_table1():
 	var CellScene = preload("res://scenes/cell.tscn")
 	for number in table1_data:
 		var cell = CellScene.instantiate()
-		cell.call_deferred("set_value", number)
+		cell.call_deferred("set_value", number, false)
 		grid1.add_child(cell)
 		
 	clear_cell_connector(grid1, Vector2(0,0), Vector2(1,0), 2)	
@@ -98,7 +98,7 @@ func setup_table2():
 	var CellScene = preload("res://scenes/cell.tscn")
 	for number in table2_data:
 		var cell = CellScene.instantiate()
-		cell.call_deferred("set_value", number)
+		cell.call_deferred("set_value", number, false)
 		grid2.add_child(cell)
 
 	clear_cell_connector(grid2, Vector2(0,2), Vector2(0,4), 2)
@@ -120,7 +120,7 @@ func setup_table3():
 	var CellScene = preload("res://scenes/cell.tscn")
 	for number in table3_data:
 		var cell = CellScene.instantiate()
-		cell.call_deferred("set_value", number)
+		cell.call_deferred("set_value", number, false)
 		grid3.add_child(cell)
 
 	# clear_cell_connector_endline(grid3, Vector2(0,2), )

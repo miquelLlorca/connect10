@@ -93,16 +93,17 @@ func clear_cell_animation_endline():
 func _on_cell_click(row, column):
 	if(not pos0):
 		pos0 = [row, column]
-		get_cell(pos0).set_colour()
+		get_cell(pos0).select_cell()
 	elif(not (pos0[0]==row and pos0[1]==column)):
 		pos1 = [row, column]
 		var n0 = get_cell_value(pos0)
 		var n1 = get_cell_value(pos1)
-		get_cell(pos0).clean_colour()
+		get_cell(pos0).deselect_cell()
 		
-		if(execute_movement()):
-			get_cell(pos0).set_value(0)
-			get_cell(pos1).set_value(0)
+		if(await execute_movement()):
+			print('AA')
+			await main.wait(0.1)
+			print('has waited')
 			if(not main.game_ongoing):
 				main.hide_shop_and_missions()
 			Data.statistics['cellsCleared'] += 2
@@ -111,13 +112,16 @@ func _on_cell_click(row, column):
 			else:
 				Data.statistics['sum10s'] += 1
 			print('CORRECT')
-			await clear_empty_rows()
+			var row0 = pos0[0]
+			var row1 = pos1[0]
+			pos0 = null
+			pos1 = null
+			await clear_empty_rows(row0, row1)
 			Data.save_game_state()
 		else:
 			print('INCORRECT')
-
-		pos0 = null
-		pos1 = null
+			pos0 = null
+			pos1 = null
 
 func get_row_count():
 	return ceil(float(self.get_child_count()) / columns)
@@ -144,7 +148,7 @@ func check_mid_line_empty(pos, dir):
 
 func remove_row(row):
 	var start_index = row * columns  
-	var timer = 0.2 if get_row_count()>1 else 0.4
+	var timer = 0.3 if get_row_count()>1 else 0.5
 	for i in range(columns):
 		var cell = self.get_child(start_index+i)
 		var tween = create_tween()
@@ -155,9 +159,7 @@ func remove_row(row):
 	await get_tree().create_timer(timer).timeout  # Wait for the animation to finish
 	self.queue_sort()
 
-func clear_empty_rows():
-	var row0 = pos0[0]
-	var row1 = pos1[0]
+func clear_empty_rows(row0,row1):
 	if(row1>row0):
 		var aux = row0
 		row0 = row1
@@ -236,7 +238,10 @@ func execute_movement():
 			full_score = full_score*main.sum_10_mult
 			
 		main.update_score(full_score)
-		clear_cell_animation(pos0, pos1, 2)
+		
+		get_cell(pos0).set_value(0,true)
+		get_cell(pos1).set_value(0,true)
+		await clear_cell_animation(pos0, pos1, 2)
 		return true;
 	else:
 		# Possible Endline move needs different treatment.
@@ -264,7 +269,10 @@ func execute_movement():
 				full_score = full_score*main.sum_10_mult
 				
 			main.update_score(full_score)
-			clear_cell_animation_endline()
+			
+			get_cell(pos0).set_value(0,true)
+			get_cell(pos1).set_value(0,true)
+			await clear_cell_animation_endline()
 			return true;
 		else:
 			return false;
