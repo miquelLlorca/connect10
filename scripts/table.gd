@@ -63,6 +63,10 @@ func expand_table():
 	if(not main.game_ongoing):
 		main.hide_shop_and_missions()
 
+	if(grid.pos0 != null):
+		grid.get_cell(grid.pos0).deselect_cell()
+		grid.pos0 = null
+
 	var keep_zeros = false
 	var values = get_table_values(keep_zeros)
 	populate_table_with_list(values, keep_zeros)

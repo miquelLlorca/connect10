@@ -101,9 +101,7 @@ func _on_cell_click(row, column):
 		get_cell(pos0).deselect_cell()
 		
 		if(await execute_movement()):
-			print('AA')
 			await main.wait(0.1)
-			print('has waited')
 			if(not main.game_ongoing):
 				main.hide_shop_and_missions()
 			Data.statistics['cellsCleared'] += 2
