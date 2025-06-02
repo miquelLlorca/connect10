@@ -33,6 +33,7 @@ Currently in development:
 - Core gameplay working
 - Visual polish and effects in progress
 - Touch/mouse support functional
+- Available for Android, Ubuntu and Windows
 
 ---
 
@@ -44,9 +45,14 @@ You can get the game in [Itch.io](https://nini-dev.itch.io/connect-10) or altern
 
 ---
 
-## ✨ License
+## 📜 License
 
-MIT — free to use, modify, and distribute.
+- **Code:** [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)  
+  You are free to use, modify, and distribute the source code, as long as any changes are also open-source under the same license.
+
+- **Assets:** [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)  
+  You may use or remix the assets (art, fonts, sounds), but only with attribution and for non-commercial purposes.
+
 
 ---
 
@@ -54,6 +60,7 @@ MIT — free to use, modify, and distribute.
 
 Feel free to open issues or submit pull requests!
 
+---
 
 ## 🌐 Socials
 
