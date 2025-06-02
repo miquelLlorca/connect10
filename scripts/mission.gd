@@ -23,27 +23,18 @@ func complete_mission():
 				"modulate", Color(1,1,1), 0.25
 			)
 
-
 func render():
 	title.text = mission.name
 	description.text = mission.description
 	progress.text = mission.get_progress_string()
 
-
-func init_complete():
-	# used when first loading game,
-	# completes mission until it cant complete anymore
-	pass
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
 	claim_button.connect("pressed", Callable(self, "complete_mission"))
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

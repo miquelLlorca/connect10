@@ -35,27 +35,19 @@ func _on_reset_confirmed():
 		await main.table.grid.remove_row(i)
 	main.init_main()
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
 	close_button.connect("pressed", Callable(self, "hide_window"))
 	help_button.connect("pressed", Callable(self, "_on_help_pressed"))
-	# reset_button.connect("pressed", Callable(Data, "reset_data"))
 	reset_button.connect("pressed", Callable(self, "_on_reset_pressed"))
 	$ResetConfirmDialog.connect("confirmed", Callable(self, "_on_reset_confirmed"))
 
 	tutorial_window = preload("res://scenes/tutorial_window.tscn").instantiate()
 	main.add_child(tutorial_window)
-	# tutorial_window.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	tutorial_window.set_anchors_preset(Control.PRESET_FULL_RECT)
 	tutorial_window.global_position = Vector2(0,0)
-	# tutorial_window.margin_left = 0
-	# tutorial_window.margin_top = 0
 	tutorial_window.hide()
 
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

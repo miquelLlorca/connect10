@@ -13,7 +13,6 @@ const MAX_EXPAND_LEVEL = 10
 func get_price_from_level(level):
 	return floor(main.shop_discount * BASE_PRICE * pow(1.2, level-1))
 
-
 func get_multiplier_from_level(level):
 	return main.round_to((BASE_MULTIPLIER * (1 + (level-1) * 0.1)), 2)
 
@@ -82,7 +81,6 @@ func render_shops():
 	$HBoxContainer/Expands/VBoxContainer/Descr.text = str(main.MAX_EXPANDS+1)
 	$HBoxContainer/Expands/VBoxContainer/Price.text = str(get_price_from_level(level)*10)+"$"
 
-
 func init_shops():
 	render_shops()
 	main.score_multiplier = get_multiplier_from_level(Data.shop_levels['score'])
@@ -101,7 +99,5 @@ func _ready() -> void:
 	money_button.connect("pressed", Callable(self, "upgrade_money_mult"))
 	max_expand_button.connect("pressed", Callable(self, "upgrade_max_expands"))
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

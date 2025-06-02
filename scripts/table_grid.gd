@@ -9,6 +9,7 @@ var initRows = 3
 
 const CLEAR_CELLS_ANIMATION_DURATION = 0.3
 
+# Aux functions
 func get_cell(pos):
 	var i = pos[0]*10 + pos[1]
 	return get_child(i)
@@ -22,6 +23,18 @@ func get_cell_value(pos):
 			return 0
 	return int(value)
 
+func get_incr(diff):
+		if(diff > 0):
+			return -1
+		if(diff < 0):
+			return +1
+		return 0
+
+func get_row_count():
+	return ceil(float(self.get_child_count()) / columns)
+	
+	
+# Animations
 func spawn_circle(pos: Vector2):
 	var circle = TextureRect.new()
 	circle.set_anchors_preset(Control.PRESET_CENTER)
@@ -47,8 +60,6 @@ func spawn_circle(pos: Vector2):
 	tween.tween_property(circle, "position", circle.position - (delta_size / 2), duration)
 	tween.tween_property(circle, "modulate:a", 0.0, duration)
 	tween.tween_callback(Callable(circle, "queue_free")).set_delay(1)
-
-
 
 func clear_cell_animation(p0, p1, draw_ends):
 	''' 
@@ -76,7 +87,6 @@ func clear_cell_animation(p0, p1, draw_ends):
 	tween.tween_property(line, "modulate:a", 0.0, CLEAR_CELLS_ANIMATION_DURATION)
 	tween.tween_callback(Callable(line, "queue_free")).set_delay(1)
 
-
 func clear_cell_animation_endline():
 	if(pos0[0]<pos1[0]):
 		clear_cell_animation(pos0, Vector2(pos0[0],9.4), 0)
@@ -88,7 +98,7 @@ func clear_cell_animation_endline():
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
-
+# Grid management
 
 func _on_cell_click(row, column):
 	if(not pos0):
@@ -121,16 +131,6 @@ func _on_cell_click(row, column):
 			pos0 = null
 			pos1 = null
 
-func get_row_count():
-	return ceil(float(self.get_child_count()) / columns)
-	
-func get_incr(diff):
-		if(diff > 0):
-			return -1
-		if(diff < 0):
-			return +1
-		return 0
-
 func check_mid_line_empty(pos, dir):
 	if(dir == 1):
 		for i in range(pos[1]+1, initColumns):
@@ -143,7 +143,6 @@ func check_mid_line_empty(pos, dir):
 				return false;
 		return true;
 		
-
 func remove_row(row):
 	var start_index = row * columns  
 	var timer = 0.3 if get_row_count()>1 else 0.5
@@ -183,12 +182,6 @@ func clear_empty_rows(row0,row1):
 		Data.statistics['tablesCleared'] += 1
 		main.reset_expands()
 		get_parent().get_parent().populate_table(3,10);
-
-##########################################################################################################################
-##########################################################################################################################
-##########################################################################################################################
-
-
 
 func execute_movement():
 	# Are the numbers compatible? Numbers must be equal or sum 10
@@ -276,21 +269,13 @@ func execute_movement():
 			return false;
 		
 
-
-
-
-
-
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

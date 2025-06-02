@@ -14,7 +14,6 @@ const SUITS = [SPADES, HEARTS, DIAMONDS, CLUBS]
 @export var base_texture: Texture2D
 @export var icon_texture: Texture2D
 @export var font: Font
-@export var label_text: String = "Card"
 
 func set_value(value):
 	cell_value = value
@@ -32,9 +31,7 @@ func _draw():
 			draw_texture(base_texture, Vector2.ZERO)
 		if(suit_textures and suit_textures[suit]):
 			draw_texture(suit_textures[suit], Vector2(43, 2))
-			# draw_texture(suit_textures[suit], Vector2(2, 42))
 		if(font):
-			# draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
 			if(suit==CLUBS or suit==SPADES):
 				draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
 				draw_string(font, Vector2(15,46), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.BLACK)
@@ -42,7 +39,7 @@ func _draw():
 				draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.BLACK)
 				draw_string(font, Vector2(15,46), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	base_texture = load("res://assets/decks/default/front_template.png")
 	back_texture = load("res://assets/decks/default/back.png")
@@ -56,6 +53,5 @@ func _ready() -> void:
 	}
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

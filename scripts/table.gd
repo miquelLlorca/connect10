@@ -4,11 +4,7 @@ extends Control
 @onready var grid = $CenterContainer/GridContainer
 var main
 
-
-# Method to populate the table with rows and columns of cells
 func populate_table(rows, cols):
-	var first_cell_pos
-
 	for row in range(rows):
 		for col in range(cols):
 			var cell = preload("res://scenes/cell.tscn").instantiate()
@@ -83,12 +79,9 @@ func end_run():
 ##########################################################################################################################
 ##########################################################################################################################
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

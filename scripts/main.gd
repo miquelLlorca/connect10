@@ -33,6 +33,7 @@ var background
 @onready var settings_button = $Settings
 var settings_window: Control
 
+# Aux functions
 func wait(seconds: float) -> void:
 	var t := Timer.new()
 	t.wait_time = seconds
@@ -45,6 +46,8 @@ func wait(seconds: float) -> void:
 func round_to(x, n):
 	return round(x*10.0**n)/10.0**n
 
+
+# Score management
 func set_score(points):
 	score = points
 	score = round_to(score, 2)
@@ -94,6 +97,8 @@ func update_score(points):
 	score_label.text = "Score:\n"+str(score)
 	show_score_diff(diff, score_label.global_position)
 
+
+# Money management
 func show_money_diff(amount: float, origin_pos: Vector2):
 	print(amount)
 	origin_pos = origin_pos + Vector2(10, +45)
@@ -150,17 +155,7 @@ func update_money(money):
 	Data.save_money()
 
 
-func expand_table():
-	if(expands_available>0):
-		expands_available -= 1
-		expand_button.text = "Expand ("+str(expands_available)+")"
-		table.expand_table()
-
-func reset_expands():
-	expands_available = MAX_EXPANDS
-	expand_button.text = "Expand ("+str(expands_available)+")"
-
-
+# Visibility
 func show_shop_and_missions():
 	if(game_ongoing):
 		game_ongoing = false
@@ -185,6 +180,17 @@ func show_tutorial():
 	show_settings()
 	settings_window.tutorial_window.show()
 
+
+# Expand management
+func expand_table():
+	if(expands_available>0):
+		expands_available -= 1
+		expand_button.text = "Expand ("+str(expands_available)+")"
+		table.expand_table()
+
+func reset_expands():
+	expands_available = MAX_EXPANDS
+	expand_button.text = "Expand ("+str(expands_available)+")"
 
 func end_run():	
 	if(game_ongoing):

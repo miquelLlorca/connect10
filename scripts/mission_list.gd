@@ -4,11 +4,11 @@ var main
 @onready var list = $ScrollContainer/VBoxContainer
 signal missions_ready
 
+
 func init_missions():
 	for child in list.get_children():
 		child.queue_free()
 
-	print('creating missions')
 	list.add_child(MissionFactory.create_mission(MissionFactory.CLEAR_CELLS,''))
 	list.add_child(MissionFactory.create_mission(MissionFactory.CLEAR_ROWS,''))
 	list.add_child(MissionFactory.create_mission(MissionFactory.CLEAR_TABLES,''))
@@ -72,22 +72,19 @@ func update_layout():
 	$ScrollContainer.scroll_vertical = 0
 
 
-
 func complete_missions_at_init():
 	for node in list.get_children():
 		while(node.mission.complete_mission()):
 			continue
 		node.render()
+
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_tree().root.get_node("Main")
 	MissionFactory.set_main_reference(main)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

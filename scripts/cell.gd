@@ -9,11 +9,7 @@ var cell_value = 0
 var cell_width = self.size.x
 var cell_height = self.size.y
 
-
-
 const SELECTION_OFFSET = 15
-
-
 
 func select_cell():
 	shadow.visible = true
@@ -24,9 +20,6 @@ func deselect_cell():
 	shadow.visible = false
 	var tween = create_tween()
 	tween.tween_property(self, "position:y", self.position.y + SELECTION_OFFSET, 0.1)
-
-
-
 
 func flip_animation(value):
 	var duration = 0.08
@@ -48,7 +41,7 @@ func flip_animation(value):
 	await tween3.finished
 	await tween4.finished
 
-	
+
 func set_value(value, animation):
 	if(value!=0):
 		cell_value = value
@@ -57,9 +50,6 @@ func set_value(value, animation):
 	elif(value==0 and animation):
 			flip_animation(value)
 			
-
-
-	
 func set_colour():
 	self.modulate = Color(0.1, 0.5, 0.9)
 
@@ -77,7 +67,6 @@ func _on_cell_input(event):
 ##########################################################################################################################
 ##########################################################################################################################
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	# gets the pos of the center container as when the table is resetted the position gets messed up
 	parentPos = get_parent().get_parent().position
@@ -88,10 +77,7 @@ func _ready():
 	card.z_index = 1
 	shadow.position.y += SELECTION_OFFSET
 
-	
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 	
