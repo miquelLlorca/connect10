@@ -17,5 +17,5 @@ func complete_mission():
 	return false
 		
 func reward():
-	main.sum_10_mult += 0.25
+	main.sum_10_mult += 0.1
 

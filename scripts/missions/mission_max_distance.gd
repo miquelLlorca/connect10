@@ -18,9 +18,9 @@ func complete_mission():
 		
 func reward():
 	if(level<5):
-		main.distance_multiplier += 0.25
+		main.distance_multiplier += 0.1
 	elif(level<10):
-		main.distance_multiplier += 1
+		main.distance_multiplier += 0.25
 	else:
 		main.distance_multiplier += 5
 

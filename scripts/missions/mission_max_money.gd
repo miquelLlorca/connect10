@@ -2,7 +2,7 @@ extends BaseMission
 class_name MissionMaxMoney
 
 func set_objective():
-	objective = 100*level
+	objective = 10**(1+level)
 
 func init(init_level, mission_name, mission_description, main_reference):
 	super.init(init_level, mission_name, mission_description, main_reference)
