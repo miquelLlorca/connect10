@@ -37,7 +37,7 @@ Currently in development:
 ---
 
 ## 📦 Running the Game
-
+You can get the game in [Itch.io](https://nini-dev.itch.io/connect-10) or alternatively:
 1. Clone this repo  
 2. Open the project in **Godot 4.3**
 3. Run the `Main` scene
