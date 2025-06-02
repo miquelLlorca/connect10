@@ -4,7 +4,13 @@ extends Control
 @onready var grid = $CenterContainer/GridContainer
 var main
 
-func populate_table(rows, cols):
+func populate_table(rows: int, cols: int):
+	'''
+	Populates the table with random numbers given a certain size.
+	Args:
+		rows (int): number of rows.
+		cols (int): number of cols.
+	'''
 	for row in range(rows):
 		for col in range(cols):
 			var cell = preload("res://scenes/cell.tscn").instantiate()
@@ -24,9 +30,13 @@ func populate_table(rows, cols):
 			tween.tween_property(cell, "position", Vector2(col*64, row*64), 0.2).set_delay(delay)
 			tween.tween_property(cell, "modulate:a", 1.0, 0.4).set_delay(delay)
 
-func get_table_values(keep_zeros):
+func get_table_values(keep_zeros: bool):
 	'''
-	Keep zeros indicates if the empty spaces should be added to the list as 0s
+	Gets the values on the table for expanding or saving table state.
+	Args:
+		keep_zeros (bool): indicates if the empty spaces should be added to the list as 0s or skipped.
+	Returns:
+		array[int]: the numbers on the table.
 	'''
 	var values = []
 	for i in range(grid.get_child_count()):
@@ -37,7 +47,13 @@ func get_table_values(keep_zeros):
 			values.append(cell_value)
 	return values
 
-func populate_table_with_list(values, keep_zeros):
+func populate_table_with_list(values: Array, keep_zeros: bool):
+	'''
+	Populates the table using a given list of numbers.
+	Args:
+		values (array[int]): the values to be written in the table.
+		keep_zeros (bool): specifies if the zeros in the list should be skipped when populating table.
+	'''
 	for i in range(len(values)):
 		if(values[i]!=0 or keep_zeros):
 			var cell = preload("res://scenes/cell.tscn").instantiate()
@@ -56,6 +72,9 @@ func populate_table_with_list(values, keep_zeros):
 			tween.tween_property(cell, "modulate:a", 1.0, 0.2).set_delay(delay)
 
 func expand_table():
+	'''
+	Expands the table, does not keep zeros.
+	'''
 	if(not main.game_ongoing):
 		main.hide_shop_and_missions()
 
@@ -69,7 +88,9 @@ func expand_table():
 	Data.save_game_state()
 
 func end_run():
-	# resets the table
+	'''
+	When run is ended, all table is cleared and populated randomly again.
+	'''
 	var n = grid.get_row_count()
 	for i in range(n-1,-1,-1):
 		await grid.remove_row(i)

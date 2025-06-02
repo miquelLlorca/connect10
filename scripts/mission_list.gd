@@ -6,6 +6,9 @@ signal missions_ready
 
 
 func init_missions():
+	'''
+	Inits and renders all missions using MissionFactory, adjusts ScrollContainer size to match amount of missions.
+	'''
 	for child in list.get_children():
 		child.queue_free()
 
@@ -37,6 +40,9 @@ func adjust_height():
 	list.custom_minimum_size.y = list.get_theme_constant("separation") * list.get_child_count()
 
 func sort_missions():
+	'''
+	Sorts missions according to the completion %.
+	'''
 	var mission_nodes = list.get_children()
 	mission_nodes.sort_custom(func(a, b):
 		return a.mission.get_progress_percentage() > b.mission.get_progress_percentage()
@@ -46,6 +52,9 @@ func sort_missions():
 		list.add_child(node)
 
 func check_claimable_missions():
+	'''
+	Checks which missions have been completed, paints them green and enables claim button.
+	'''
 	for node in list.get_children():
 		var tween = create_tween()
 		if node.mission.get_progress_percentage() < 100:
@@ -66,6 +75,9 @@ func render_missions():
 		node.render()
 
 func update_layout():
+	'''
+	Updates whole layout of mission list.
+	'''
 	render_missions()
 	sort_missions()
 	check_claimable_missions()
@@ -73,6 +85,9 @@ func update_layout():
 
 
 func complete_missions_at_init():
+	'''
+	At game init the missions must be init according to the stats.
+	'''
 	for node in list.get_children():
 		while(node.mission.complete_mission()):
 			continue

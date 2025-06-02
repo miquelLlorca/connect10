@@ -10,11 +10,11 @@ var initRows = 3
 const CLEAR_CELLS_ANIMATION_DURATION = 0.3
 
 # Aux functions
-func get_cell(pos):
+func get_cell(pos: Array):
 	var i = pos[0]*10 + pos[1]
 	return get_child(i)
 	
-func get_cell_value(pos):
+func get_cell_value(pos: Array):
 	var i = pos[0]*10 + pos[1]
 	if(i>=self.get_child_count()):
 		return 0 # trying to read at the right of an unfinished line
@@ -23,19 +23,29 @@ func get_cell_value(pos):
 			return 0
 	return int(value)
 
-func get_incr(diff):
-		if(diff > 0):
-			return -1
-		if(diff < 0):
-			return +1
-		return 0
+func get_incr(diff: int):
+	'''
+	Aux function for executing moves, gets the direction in which to check.
+	Args: 
+		diff (int): the difference between the 2 positions.
+	'''
+	if(diff > 0):
+		return -1
+	if(diff < 0):
+		return +1
+	return 0
 
 func get_row_count():
 	return ceil(float(self.get_child_count()) / columns)
 	
-	
+
 # Animations
 func spawn_circle(pos: Vector2):
+	'''
+	Spawns circle in the center of the cell. Used for clearing animation.
+	Args:
+		pos (Vector2): position of the cell.
+	'''
 	var circle = TextureRect.new()
 	circle.set_anchors_preset(Control.PRESET_CENTER)
 	circle.texture = preload("res://assets/circle.png")  # Adjust the path as needed
@@ -61,9 +71,13 @@ func spawn_circle(pos: Vector2):
 	tween.tween_property(circle, "modulate:a", 0.0, duration)
 	tween.tween_callback(Callable(circle, "queue_free")).set_delay(1)
 
-func clear_cell_animation(p0, p1, draw_ends):
+func clear_cell_animation(p0: Vector2, p1: Vector2, draw_ends: int):
 	''' 
-	Draw ends {-1:none, 0:p0, 1:p1, 2:both}
+	Starts animation for clearing cell. Circles at the end can be deactivated.
+	Args:
+		p0 (Vector2): position of first cell.
+		p1 (Vector2): position of other cell.
+		draw_ends (int): used for specifying which circles to plot {-1:none, 0:p0, 1:p1, 2:both}
 	'''
 	var x = self.get_global_rect().position.x
 	var y = self.get_global_rect().position.y
@@ -88,19 +102,29 @@ func clear_cell_animation(p0, p1, draw_ends):
 	tween.tween_callback(Callable(line, "queue_free")).set_delay(1)
 
 func clear_cell_animation_endline():
+	'''
+	Starts clear cell animation for endline clearings.
+	'''
 	if(pos0[0]<pos1[0]):
-		clear_cell_animation(pos0, Vector2(pos0[0],9.4), 0)
-		clear_cell_animation(Vector2(pos1[0],-0.5), pos1, 1)
+		clear_cell_animation(Vector2(pos0[0], pos0[1]), Vector2(pos0[0],9.4),      0)
+		clear_cell_animation(Vector2(pos1[0],-0.5),     Vector2(pos1[0], pos1[1]), 1)
 	else:
-		clear_cell_animation(pos1, Vector2(pos1[0],9.4), 0)
-		clear_cell_animation(Vector2(pos0[0],-0.5), pos0, 1)
+		clear_cell_animation(Vector2(pos1[0], pos1[1]), Vector2(pos1[0],9.4),      0)
+		clear_cell_animation(Vector2(pos0[0],-0.5),     Vector2(pos0[0], pos0[1]), 1)
 
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
 # Grid management
 
-func _on_cell_click(row, column):
+func _on_cell_click(row: int, column: int):
+	'''
+	Called when a cell is clicked, given its position, it does all processing needed.
+	First click is always saved, second is processed to check if it is a valid move.
+	Args:
+		row (int): row index.
+		column (int): column index.
+	'''
 	if(not pos0):
 		pos0 = [row, column]
 		get_cell(pos0).select_cell()
@@ -131,19 +155,33 @@ func _on_cell_click(row, column):
 			pos0 = null
 			pos1 = null
 
-func check_mid_line_empty(pos, dir):
+func check_mid_line_empty(pos: Array, dir: int):
+	'''
+	Checks if the line is empty starting from a given position.
+	Used for endline moves, also to check if a row can be removed.
+	Args: 
+		pos (array[int]): start position to check.
+		dir (int): direction of movement through the row.
+	Returns:
+		bool: true if the checked part is empty.
+	'''
 	if(dir == 1):
 		for i in range(pos[1]+1, initColumns):
 			if(get_cell_value([pos[0], i]) != 0):
 				return false
-		return true;
+		return true
 	else:
 		for i in range(pos[1] - 1, -1, -1):
 			if(get_cell_value([pos[0], i]) != 0):
-				return false;
-		return true;
+				return false
+		return true
 		
-func remove_row(row):
+func remove_row(row: int):
+	'''
+	Removes the specified row, starts the animation and sets a timeout to ensure data consistency.
+	Args:
+		row (int): the index of the row.
+	'''
 	var start_index = row * columns  
 	var timer = 0.3 if get_row_count()>1 else 0.5
 	for i in range(columns):
@@ -156,7 +194,14 @@ func remove_row(row):
 	await get_tree().create_timer(timer).timeout  # Wait for the animation to finish
 	self.queue_sort()
 
-func clear_empty_rows(row0,row1):
+func clear_empty_rows(row0: int, row1: int):
+	'''
+	When a move is executed it checks the affected rows to see if they can be removed.
+	If the table is cleared it resets it.
+	Args:
+		row0 (int): index of first row.
+		row1 (int): index of other row.
+	'''
 	if(row1>row0):
 		var aux = row0
 		row0 = row1
@@ -184,6 +229,13 @@ func clear_empty_rows(row0,row1):
 		get_parent().get_parent().populate_table(3,10);
 
 func execute_movement():
+	'''
+	Executes the movement on the selected cells.
+	Are the numbers compatible? Can they reach each other? 
+	If it is all ok, it computes the score and shows the animation for clearing the cells.
+	Returns:
+		bool: true if the move is executed.
+	'''
 	# Are the numbers compatible? Numbers must be equal or sum 10
 	var n0 = get_cell_value(pos0)
 	var n1 = get_cell_value(pos1)
@@ -232,7 +284,7 @@ func execute_movement():
 		
 		get_cell(pos0).set_value(0,true)
 		get_cell(pos1).set_value(0,true)
-		await clear_cell_animation(pos0, pos1, 2)
+		await clear_cell_animation(Vector2(pos0[0], pos0[1]), Vector2(pos1[0], pos1[1]), 2)
 		return true;
 	else:
 		# Possible Endline move needs different treatment.

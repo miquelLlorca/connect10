@@ -14,7 +14,15 @@ const CLEAR_PAIRS = 'CLEAR_PAIRS'
 
 var main
 
-func create_mission(mission_type, subtype):
+func create_mission(mission_type: String, subtype: String):
+	'''
+	Creates a mission object according to the specified type.
+	Args:
+		mission_type (string): specifies the primary type, always needed.
+		subtype (string): specifies subtype, needed only for Pair Clearing missions.
+	Returns:
+		BaseMission: Mission object of the specified type.
+	'''
 	var aux_mission
 	if(mission_type==CLEAR_CELLS):
 		aux_mission = load("res://scripts/missions/mission_clear_cells.gd")

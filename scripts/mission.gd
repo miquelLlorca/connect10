@@ -8,15 +8,22 @@ var mission
 @onready var progress = $CenterContainer/Panel/VBoxContainer/Progress
 @onready var claim_button = $CenterContainer/Panel/VBoxContainer/Claim
 
-func init(mission_obj):
+func init(mission_obj: BaseMission):
+	'''
+	Sets the mission object related to the mission node, as this is just the general UI. 
+	Args:
+		Mission_obj (BaseMission): Can be any child of BaseMission, this object contains all the mission data. 
+	'''
 	mission = mission_obj
 
 func complete_mission():
+	'''
+	If mission can be completed (the objective can be reached), level goes up and it gets rendered again.
+	'''
 	if(mission.complete_mission()):
 		render()
 		if mission.get_progress_percentage() < 100:
 			claim_button.disabled = true
-			# $CenterContainer/Panel.modulate = Color(1,1,1)
 			var tween = create_tween()
 			tween.tween_property(
 				$CenterContainer/Panel, 

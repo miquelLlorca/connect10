@@ -54,6 +54,12 @@ func set_score(points):
 	score_label.text = "Score:\n"+str(score)
 
 func show_score_diff(amount: float, origin_pos: Vector2):
+	'''
+	Creates a panel animation that shows how the score is changed.
+	Args:
+		amount (float): the amount of points that are added to the score.
+		origin_pos (Vector2): the position where the panel will be plotted.
+	'''
 	origin_pos = origin_pos + Vector2(10, +45)
 	var panel = Panel.new()
 	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
@@ -91,7 +97,12 @@ func show_score_diff(amount: float, origin_pos: Vector2):
 	tween.tween_property(panel, "modulate:a", 0.0, 1)
 	tween.tween_callback(Callable(panel, "queue_free")).set_delay(2)
 
-func update_score(points):
+func update_score(points: float):
+	'''
+	Updates the score taking into account the multiplier, updates UI.
+	Args:
+		amount (float): the base amount of points added to the score.
+	'''
 	var diff = round_to(points*score_multiplier, 2)
 	score = round_to(score + diff,2)
 	score_label.text = "Score:\n"+str(score)
@@ -100,7 +111,13 @@ func update_score(points):
 
 # Money management
 func show_money_diff(amount: float, origin_pos: Vector2):
-	print(amount)
+	'''
+	Creates a panel animation that shows how the money is changed.
+	Args:
+		amount (float): the amount of money that is added (or removed) from the total.
+		origin_pos (Vector2): the position where the panel will be plotted.
+	'''
+	
 	origin_pos = origin_pos + Vector2(10, +45)
 	var panel = Panel.new()
 	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
@@ -139,6 +156,11 @@ func show_money_diff(amount: float, origin_pos: Vector2):
 	tween.tween_callback(Callable(panel, "queue_free")).set_delay(2)
 
 func update_money(money):
+	'''
+	Updates the money taking into account the multiplier, updates UI and saves data.
+	Args:
+		money (float): the base amount of money added (or removed) from the total. Multiplier only counts if money>0.
+	'''
 	var diff
 	if(money<0): # when buying mult does not apply
 		diff = round_to(money,2)	
@@ -193,6 +215,9 @@ func reset_expands():
 	expand_button.text = "Expand ("+str(expands_available)+")"
 
 func end_run():	
+	'''
+	Ends current run, updates stats, resets table and shows UI.
+	'''
 	if(game_ongoing):
 		Data.statistics['gamesPlayed'] += 1
 
@@ -227,6 +252,9 @@ func end_run():
 ##########################################################################################################################
 
 func init_main():
+	'''
+	Inits main node, called in ready() and when resetting game data.
+	'''
 	var new_player = Data.init_data()
 	print(Data.statistics)
 	mission_list.init_missions()
@@ -247,7 +275,7 @@ func init_main():
 		if(new_player):
 			show_tutorial()
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 
 	settings_button.connect("pressed", Callable(self, "show_settings"))
@@ -276,9 +304,5 @@ func _ready():
 	# Banner: ca-app-pub-3940256099942544/9214589741
 	# '''
 
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

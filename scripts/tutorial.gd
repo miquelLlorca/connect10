@@ -1,15 +1,15 @@
 extends Control
 
-
 @onready var close_button = $CloseButton
 
 
-
-
-
-
-
-func spawn_circle(table, pos: Vector2):
+func spawn_circle(table: Control, pos: Vector2):	
+	'''
+	Spawns circle in the center of the cell.
+	Args:
+		table (Control): table where the circle should be plotted.
+		pos (Vector2): position of the cell.
+	'''
 	var circle = TextureRect.new()
 	circle.set_anchors_preset(Control.PRESET_CENTER)
 	circle.texture = preload("res://assets/circle.png")  # Adjust the path as needed
@@ -23,9 +23,14 @@ func spawn_circle(table, pos: Vector2):
 	table.get_child(0).add_child(circle)
 
 
-func clear_cell_connector(table, p0, p1, draw_ends):
+func clear_cell_connector(table: Control, p0: Vector2, p1: Vector2, draw_ends: int):
 	''' 
-	Draw ends {-1:none, 0:p0, 1:p1, 2:both}
+	Plots connector mimicking the clearing cell animation. Circles at the end can be deactivated.
+	Args:
+		table (Control): table where the connector should be plotted.
+		p0 (Vector2): position of first cell.
+		p1 (Vector2): position of other cell.
+		draw_ends (int): used for specifying which circles to plot {-1:none, 0:p0, 1:p1, 2:both}
 	'''
 	var start = Vector2(p0[1]*64+32, p0[0]*64+32)
 	var end = Vector2(p1[1]*64+32, p1[0]*64+32)
@@ -46,6 +51,13 @@ func clear_cell_connector(table, p0, p1, draw_ends):
 
 
 func clear_cell_connector_endline(table, pos0, pos1):
+	'''
+	Starts clear cell animation for endline clearings.
+	Args:
+		table (Control): table where the connector should be plotted.
+		pos0 (Vector2): position of first cell.
+		pos1 (Vector2): position of other cell.
+	'''
 	if(pos0[0]<pos1[0]):
 		clear_cell_connector(table, pos0, Vector2(pos0[0],9.4), 0)
 		clear_cell_connector(table, Vector2(pos1[0],-0.5), pos1, 1)
@@ -54,16 +66,15 @@ func clear_cell_connector_endline(table, pos0, pos1):
 		clear_cell_connector(table, Vector2(pos0[0],-0.5), pos0, 1)
 
 
-
-
 ##########################################################################################################################
 ##########################################################################################################################
 ##########################################################################################################################
-
-
 
 
 func setup_table1():
+	'''
+	Sets up table 1, example for different directions.
+	'''
 	var table1_data = [ 4, 1, 7, 7, 9, 2, 
 						6, 2, 4, 5, 8, 5]
 	var grid1 = GridContainer.new()
@@ -85,8 +96,10 @@ func setup_table1():
 	set_mouse_filter_recursive(grid1, Control.MOUSE_FILTER_IGNORE)
 
 
-
 func setup_table2():
+	'''
+	Sets up table 2, example for longer moves.
+	'''
 	var table2_data = [ 4, 5, 3, 0, 7, 5,
 						2, 0, 0, 0, 8, 1]
 	var grid2 = GridContainer.new()
@@ -107,8 +120,10 @@ func setup_table2():
 	set_mouse_filter_recursive(grid2, Control.MOUSE_FILTER_IGNORE)
 
 
-
 func setup_table3():
+	'''
+	Sets up table 3, example for endline moves.
+	'''
 	var table3_data = [ 4, 5, 9, 0, 0, 0,
 						0, 0, 0, 0, 1, 2]
 	var grid3 = GridContainer.new()
@@ -134,6 +149,13 @@ func hide_window():
 	self.hide()
 
 func set_mouse_filter_recursive(node: Control, filter_value: int):
+	'''
+	Sets the mouse filter to a node and all its children.
+	Used to disable example tables on tutorial.
+	Args:
+		node (Control): starting node to edit.
+		filter_value (int): value to set on the property.
+	'''
 	node.mouse_filter = filter_value
 	for child in node.get_children():
 		if child is Control:
@@ -144,15 +166,11 @@ func set_mouse_filter_recursive(node: Control, filter_value: int):
 ##########################################################################################################################
 ##########################################################################################################################
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	close_button.connect("pressed", Callable(self, "hide_window"))
-	
 	setup_table1()
 	setup_table2()
 	setup_table3()
-	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

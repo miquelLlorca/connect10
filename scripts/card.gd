@@ -15,7 +15,12 @@ const SUITS = [SPADES, HEARTS, DIAMONDS, CLUBS]
 @export var icon_texture: Texture2D
 @export var font: Font
 
-func set_value(value):
+func set_value(value: int):
+	'''
+	Sets the value of the card and redraws it.
+	Args: 
+		value (int): the value to set the card to.
+	'''
 	cell_value = value
 	if(value!=0):
 		var n = randi_range(0, 3)
@@ -23,6 +28,10 @@ func set_value(value):
 	queue_redraw()
 
 func _draw():
+	'''
+	Overwrites the draw function to draw the cards using composite textures.
+	If the cell is flipped it draws the back but if it is not it draws the base, suit and value.
+	'''
 	if(cell_value==0):
 		if(back_texture):
 			draw_texture(back_texture, Vector2.ZERO)
@@ -39,19 +48,16 @@ func _draw():
 				draw_string(font, Vector2(17,48), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.BLACK)
 				draw_string(font, Vector2(15,46), str(cell_value), HORIZONTAL_ALIGNMENT_LEFT, 60, 50, Color.RED)
 
-
 func _ready() -> void:
 	base_texture = load("res://assets/decks/default/front_template.png")
 	back_texture = load("res://assets/decks/default/back.png")
 	font = ThemeDB.fallback_font;
-	# font.size = 20
 	suit_textures = {
 		HEARTS: load("res://assets/decks/default/corazones.png"),
 		SPADES: load("res://assets/decks/default/picas.png"),
 		CLUBS: load("res://assets/decks/default/treboles.png"),
 		DIAMONDS: load("res://assets/decks/default/diamantes.png"),
 	}
-
 
 func _process(delta: float) -> void:
 	pass

@@ -21,7 +21,12 @@ func deselect_cell():
 	var tween = create_tween()
 	tween.tween_property(self, "position:y", self.position.y + SELECTION_OFFSET, 0.1)
 
-func flip_animation(value):
+func flip_animation(value: int):
+	'''
+	When clearing a cell it animates it as it is being flipped.
+	Args:
+		value (int): the value to set the card.
+	'''
 	var duration = 0.08
 	var tween1 = create_tween()
 	tween1.tween_property(self, "scale:x", 0.1, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
@@ -42,7 +47,13 @@ func flip_animation(value):
 	await tween4.finished
 
 
-func set_value(value, animation):
+func set_value(value: int, animation: bool):
+	'''
+	Sets the value of the cell and does the animation if it proceeds.
+	Args:
+		value (int): the value to set the cell to.
+		animation (bool): specifies if the flip animation should be played, it is only used during games.
+	'''
 	if(value!=0):
 		cell_value = value
 		card.set_value(value)
@@ -50,13 +61,11 @@ func set_value(value, animation):
 	elif(value==0 and animation):
 			flip_animation(value)
 			
-func set_colour():
-	self.modulate = Color(0.1, 0.5, 0.9)
-
-func clean_colour():
-	self.modulate = original_colour
-	
 func _on_cell_input(event):
+	'''
+	Function associated with input events, used to select a cell during a run.
+	Calls to the parent function that manages the game logic with the position of the clicked cell.
+	'''
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var column = int((position.x-parentPos.x) / cell_width)
 		var row = int((position.y-parentPos.y) / cell_height)
