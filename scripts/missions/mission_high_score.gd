@@ -8,8 +8,6 @@ func set_objective():
 			objective = level * 10**(3+i)
 			return
 		
-	
-
 func init(init_level, mission_name, mission_description, main_reference):
 	super.init(init_level, mission_name, mission_description, main_reference)
 	stat = "highScore"

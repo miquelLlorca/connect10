@@ -19,10 +19,10 @@ Missions:
     ✔ Scroll should be reseted each run @done (5/2/2025, 3:02:35 PM)
     ✔ Refactored init missions with a mission factory singleton @done (5/5/2025, 2:59:58 PM)
     Rebalance: 
-        ☐ sum10 needs to be more spaced or less rewarding
-        ☐ high score needs to be more spaced or less rewarding
-        ☐ Total money earned needs to be much less rewarding AND more space
-        ☐ Distance needs to be less rewarding
+        ✔ sum10 needs to be more spaced or less rewarding @done (6/2/2025, 4:55:48 PM)
+        ✔ high score needs to be more spaced or less rewarding @done (6/2/2025, 4:55:47 PM)
+        ✔ Total money earned needs to be much less rewarding AND more space @done (6/2/2025, 4:55:47 PM)
+        ✔ Distance needs to be less rewarding @done (6/2/2025, 4:55:46 PM)
 
 
 
