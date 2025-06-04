@@ -81,7 +81,7 @@ func _ready():
 	parentPos = get_parent().get_parent().position
 	original_colour = self.modulate
 	self.connect("gui_input", _on_cell_input)
-	self.z_as_relative = true
+	# self.z_as_relative = true
 	shadow.z_index = 0
 	card.z_index = 1
 	shadow.position.y += SELECTION_OFFSET

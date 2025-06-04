@@ -7,7 +7,7 @@ var main
 var initColumns = 10
 var initRows = 3
 
-const CLEAR_CELLS_ANIMATION_DURATION = 0.3
+const CLEAR_CELLS_ANIMATION_DURATION = 0.7
 
 # Aux functions
 func get_cell(pos: Array):
@@ -52,7 +52,7 @@ func spawn_circle(pos: Vector2):
 	circle.expand = true
 	circle.stretch_mode = TextureRect.STRETCH_SCALE
 	circle.pivot_offset = circle.size / 2
-	# circle.z_index = 100
+	circle.z_index = 100
 	circle.size = Vector2(20, 20)
 	circle.position = pos  - (circle.size / 2)  # Center the circle
 	circle.modulate = Color(0.1, 0.5, 0.9, 1 )  # Blue tint
@@ -81,10 +81,11 @@ func clear_cell_animation(p0: Vector2, p1: Vector2, draw_ends: int):
 	'''
 	var x = self.get_global_rect().position.x
 	var y = self.get_global_rect().position.y
-	var start = Vector2(x+p0[1]*64+32, y+p0[0]*64+32)
-	var end = Vector2(x+p1[1]*64+32, y+p1[0]*64+32)
+	var start = Vector2(x+p0[1]*64+32-2, y+p0[0]*64+32-2)
+	var end = Vector2(x+p1[1]*64+32-2, y+p1[0]*64+32-2)
 	var line = Line2D.new()
 	line.width = 4
+	line.z_index = 100
 	line.default_color = Color(0.1, 0.5, 0.9, 1 )  # Blue tint
 	line.points = [start, end]
 	main.add_child(line)
@@ -284,7 +285,7 @@ func execute_movement():
 		
 		get_cell(pos0).set_value(0,true)
 		get_cell(pos1).set_value(0,true)
-		await clear_cell_animation(Vector2(pos0[0], pos0[1]), Vector2(pos1[0], pos1[1]), 2)
+		await clear_cell_animation (Vector2(pos0[0], pos0[1]), Vector2(pos1[0], pos1[1]), 2)
 		return true;
 	else:
 		# Possible Endline move needs different treatment.

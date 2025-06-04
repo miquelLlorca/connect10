@@ -17,8 +17,8 @@ func spawn_circle(table: Control, pos: Vector2):
 	circle.stretch_mode = TextureRect.STRETCH_SCALE
 	circle.pivot_offset = circle.size / 2
 	circle.z_index = 100
-	circle.size = Vector2(15, 15)
-	circle.position = pos  - (circle.size / 2) - Vector2(32,32)  # Center the circle
+	circle.size = Vector2(20, 20)
+	circle.position = pos  - (circle.size / 2) - Vector2(30,30)  # Center the circle
 	circle.modulate = Color(0.1, 0.5, 0.9, 0.9 )  # Blue tint
 	table.get_child(0).add_child(circle)
 
@@ -32,8 +32,8 @@ func clear_cell_connector(table: Control, p0: Vector2, p1: Vector2, draw_ends: i
 		p1 (Vector2): position of other cell.
 		draw_ends (int): used for specifying which circles to plot {-1:none, 0:p0, 1:p1, 2:both}
 	'''
-	var start = Vector2(p0[1]*64+32, p0[0]*64+32)
-	var end = Vector2(p1[1]*64+32, p1[0]*64+32)
+	var start = Vector2(p0[1]*64+30, p0[0]*64+30)
+	var end = Vector2(p1[1]*64+30, p1[0]*64+30)
 	var line = Line2D.new()
 	line.z_index = 100
 	line.width = 4
@@ -114,7 +114,7 @@ func setup_table2():
 		cell.call_deferred("set_value", number, false)
 		grid2.add_child(cell)
 
-	clear_cell_connector(grid2, Vector2(0,2), Vector2(0,4), 2)
+	clear_cell_connector(grid2, Vector2(0,3), Vector2(0,4), 2)
 	clear_cell_connector(grid2, Vector2(1,0), Vector2(1,4), 2)
 	
 	set_mouse_filter_recursive(grid2, Control.MOUSE_FILTER_IGNORE)
