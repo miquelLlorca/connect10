@@ -5,7 +5,8 @@ Table:
     ✔ Implement cleaning rows @done (4/1/2025, 7:39:13 PM)
     ✔ Table should be reset when it is cleared @done (4/5/2025, 11:15:30 AM)
     ✔ Center table @done (4/7/2025, 12:33:47 PM)
-    
+    ✔ Add size limitation @done (6/9/2025, 1:47:43 PM)
+
 Missions:
     ✔ Create and locate mission template @done (4/7/2025, 4:24:34 PM)
     ✔ Implement mission system @done (4/15/2025, 6:05:24 PM)

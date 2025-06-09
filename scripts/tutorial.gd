@@ -114,7 +114,7 @@ func setup_table2():
 		cell.call_deferred("set_value", number, false)
 		grid2.add_child(cell)
 
-	clear_cell_connector(grid2, Vector2(0,3), Vector2(0,4), 2)
+	clear_cell_connector(grid2, Vector2(0,2), Vector2(0,4), 2)
 	clear_cell_connector(grid2, Vector2(1,0), Vector2(1,4), 2)
 	
 	set_mouse_filter_recursive(grid2, Control.MOUSE_FILTER_IGNORE)

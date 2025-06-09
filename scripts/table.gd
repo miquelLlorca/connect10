@@ -3,6 +3,7 @@ extends Control
 # Reference to the GridContainer to hold the cells
 @onready var grid = $CenterContainer/GridContainer
 var main
+const MAX_TABLE_LENGTH=120
 
 func populate_table(rows: int, cols: int):
 	'''
@@ -54,8 +55,11 @@ func populate_table_with_list(values: Array, keep_zeros: bool):
 		values (array[int]): the values to be written in the table.
 		keep_zeros (bool): specifies if the zeros in the list should be skipped when populating table.
 	'''
+	if(not keep_zeros):
+		values = values.filter(func(x): return x != 0)
+
 	for i in range(len(values)):
-		if(values[i]!=0 or keep_zeros):
+		if(grid.get_child_count()<MAX_TABLE_LENGTH):
 			var cell = preload("res://scenes/cell.tscn").instantiate()
 			grid.add_child(cell)
 			cell.set_value(values[i], false)
@@ -82,10 +86,14 @@ func expand_table():
 		grid.get_cell(grid.pos0).deselect_cell()
 		grid.pos0 = null
 
-	var keep_zeros = false
+	var keep_zeros = true
 	var values = get_table_values(keep_zeros)
-	populate_table_with_list(values, keep_zeros)
-	Data.save_game_state()
+	if(len(values)<MAX_TABLE_LENGTH):
+		keep_zeros = false
+		populate_table_with_list(values, keep_zeros)
+		Data.save_game_state()
+		return true
+	return false
 
 func end_run():
 	'''

@@ -206,9 +206,14 @@ func show_tutorial():
 # Expand management
 func expand_table():
 	if(expands_available>0):
-		expands_available -= 1
-		expand_button.text = "Expand ("+str(expands_available)+")"
-		table.expand_table()
+		if(table.expand_table()):
+			expands_available -= 1
+			expand_button.text = "Expand ("+str(expands_available)+")"
+		else:
+			var tween = create_tween()
+			# var original_colour = expand_button.modulate 
+			tween.tween_property(expand_button, "modulate", Color(1,0,0), 0.25)
+			tween.tween_property(expand_button, "modulate", Color(1,1,1), 0.25)
 
 func reset_expands():
 	expands_available = MAX_EXPANDS
@@ -277,7 +282,6 @@ func init_main():
 
 
 func _ready():
-
 	settings_button.connect("pressed", Callable(self, "show_settings"))
 	expand_button.connect("pressed", Callable(self, "expand_table"))
 	end_run_button.connect("pressed", Callable(self, "end_run"))
